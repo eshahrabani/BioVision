@@ -45,3 +45,15 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+*.dll
+bin/BioVision.exe
+*.exp
+*.lib
+*.obj
+*.suo
+*.log
+*.tlog
+obj/Release/vc140.pdb
+*.cache
+obj/Release/icon.res
+*.db

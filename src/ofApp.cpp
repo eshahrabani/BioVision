@@ -39,11 +39,16 @@ void ofApp::draw(){
 	// Draw the video player according to current dimensions.
 	video_player.draw(vid_x, vid_y, vid_width, vid_height);
 
-	// Draw the maruqee if currently defined. 
-	if (marquee_ptr != nullptr) {
+	// Draw the marqee if currently defined. 
+	if (marquee != nullptr) {
 		ofSetColor(192, 192, 192);
 		ofNoFill();
-		ofDrawRectangle(marquee);
+		ofDrawRectangle(*marquee);
+	} 
+	else {
+		ofSetColor(255, 255, 255);
+		ofNoFill();
+		ofDrawRectangle(0, 0, 0, 0);
 	}
 }
 
@@ -96,7 +101,11 @@ void ofApp::keyPressed(int key){
 		case 'M':
 		case 'm':
 			m_pressed = true;
-			if(ctrl_pressed) marquee_ptr = nullptr;
+			if (marquee != nullptr) {
+				cout << "Clearing marquee\n\n";
+				delete marquee;
+				marquee = nullptr;
+			}
 			break;
 
 		// Set the global ctrl_pressed boolean to true.
@@ -174,8 +183,14 @@ void ofApp::mouseDragged(int x, int y, int button){
 		int w, h;
 		w = h = sqrt(pow(d, 2) / 2);
 
-		marquee.setFromCenter(x_center, y_center, w, h);
-		marquee_ptr = &marquee;		// Marquee is now defined. 
+		// Clear previous marquee.
+		if (marquee != nullptr) {
+			delete marquee;
+		}
+
+		// Set new marquee.
+		marquee = new ofRectangle();
+		marquee->setFromCenter(x_center, y_center, w, h);
 	}
 }
 
@@ -242,6 +257,8 @@ void ofApp::load() {
 		cout << "File loaded successfully.\n\n";
 	}
 
+	// Displays the first frame for user feedback.
+	video_player.setPaused(true);
 }
 
 

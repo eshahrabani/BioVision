@@ -57,3 +57,4 @@ obj/Release/vc140.pdb
 *.cache
 obj/Release/icon.res
 *.db
+*.opendb

@@ -47,8 +47,7 @@ class ofApp : public ofBaseApp{
 		
 		ofVideoPlayer video_player;				 // Video player.
 
-		ofRectangle marquee;
-		ofRectangle* marquee_ptr = nullptr;
+		ofRectangle* marquee;
 
 		// Globals.
 		int app_width = ofGetWidth();					  // Store the width of the app.

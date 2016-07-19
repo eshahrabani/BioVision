@@ -111,6 +111,8 @@ void ofApp::keyPressed(int key){
 		// Set the global ctrl_pressed boolean to true.
 		case OF_KEY_CONTROL:
 			ctrl_pressed = true;
+			if (right_pressed) next_frame();
+			if (left_pressed) previous_frame();
 			break;
 
 		// If h is pressed, print handy key commands.
@@ -129,7 +131,7 @@ void ofApp::keyPressed(int key){
 
 		// Tell the user how to access the help dialog.
 		default:
-			cout << "Key command unrecognized. Press h for a list of valid commands.\n\n";
+			//cout << "Key command unrecognized. Press h for a list of valid commands.\n\n";
 			break;
 	}
 }

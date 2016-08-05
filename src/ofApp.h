@@ -25,11 +25,12 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 		
 		// GUI listener methods.
-		void load();                   // Listens to the Load button.	
-		void play_toggled(bool &b);    // Listens to the Play toggle button.
-		void play_or_pause();		   // Global app method for playing or pausing the video.
-		void next_frame();             // Listens to the next frame button.
-		void previous_frame();         // Listens to the previous frame button.
+		void load();                           // Listens to the Load button.	
+		void play_toggled(bool &b);            // Listens to the Play toggle button.
+		void play_or_pause();		           // Global app method for playing or pausing the video.
+		void next_frame();					   // Listens to the next frame button.
+		void previous_frame();				   // Listens to the previous frame button.
+		void play_speed_changed(float &f);	   // Listens to the play speed slider. 
 
 		// Helper methods.
 		void resizeVideoPlayer();
@@ -47,7 +48,7 @@ class ofApp : public ofBaseApp{
 		
 		ofVideoPlayer video_player;				 // Video player.
 
-		ofRectangle* marquee;
+		ofRectangle* marquee = nullptr;
 
 		// Globals.
 		int app_width = ofGetWidth();					  // Store the width of the app.

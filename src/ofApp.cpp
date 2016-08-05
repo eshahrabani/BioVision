@@ -14,10 +14,11 @@ void ofApp::setup(){
 	gui.add(play_speed.setup("Play speed", 1.0, -3.0, 3.0));		  // Add the play speed slider, default speed at 1x, min at -3x, and max at 3
 
 	// Link the buttons to their respective methods.
-	load_button.addListener(this, &ofApp::load);					  // Link the Load button to the load() method.
-	play_toggle.addListener(this, &ofApp::play_toggled);              // See problem note.
-	next_frame_button.addListener(this, &ofApp::next_frame);		  // Link the next frame button to the next_frame() method.
+	load_button.addListener(this, &ofApp::load);					  // Link the Load button to the load method.
+	play_toggle.addListener(this, &ofApp::play_toggled);              // Link the play toggle to the play_toggled method.
+	next_frame_button.addListener(this, &ofApp::next_frame);		  // Link the next frame button to the next_frame method.
 	previous_frame_button.addListener(this, &ofApp::previous_frame);  // Link the previous frame button to the previous_frame method. 
+	play_speed.addListener(this, &ofApp::play_speed_changed);	      // Link the play speed slider to the play_speed_changed method.
 }
 
 //--------------------------------------------------------------
@@ -25,9 +26,6 @@ void ofApp::update(){
 	
 	// Update the frames of the video player.
 	video_player.update();
-
-	// Same problem as the play toggle.
-	video_player.setSpeed(play_speed);
 }
 
 //--------------------------------------------------------------
@@ -337,6 +335,10 @@ void ofApp::previous_frame() {
 	// Go one frame backward.
 	cout << "Going backward one frame.\n\n";
 	video_player.previousFrame();
+}
+
+void ofApp::play_speed_changed(float &f) {
+	video_player.setSpeed(f);
 }
 
 // Updates the size of the video player according to the current dimensions of the app.

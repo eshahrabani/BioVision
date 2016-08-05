@@ -5,4 +5,4 @@ Note on install: you must clone the repo to a folder inside the /myApps/ directo
 
 For example, of_v0.9.3_vs_release/apps/myApps/BioVision/ 
 OR 
-of_v0.9.3_vs_release/apps/someOtherFolder/BioVision
+of_v0.9.3_vs_release/apps/someOtherFolder/BioVision/

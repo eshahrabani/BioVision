@@ -1,12 +1,13 @@
-#include "KeyParser.h"
+#include "KeyHandler.h"
+#include "ofApp.h"
 
-KeyParser::KeyParser(ofApp* app) {
+KeyHandler::KeyHandler(ofApp* app) {
 
 	// Copies the address from app to this->app.
 	this->app = app;
 }
 
-void KeyParser::parsePressed(int key) {
+void KeyHandler::handlePressed(int key) {
 	switch (key) {
 
 	// If p is pressed, play or pause the video.
@@ -21,49 +22,71 @@ void KeyParser::parsePressed(int key) {
 		app->load();
 		break;
 
-		// If the right arrow key is pressed, check to make sure control is pressed as well. 
-		// If so, go forward one frame.
+	// Move forward one frame if CTRL+RIGHT are pressed.
 	case OF_KEY_RIGHT:
-		right_pressed = true;				// Update the global right_pressed boolean in case control is pressed after this key is.
-		if (ctrl_pressed) app->next_frame();		// Is not executed if control is pressed second, so we needed to update the boolean.								 
+		right_pressed = true;	
+
+		// This not executed if RIGHT is pressed first. 
+		// SEE: case OF_KEY_CONTROL for opposite condition. 
+		if (ctrl_pressed) app->next_frame();   					 
 		break;
 
-		// Same as right arrow key, but for the left now.
+	// Same implementation as case OF_KEY_RIGHT. 
 	case OF_KEY_LEFT:
 		left_pressed = true;
 		if (ctrl_pressed) app->previous_frame();
 		break;
 
-		// If f is pressed, increase play speed by 0.25.
+	// If f is pressed, increase play speed by 0.25.
 	case 'F':
-	case 'f':
-		// Check slider max boundary.
-		if ((app->play_speed + 0.25) <= app->play_speed.getMax()) {
-			app->play_speed = app->play_speed + 0.25;
+	case 'f': 
+	{
+		// Reference var to the speed slider. 
+		ofxSlider<float>& speed = app->play_speed;
+
+		// Check boundaries. 
+		if ((speed + 0.25) <= speed.getMax()) {
+			speed = speed + 0.25;
+			cout << "Increasing speed by 0.25.\n\n";
 		}
+		else cout << "Maximum speed already hit.\n\n";
+	}
 		break;
 
-		// If r is pressed, decrease play speed by 0.25.
+	// Same implementation as case 'f'.
 	case 'R':
 	case 'r':
-		// Check slider min boundary.
-		if ((app->play_speed - 0.25) >= app->play_speed.getMin()) {
-			app->play_speed = app->play_speed - 0.25;
+	{
+		// Reference var to the speed slider.
+		ofxSlider<float>& speed = app->play_speed;
+
+		// Check boundaries. 
+		if ((speed - 0.25) >= speed.getMin()) {
+			speed = speed - 0.25;
+			cout << "Decreasing speed by 0.25.\n\n";
 		}
+		else cout << "Minimum speed already hit.\n\n";
+	}
 		break;
+
+	// If m is pressed, clear the marquee. 
 	case 'M':
 	case 'm':
+		cout << "Clearing marquee.\n\n";
 		app->marquee.clear();
 		break;
 
-		// Set the global ctrl_pressed boolean to true.
+	// If RIGHT+CTRL or LEFT+CTRL is pressed, move forward/backward one frame. 
 	case OF_KEY_CONTROL:
 		ctrl_pressed = true;
+
+		// These are not executed if CTRL is pressed first.
+		// SEE: case OF_RIGHT_PRESSED and case OF_LEFT_PRESSED for opposite condition. 
 		if (right_pressed) app->next_frame();
 		if (left_pressed) app->previous_frame();
 		break;
 
-		// If h is pressed, print handy key commands.
+	// If h is pressed, print handy key commands.
 	case 'H':
 	case 'h':
 		cout << "p: play/pause\n";
@@ -77,14 +100,11 @@ void KeyParser::parsePressed(int key) {
 		cout << "h: help\n\n";
 		break;
 
-		// Tell the user how to access the help dialog.
-	default:
-		//cout << "Key command unrecognized. Press h for a list of valid commands.\n\n";
-		break;
+	// TODO: Implement default case. 
 	}
 }
 
-void KeyParser::parseReleased(int key) {
+void KeyHandler::handleReleased(int key) {
 	switch (key) {
 
 		// If the control key is released, set its global boolean to false.

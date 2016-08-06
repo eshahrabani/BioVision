@@ -55,7 +55,10 @@
     <ClCompile Include="src\Marquee.cpp">
       <Filter>src\gui</Filter>
     </ClCompile>
-    <ClCompile Include="src\KeyParser.cpp">
+    <ClCompile Include="src\KeyHandler.cpp">
+      <Filter>src\io</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MouseHandler.cpp">
       <Filter>src\io</Filter>
     </ClCompile>
   </ItemGroup>
@@ -704,7 +707,10 @@
     <ClInclude Include="src\Marquee.h">
       <Filter>src\gui</Filter>
     </ClInclude>
-    <ClInclude Include="src\KeyParser.h">
+    <ClInclude Include="src\KeyHandler.h">
+      <Filter>src\io</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MouseHandler.h">
       <Filter>src\io</Filter>
     </ClInclude>
   </ItemGroup>

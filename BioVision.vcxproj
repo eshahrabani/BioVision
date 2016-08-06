@@ -171,9 +171,10 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\KeyParser.cpp" />
+    <ClCompile Include="src\KeyHandler.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Marquee.cpp" />
+    <ClCompile Include="src\MouseHandler.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxBaseGui.cpp" />
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxButton.cpp" />
@@ -192,8 +193,9 @@
     <ClCompile Include="..\..\..\addons\ofxOpenCv\src\ofxCvShortImage.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\KeyParser.h" />
+    <ClInclude Include="src\KeyHandler.h" />
     <ClInclude Include="src\Marquee.h" />
+    <ClInclude Include="src\MouseHandler.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxBaseGui.h" />
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxButton.h" />

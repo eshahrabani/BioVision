@@ -3,8 +3,8 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "Marquee.h"
+#include "KeyHandler.h"
 
-class KeyParser;
 
 class ofApp : public ofBaseApp{
 
@@ -64,14 +64,14 @@ class ofApp : public ofBaseApp{
 		int vid_x = app_width / 2 - vid_width / 2;	      // Calculate the left-corner x position of the video.
 		int vid_y = app_height / 2 - vid_height / 2;      // Calculate the left-corner y position of the video.
 
-		KeyParser* parser;
+		KeyHandler* parser;
 
 		// Mouse booleans and associated storage.
 		bool pressed_inside_player = false;
 		
-		int initial_x_inside = 0;
-		int initial_y_inside = 0;
+		int last_clicked_x = 0;
+		int last_clicked_y = 0;
 		
-		int mouse_x = 0;
-		int mouse_y = 0;
+		int mouse_pos_x = 0;
+		int mouse_pos_y = 0;
 };

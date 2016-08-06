@@ -1,5 +1,4 @@
 #include "ofApp.h"
-#include "KeyParser.h"
 
 ofApp::ofApp() : ofBaseApp() {}
 ofApp::~ofApp() {
@@ -26,7 +25,7 @@ void ofApp::setup(){
 	previous_frame_button.addListener(this, &ofApp::previous_frame);  // Link the previous frame button to the previous_frame method. 
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      // Link the play speed slider to the play_speed_changed method.
 
-	parser = new KeyParser(this);
+	parser = new KeyHandler(this);
 }
 
 //--------------------------------------------------------------
@@ -51,39 +50,37 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	parser->parsePressed(key);
+	parser->handlePressed(key);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-	parser->parseReleased(key);
+	parser->handleReleased(key);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-	mouse_x = x;
-	mouse_y = y;
+	mouse_pos_x = x;
+	mouse_pos_y = y;
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-	// Trigger the mouseMoved(int,int) method first since it doesn't call if dragged.
+
+	// Trigger the mouseMoved(int,int) method first since it doesn't normally call if dragged.
 	mouseMoved(x, y);
 
 	// If control is pressed, draw a marquee.
 	if (button == OF_MOUSE_BUTTON_LEFT && parser->ctrl_pressed && pressed_inside_player) {
-		// Find the midpoint of the marquee diagonal line.
-		int x_center = (initial_x_inside + x) / 2;
-		int y_center = (initial_y_inside + y) / 2;
-
-		// Assuming 45 degree angles (square marquee): 2w^2 = d^2; w = sqrt(d^2 / 2).
-		float d = sqrt(pow(x - initial_x_inside, 2) + pow(y - initial_y_inside, 2));	// Apply distance formula.
+		
+		// Assuming 45 degree angles (square marquee): w = h = (d/2)*sqrt(2)
+		float d = sqrt(pow(x - last_clicked_x, 2) + pow(y - last_clicked_y, 2));	// Apply distance formula.
 		int w, h;
-		w = h = sqrt(pow(d, 2) / 2);
+		w = h = (d/2)*sqrt(2);
 
 		// Set new marquee.
 		if (video_player.isLoaded()) {
-			marquee.setFromCenter(x_center, y_center, w, h);
+			marquee.set(last_clicked_x, last_clicked_y, w, h);
 		}
 	}
 }
@@ -96,8 +93,8 @@ void ofApp::mousePressed(int x, int y, int button){
 		
 		if (area.inside(x, y)) {
 			pressed_inside_player = true;
-			initial_x_inside = x;
-			initial_y_inside = y;
+			last_clicked_x = x;
+			last_clicked_y = y;
 		}
 	}
 }

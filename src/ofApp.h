@@ -4,10 +4,13 @@
 #include "ofxGui.h"
 #include "Marquee.h"
 
+class KeyParser;
+
 class ofApp : public ofBaseApp{
 
 	public:
 		ofApp();
+		~ofApp();
 
 		// Default event methods.
 		void setup();
@@ -61,11 +64,7 @@ class ofApp : public ofBaseApp{
 		int vid_x = app_width / 2 - vid_width / 2;	      // Calculate the left-corner x position of the video.
 		int vid_y = app_height / 2 - vid_height / 2;      // Calculate the left-corner y position of the video.
 
-		// Booleans for storing the current state of some keys that need to be pressed simultaneously.
-		bool ctrl_pressed = false;
-		bool right_pressed = false;
-		bool left_pressed = false;
-		bool m_pressed = false;
+		KeyParser* parser;
 
 		// Mouse booleans and associated storage.
 		bool pressed_inside_player = false;

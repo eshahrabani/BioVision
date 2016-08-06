@@ -1,6 +1,10 @@
 #include "ofApp.h"
+#include "KeyParser.h"
 
 ofApp::ofApp() : ofBaseApp() {}
+ofApp::~ofApp() {
+	delete parser;
+}
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -21,6 +25,8 @@ void ofApp::setup(){
 	next_frame_button.addListener(this, &ofApp::next_frame);		  // Link the next frame button to the next_frame method.
 	previous_frame_button.addListener(this, &ofApp::previous_frame);  // Link the previous frame button to the previous_frame method. 
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      // Link the play speed slider to the play_speed_changed method.
+
+	parser = new KeyParser(this);
 }
 
 //--------------------------------------------------------------
@@ -45,109 +51,12 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	switch (key) {
-
-		// If p is pressed, play or pause the video.
-		case 'P':
-		case 'p':
-			play_or_pause();
-			break;
-		
-		// If l is pressed, open the load dialog.
-		case 'L':
-		case 'l':
-			load();
-			break;
-		
-		// If the right arrow key is pressed, check to make sure control is pressed as well. 
-		// If so, go forward one frame.
-		case OF_KEY_RIGHT:
-			right_pressed = true;				// Update the global right_pressed boolean in case control is pressed after this key is.
-			if (ctrl_pressed) next_frame();		// Is not executed if control is pressed second, so we needed to update the boolean.								 
-			break;
-
-		// Same as right arrow key, but for the left now.
-		case OF_KEY_LEFT:
-			left_pressed = true;				
-			if (ctrl_pressed) previous_frame();
-			break;
-
-		// If f is pressed, increase play speed by 0.25.
-		case 'F':
-		case 'f':
-			// Check slider max boundary.
-			if ((play_speed + 0.25) <= play_speed.getMax()) {
-				play_speed = play_speed + 0.25;
-			}
-			break;
-
-		// If r is pressed, decrease play speed by 0.25.
-		case 'R':
-		case 'r':
-			// Check slider min boundary.
-			if ((play_speed - 0.25) >= play_speed.getMin()) {
-				play_speed = play_speed - 0.25;
-			}
-			break;
-		case 'M':
-		case 'm':
-			m_pressed = true;
-			marquee.clear();
-			break;
-
-		// Set the global ctrl_pressed boolean to true.
-		case OF_KEY_CONTROL:
-			ctrl_pressed = true;
-			if (right_pressed) next_frame();
-			if (left_pressed) previous_frame();
-			break;
-
-		// If h is pressed, print handy key commands.
-		case 'H':
-		case 'h':
-			cout << "p: play/pause\n";
-			cout << "l: load\n";
-			cout << "control + right: skip forward one frame\n";
-			cout << "control + left: skip backward one frame\n";
-			cout << "f: increase speed by 0.25\n";
-			cout << "r: decrease speed by 0.25\n";
-			cout << "control + left click & drag: draw marquee on video\n";
-			cout << "control + m: clear marquee\n";
-			cout << "h: help\n\n";
-			break;
-
-		// Tell the user how to access the help dialog.
-		default:
-			//cout << "Key command unrecognized. Press h for a list of valid commands.\n\n";
-			break;
-	}
+	parser->parsePressed(key);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-	switch (key) {
-		
-		// If the control key is released, set its global boolean to false.
-		case OF_KEY_CONTROL:
-			ctrl_pressed = false;
-			break;
-
-		// If the right arrow key is released, set its global boolean to false.
-		case OF_KEY_RIGHT:
-			right_pressed = false;
-			break;
-
-		// If the left arrow key is released, set its global boolean to false.
-		case OF_KEY_LEFT:
-			left_pressed = false;
-			break;
-
-		// If the m key is released, set its global boolean to false.
-		case 'M':
-		case 'm':
-			m_pressed = false;
-			break;
-	}
+	parser->parseReleased(key);
 }
 
 //--------------------------------------------------------------
@@ -162,7 +71,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 	mouseMoved(x, y);
 
 	// If control is pressed, draw a marquee.
-	if (button == OF_MOUSE_BUTTON_LEFT && ctrl_pressed && pressed_inside_player) {
+	if (button == OF_MOUSE_BUTTON_LEFT && parser->ctrl_pressed && pressed_inside_player) {
 		// Find the midpoint of the marquee diagonal line.
 		int x_center = (initial_x_inside + x) / 2;
 		int y_center = (initial_y_inside + y) / 2;
@@ -173,7 +82,9 @@ void ofApp::mouseDragged(int x, int y, int button){
 		w = h = sqrt(pow(d, 2) / 2);
 
 		// Set new marquee.
-		marquee.setFromCenter(x_center, y_center, w, h);
+		if (video_player.isLoaded()) {
+			marquee.setFromCenter(x_center, y_center, w, h);
+		}
 	}
 }
 

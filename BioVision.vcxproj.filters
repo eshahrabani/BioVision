@@ -53,7 +53,10 @@
       <Filter>addons\ofxOpenCv\src</Filter>
     </ClCompile>
     <ClCompile Include="src\Marquee.cpp">
-      <Filter>src\GUI</Filter>
+      <Filter>src\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\KeyParser.cpp">
+      <Filter>src\io</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -153,7 +156,10 @@
     <Filter Include="addons\ofxOpenCv\libs\opencv\include\opencv2\videostab">
       <UniqueIdentifier>{D4F01CB4-61E3-5965-F3B1-CFB9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\GUI">
+    <Filter Include="src\io">
+      <UniqueIdentifier>{8d7d38fd-1970-436c-974e-84def65355b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\gui">
       <UniqueIdentifier>{97c2268a-4bce-4b1a-aea5-0287629a61ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -696,7 +702,10 @@
       <Filter>addons\ofxOpenCv\libs\opencv\include\opencv2\videostab</Filter>
     </ClInclude>
     <ClInclude Include="src\Marquee.h">
-      <Filter>src\GUI</Filter>
+      <Filter>src\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\KeyParser.h">
+      <Filter>src\io</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

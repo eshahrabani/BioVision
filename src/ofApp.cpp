@@ -1,5 +1,7 @@
 #include "ofApp.h"
 
+ofApp::ofApp() : ofBaseApp() {}
+
 //--------------------------------------------------------------
 void ofApp::setup(){
 	
@@ -37,17 +39,8 @@ void ofApp::draw(){
 	// Draw the video player according to current dimensions.
 	video_player.draw(vid_x, vid_y, vid_width, vid_height);
 
-	// Draw the marqee if currently defined. 
-	if (marquee != nullptr) {
-		ofSetColor(192, 192, 192);
-		ofNoFill();
-		ofDrawRectangle(*marquee);
-	} 
-	else {
-		ofSetColor(255, 255, 255);
-		ofNoFill();
-		ofDrawRectangle(0, 0, 0, 0);
-	}
+	// Draw the marquee.
+	marquee.draw();
 }
 
 //--------------------------------------------------------------
@@ -99,11 +92,7 @@ void ofApp::keyPressed(int key){
 		case 'M':
 		case 'm':
 			m_pressed = true;
-			if (marquee != nullptr) {
-				cout << "Clearing marquee\n\n";
-				delete marquee;
-				marquee = nullptr;
-			}
+			marquee.clear();
 			break;
 
 		// Set the global ctrl_pressed boolean to true.
@@ -179,18 +168,12 @@ void ofApp::mouseDragged(int x, int y, int button){
 		int y_center = (initial_y_inside + y) / 2;
 
 		// Assuming 45 degree angles (square marquee): 2w^2 = d^2; w = sqrt(d^2 / 2).
-		float d = sqrt(pow(x_center - initial_x_inside, 2) + pow(y_center - initial_y_inside, 2));	// Apply distance formula.
+		float d = sqrt(pow(x - initial_x_inside, 2) + pow(y - initial_y_inside, 2));	// Apply distance formula.
 		int w, h;
 		w = h = sqrt(pow(d, 2) / 2);
 
-		// Clear previous marquee.
-		if (marquee != nullptr) {
-			delete marquee;
-		}
-
 		// Set new marquee.
-		marquee = new ofRectangle();
-		marquee->setFromCenter(x_center, y_center, w, h);
+		marquee.setFromCenter(x_center, y_center, w, h);
 	}
 }
 

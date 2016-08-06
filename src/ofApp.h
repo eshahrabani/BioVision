@@ -2,11 +2,13 @@
 
 #include "ofMain.h"
 #include "ofxGui.h"
+#include "Marquee.h"
 
 class ofApp : public ofBaseApp{
 
 	public:
-		
+		ofApp();
+
 		// Default event methods.
 		void setup();
 		void update();
@@ -48,7 +50,7 @@ class ofApp : public ofBaseApp{
 		
 		ofVideoPlayer video_player;				 // Video player.
 
-		ofRectangle* marquee = nullptr;
+		Marquee marquee;						 // Marquee for selecting regions of the video player.
 
 		// Globals.
 		int app_width = ofGetWidth();					  // Store the width of the app.

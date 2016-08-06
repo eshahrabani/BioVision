@@ -64,7 +64,7 @@ class ofApp : public ofBaseApp{
 		int vid_x = app_width / 2 - vid_width / 2;	      // Calculate the left-corner x position of the video.
 		int vid_y = app_height / 2 - vid_height / 2;      // Calculate the left-corner y position of the video.
 
-		KeyHandler* parser;
+		KeyHandler* keyHandler;
 
 		// Mouse booleans and associated storage.
 		bool pressed_inside_player = false;

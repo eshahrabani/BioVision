@@ -2,7 +2,7 @@
 
 ofApp::ofApp() : ofBaseApp() {}
 ofApp::~ofApp() {
-	delete parser;
+	delete keyHandler;
 }
 
 //--------------------------------------------------------------
@@ -25,7 +25,8 @@ void ofApp::setup(){
 	previous_frame_button.addListener(this, &ofApp::previous_frame);  // Link the previous frame button to the previous_frame method. 
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      // Link the play speed slider to the play_speed_changed method.
 
-	parser = new KeyHandler(this);
+	// Handlers. 
+	keyHandler = new KeyHandler(this);
 }
 
 //--------------------------------------------------------------
@@ -50,12 +51,12 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	parser->handlePressed(key);
+	keyHandler->handlePressed(key);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-	parser->handleReleased(key);
+	keyHandler->handleReleased(key);
 }
 
 //--------------------------------------------------------------
@@ -71,7 +72,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 	mouseMoved(x, y);
 
 	// If control is pressed, draw a marquee.
-	if (button == OF_MOUSE_BUTTON_LEFT && parser->ctrl_pressed && pressed_inside_player) {
+	if (button == OF_MOUSE_BUTTON_LEFT && keyHandler->ctrl_pressed && pressed_inside_player) {
 		
 		// Assuming 45 degree angles (square marquee): w = h = (d/2)*sqrt(2)
 		float d = sqrt(pow(x - last_clicked_x, 2) + pow(y - last_clicked_y, 2));	// Apply distance formula.

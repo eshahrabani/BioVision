@@ -1,18 +1,17 @@
 #pragma once
-#include "ofMain.h"
 #include <iostream>
 using namespace std;
  
 // Forward declaration of ofApp to avoid circular includes, since ofApp.h includes this file. 
 class ofApp;
 
-// KeyParser handles keys pressed, sending actions to ofApp. 
+// KeyHandler handles keys pressed, sending actions to ofApp. 
 // It also stores the current state of CTRL, RIGHT, and LEFT keys.
 class KeyHandler {
 
 public:
 
-	// Constructor that connects KeyParser to ofApp. 
+	// Constructor that connects KeyHandler to ofApp. 
 	KeyHandler(ofApp* app);
 
 	// Parses pressed keys and executes relevant commands on ofApp. 

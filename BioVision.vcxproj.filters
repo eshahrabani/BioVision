@@ -53,7 +53,7 @@
       <Filter>addons\ofxOpenCv\src</Filter>
     </ClCompile>
     <ClCompile Include="src\Marquee.cpp">
-      <Filter>src</Filter>
+      <Filter>src\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +152,9 @@
     </Filter>
     <Filter Include="addons\ofxOpenCv\libs\opencv\include\opencv2\videostab">
       <UniqueIdentifier>{D4F01CB4-61E3-5965-F3B1-CFB9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\GUI">
+      <UniqueIdentifier>{97c2268a-4bce-4b1a-aea5-0287629a61ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -693,7 +696,7 @@
       <Filter>addons\ofxOpenCv\libs\opencv\include\opencv2\videostab</Filter>
     </ClInclude>
     <ClInclude Include="src\Marquee.h">
-      <Filter>src</Filter>
+      <Filter>src\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

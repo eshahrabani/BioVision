@@ -182,7 +182,7 @@ void ofApp::mousePressed(int x, int y, int button){
 	if (button == OF_MOUSE_BUTTON_LEFT) {
 		ofRectangle area;
 		area.set(vid_x, vid_y, vid_width, vid_height);
-
+		
 		if (area.inside(x, y)) {
 			pressed_inside_player = true;
 			initial_x_inside = x;

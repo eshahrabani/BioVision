@@ -52,13 +52,13 @@
     <ClCompile Include="..\..\..\addons\ofxOpenCv\src\ofxCvShortImage.cpp">
       <Filter>addons\ofxOpenCv\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Marquee.cpp">
+    <ClCompile Include="src\gui\Marquee.cpp">
       <Filter>src\gui</Filter>
     </ClCompile>
-    <ClCompile Include="src\KeyHandler.cpp">
+    <ClCompile Include="src\io\KeyHandler.cpp">
       <Filter>src\io</Filter>
     </ClCompile>
-    <ClCompile Include="src\MouseHandler.cpp">
+    <ClCompile Include="src\io\MouseHandler.cpp">
       <Filter>src\io</Filter>
     </ClCompile>
   </ItemGroup>
@@ -704,13 +704,13 @@
     <ClInclude Include="..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\videostab\videostab.hpp">
       <Filter>addons\ofxOpenCv\libs\opencv\include\opencv2\videostab</Filter>
     </ClInclude>
-    <ClInclude Include="src\Marquee.h">
+    <ClInclude Include="src\gui\Marquee.h">
       <Filter>src\gui</Filter>
     </ClInclude>
-    <ClInclude Include="src\KeyHandler.h">
+    <ClInclude Include="src\io\KeyHandler.h">
       <Filter>src\io</Filter>
     </ClInclude>
-    <ClInclude Include="src\MouseHandler.h">
+    <ClInclude Include="src\io\MouseHandler.h">
       <Filter>src\io</Filter>
     </ClInclude>
   </ItemGroup>

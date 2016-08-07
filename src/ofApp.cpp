@@ -22,6 +22,7 @@ void ofApp::setup(){
 	gui.add(next_frame_button.setup("Next frame"));				      // Add the next frame button.
 	gui.add(previous_frame_button.setup("Previous frame"));			  // Add the previous frame button.
 	gui.add(play_speed.setup("Play speed", 1.0, -3.0, 3.0));		  // Add the play speed slider, default speed at 1x, min at -3x, and max at 3x.
+	gui.add(frame.setup("Frame", 1, 1, video_player.getTotalNumFrames()));
 
 	// Link the buttons to their respective methods.
 	load_button.addListener(this, &ofApp::load);					  // Link the Load button to the load method.
@@ -29,6 +30,7 @@ void ofApp::setup(){
 	next_frame_button.addListener(this, &ofApp::next_frame);		  // Link the next frame button to the next_frame method.
 	previous_frame_button.addListener(this, &ofApp::previous_frame);  // Link the previous frame button to the previous_frame method. 
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      // Link the play speed slider to the play_speed_changed method.
+	frame.addListener(this, &ofApp::frame_changed);
 
 	// Start handlers. 
 	mouseHandler = new MouseHandler(this);
@@ -185,7 +187,9 @@ void ofApp::next_frame() {
 
 	// Go one frame forward.
 	cout << "Going forward one frame.\n\n";
-	video_player.nextFrame();
+	if (frame < video_player.getTotalNumFrames()) {
+		frame = frame + 1;
+	}
 }
 
 void ofApp::previous_frame() {
@@ -203,11 +207,19 @@ void ofApp::previous_frame() {
 
 	// Go one frame backward.
 	cout << "Going backward one frame.\n\n";
-	video_player.previousFrame();
+	if (frame > 1) {
+		frame = frame - 1;
+	}
 }
 
 void ofApp::play_speed_changed(float &f) {
+	if (!video_player.isLoaded()) return;
 	video_player.setSpeed(f);
+}
+
+void ofApp::frame_changed(int &frame) {
+	if (!video_player.isLoaded()) return;
+	video_player.setFrame(frame);
 }
 
 // Updates the size of the video player according to the current dimensions of the app.

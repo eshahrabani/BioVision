@@ -37,6 +37,7 @@ class ofApp : public ofBaseApp{
 		void next_frame();					   // Listens to the next frame button.
 		void previous_frame();				   // Listens to the previous frame button.
 		void play_speed_changed(float &f);	   // Listens to the play speed slider. 
+		void frame_changed(int &frame);
 
 		// Helper methods.
 		void resizeVideoPlayer();
@@ -52,6 +53,9 @@ class ofApp : public ofBaseApp{
 		ofxButton previous_frame_button;		 // Previous frame button.
 		ofxSlider<float> play_speed;			 // Play speed slider.
 		
+		// FIX: doesn't work when clicked on.
+		ofxSlider<int> frame;
+
 		ofVideoPlayer video_player;				 // Video player.
 		Marquee marquee;						 // Marquee for selecting regions of the video player.
 

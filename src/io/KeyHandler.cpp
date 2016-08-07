@@ -86,6 +86,10 @@ void KeyHandler::handlePressed(int key) {
 		if (left_pressed) app->previous_frame();
 		break;
 
+	case OF_KEY_ALT:
+		alt_pressed = true;
+		break;
+
 	// If h is pressed, print handy key commands.
 	case 'H':
 	case 'h':

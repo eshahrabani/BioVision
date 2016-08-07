@@ -3,7 +3,7 @@
 
 Marquee::Marquee() : Marquee(0, 0, 0, 0) {}
 
-Marquee::Marquee(int x, int y, int w, int h) {
+Marquee::Marquee(int x, int y, float w, float h) {
 	rect = new ofRectangle(x, y, w, h);
 }
 
@@ -12,14 +12,14 @@ Marquee::~Marquee() {
 }
 
 // Sets a marquee with (x,y) as the top left corner.
-void Marquee::set(int x, int y, int w, int h) {
+void Marquee::set(int x, int y, float w, float h) {
 
 	// Resize the rectangle's dimensions.
 	rect->set(x, y, w, h);
 }
 
 // Sets a marquee with (x,y) as the center.
-void Marquee::setFromCenter(int x, int y, int w, int h) {
+void Marquee::setFromCenter(int x, int y, float w, float h) {
 	rect->setFromCenter(x, y, w, h);
 }
 
@@ -31,6 +31,22 @@ void Marquee::setFromDrag(int x_i, int y_i, int x_f, int y_f) {
 	w = h = (d / 2)*sqrt(2);
 
 	this->set(x_i, y_i, w, h);
+}
+
+int Marquee::getX() {
+	return rect->getX();
+}
+
+int Marquee::getY() {
+	return rect->getY();
+}
+
+float Marquee::width() {
+	return rect->getWidth();
+}
+
+float Marquee::height() {
+	return rect->getHeight();
 }
 
 // Returns true/false if (x,y) is inside/outside the marquee.

@@ -24,6 +24,7 @@ public:
 	bool right_pressed;
 	bool left_pressed;
 	bool ctrl_pressed;
+	bool alt_pressed;
 
 	// Pointer to ofApp. 
 	ofApp* app;

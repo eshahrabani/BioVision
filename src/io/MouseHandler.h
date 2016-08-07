@@ -33,14 +33,6 @@ public:
 	int pos_x;
 	int pos_y;
 
-	// Last clicked position.
-	int last_clicked_x;
-	int last_clicked_y;
-	int last_clicked_button; 
-
-	// Bools.
-	bool pressed_inside_player = false;
-
 	// Pointer to ofApp.
 	ofApp* app;
 };

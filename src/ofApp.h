@@ -3,7 +3,6 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "Marquee.h"
-#include "MouseHandler.h"
 #include "KeyHandler.h"
 
 
@@ -53,6 +52,7 @@ class ofApp : public ofBaseApp{
 		ofxSlider<float> play_speed;			 // Play speed slider.
 		
 		ofVideoPlayer video_player;				 // Video player.
+
 		Marquee marquee;						 // Marquee for selecting regions of the video player.
 
 		// Globals.
@@ -64,7 +64,14 @@ class ofApp : public ofBaseApp{
 		int vid_x = app_width / 2 - vid_width / 2;	      // Calculate the left-corner x position of the video.
 		int vid_y = app_height / 2 - vid_height / 2;      // Calculate the left-corner y position of the video.
 
-		// Handlers. 
-		MouseHandler* mouseHandler;
 		KeyHandler* keyHandler;
+
+		// Mouse booleans and associated storage.
+		bool pressed_inside_player = false;
+		
+		int last_clicked_x = 0;
+		int last_clicked_y = 0;
+		
+		int mouse_pos_x = 0;
+		int mouse_pos_y = 0;
 };

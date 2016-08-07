@@ -125,6 +125,10 @@ void KeyHandler::handleReleased(int key) {
 	case OF_KEY_LEFT:
 		left_pressed = false;
 		break;
+
+	case OF_KEY_ALT:
+		alt_pressed = false;
+		break;
 	}
 }
 

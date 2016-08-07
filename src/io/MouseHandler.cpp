@@ -16,15 +16,8 @@ void MouseHandler::handleDragged(int x, int y, int button) {
 
 	// If control is pressed, draw a marquee.
 	if (button == OF_MOUSE_BUTTON_LEFT && app->keyHandler->ctrl_pressed && pressed_inside_player) {
-
-		// Assuming 45 degree angles (square marquee): w = h = (d/2)*sqrt(2)
-		float d = sqrt(pow(x - last_clicked_x, 2) + pow(y - last_clicked_y, 2));	// Apply distance formula.
-		int w, h;
-		w = h = (d / 2)*sqrt(2);
-
-		// Set new marquee.
 		if (app->video_player.isLoaded()) {
-			app->marquee.set(last_clicked_x, last_clicked_y, w, h);
+			app->marquee.setFromDrag(last_clicked_x, last_clicked_y, x, y);
 		}
 	}
 }

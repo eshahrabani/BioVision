@@ -1,11 +1,16 @@
 #include "ofApp.h"
 
+// Constructor.
 ofApp::ofApp() : ofBaseApp() {}
+
+// Destructor.
 ofApp::~ofApp() {
+	delete mouseHandler;
 	delete keyHandler;
 }
 
 //--------------------------------------------------------------
+// Called once on startup. 
 void ofApp::setup(){
 	
 	// Start the gui panel.
@@ -16,7 +21,7 @@ void ofApp::setup(){
 	gui.add(play_toggle.set("Play", false));						  // Add the play/pause toggle and start it at false (paused). 
 	gui.add(next_frame_button.setup("Next frame"));				      // Add the next frame button.
 	gui.add(previous_frame_button.setup("Previous frame"));			  // Add the previous frame button.
-	gui.add(play_speed.setup("Play speed", 1.0, -3.0, 3.0));		  // Add the play speed slider, default speed at 1x, min at -3x, and max at 3
+	gui.add(play_speed.setup("Play speed", 1.0, -3.0, 3.0));		  // Add the play speed slider, default speed at 1x, min at -3x, and max at 3x.
 
 	// Link the buttons to their respective methods.
 	load_button.addListener(this, &ofApp::load);					  // Link the Load button to the load method.
@@ -25,7 +30,8 @@ void ofApp::setup(){
 	previous_frame_button.addListener(this, &ofApp::previous_frame);  // Link the previous frame button to the previous_frame method. 
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      // Link the play speed slider to the play_speed_changed method.
 
-	// Handlers. 
+	// Start handlers. 
+	mouseHandler = new MouseHandler(this);
 	keyHandler = new KeyHandler(this);
 }
 
@@ -61,51 +67,22 @@ void ofApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-	mouse_pos_x = x;
-	mouse_pos_y = y;
+	mouseHandler->handleMoved(x, y);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-
-	// Trigger the mouseMoved(int,int) method first since it doesn't normally call if dragged.
-	mouseMoved(x, y);
-
-	// If control is pressed, draw a marquee.
-	if (button == OF_MOUSE_BUTTON_LEFT && keyHandler->ctrl_pressed && pressed_inside_player) {
-		
-		// Assuming 45 degree angles (square marquee): w = h = (d/2)*sqrt(2)
-		float d = sqrt(pow(x - last_clicked_x, 2) + pow(y - last_clicked_y, 2));	// Apply distance formula.
-		int w, h;
-		w = h = (d/2)*sqrt(2);
-
-		// Set new marquee.
-		if (video_player.isLoaded()) {
-			marquee.set(last_clicked_x, last_clicked_y, w, h);
-		}
-	}
+	mouseHandler->handleDragged(x, y, button);
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-	if (button == OF_MOUSE_BUTTON_LEFT) {
-		ofRectangle area;
-		area.set(vid_x, vid_y, vid_width, vid_height);
-		
-		if (area.inside(x, y)) {
-			pressed_inside_player = true;
-			last_clicked_x = x;
-			last_clicked_y = y;
-		}
-	}
+	mouseHandler->handlePressed(x, y, button);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-	if (button == OF_MOUSE_BUTTON_LEFT && pressed_inside_player) {
-		// Must now be false.
-		pressed_inside_player = false;
-	}
+	mouseHandler->handleReleased(x, y, button);
 }
 
 //--------------------------------------------------------------
@@ -137,25 +114,25 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 void ofApp::load() {
 
 	// Open load dialog.
-	ofFileDialogResult result = ofSystemLoadDialog();							// Store the user's selection.
+	ofFileDialogResult result = ofSystemLoadDialog();							
 	cout << "Attempting to load file: " << result.filePath << endl << endl;;	
 
 	// Attempt to load the file. 
 	// Will refuse to load if the file extension is invalid, and notifies the user.
-	video_player.loadMovie(result.filePath);											// TODO: no error printing if no file is selected.
+	video_player.loadMovie(result.filePath);											
 	
 	// Check successful load.
 	if (video_player.isLoaded()) {
 		cout << "File loaded successfully.\n\n";
 	}
+	else return;
 
-	// Displays the first frame for user feedback.
+	// Displays the first frame.
 	video_player.setPaused(true);
 }
 
 
 // This method is triggered when the state of the play toggle is changed, either graphically or via code. 
-// NOTE: currently being called many times per second in update().
 void ofApp::play_toggled(bool &play) {
 
 	// If the file has been loaded...
@@ -165,7 +142,7 @@ void ofApp::play_toggled(bool &play) {
 		if (play) {
 			video_player.setPaused(false);
 			play_toggle.setName("Playing");
-			cout << "Playing video.\n\n";   // Prints hundreds of times per second since this method is called in update().
+			cout << "Playing video.\n\n";  
 		}
 
 		// If the play toggle is currently disabled, pause the video and change the toggle name to "Play".
@@ -188,7 +165,7 @@ void ofApp::play_toggled(bool &play) {
 }
 
 // This method is used to either play or pause the video by inverting the state of the play toggle, which is being listened to by play_toggled().
-// This is useful because it also updates the GUI.
+// This also updates the GUI.
 void ofApp::play_or_pause() {
 	play_toggle = !play_toggle;
 }

@@ -8,6 +8,7 @@ KeyHandler::KeyHandler(ofApp* app) {
 }
 
 void KeyHandler::handlePressed(int key) {
+	cout << "Key is " << key << endl;
 	switch (key) {
 
 	// If p is pressed, play or pause the video.
@@ -76,14 +77,16 @@ void KeyHandler::handlePressed(int key) {
 		app->marquee.clear();
 		break;
 
-	// If RIGHT+CTRL or LEFT+CTRL is pressed, move forward/backward one frame. 
-	case OF_KEY_CONTROL:
+	// If RIGHT+CTRL or LEFT+CTRL is pressed, move forward/backward one frame. 0
+	case OF_KEY_LEFT_CONTROL:
+	case OF_KEY_RIGHT_CONTROL:
 		ctrl_pressed = true;
 
 		// These are not executed if CTRL is pressed first.
 		// SEE: case OF_RIGHT_PRESSED and case OF_LEFT_PRESSED for opposite condition. 
 		if (right_pressed) app->next_frame();
 		if (left_pressed) app->previous_frame();
+		cout << "CTRL pressed.\n\n";
 		break;
 
 	case OF_KEY_ALT:
@@ -105,6 +108,9 @@ void KeyHandler::handlePressed(int key) {
 		break;
 
 	// TODO: Implement default case. 
+	default: 
+		cout << "Default.\n\n";
+		break;
 	}
 }
 

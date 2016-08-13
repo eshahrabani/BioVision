@@ -77,6 +77,8 @@ void KeyHandler::handlePressed(int key) {
 		break;
 
 	// If RIGHT+CTRL or LEFT+CTRL is pressed, move forward/backward one frame. 
+	case OF_KEY_LEFT_CONTROL:
+	case OF_KEY_RIGHT_CONTROL:
 	case OF_KEY_CONTROL:
 		ctrl_pressed = true;
 
@@ -86,6 +88,8 @@ void KeyHandler::handlePressed(int key) {
 		if (left_pressed) app->previous_frame();
 		break;
 
+	case OF_KEY_LEFT_ALT:
+	case OF_KEY_RIGHT_ALT:
 	case OF_KEY_ALT:
 		alt_pressed = true;
 		break;

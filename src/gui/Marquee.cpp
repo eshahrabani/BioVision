@@ -26,7 +26,7 @@ void Marquee::setFromCenter(int x, int y, float w, float h) {
 void Marquee::setFromDrag(int x_i, int y_i, int x_f, int y_f) {
 
 	// Assuming 45 degree angles (square marquee): w = h = (d/2)*sqrt(2)
-	float d = sqrt(pow(x_f - x_i, 2) + pow(y_f - y_i, 2));	// Apply distance formula.
+	float d = sqrt(pow(x_f - x_i, 2) + pow(y_f - y_i, 2));	
 	int w, h;
 	w = h = (d / 2)*sqrt(2);
 

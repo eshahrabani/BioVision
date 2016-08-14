@@ -22,7 +22,7 @@ void ofApp::setup(){
 	gui.add(next_frame_button.setup("Next frame"));				      // Add the next frame button.
 	gui.add(previous_frame_button.setup("Previous frame"));			  // Add the previous frame button.
 	gui.add(play_speed.setup("Play speed", 1.0, -3.0, 3.0));		  // Add the play speed slider, default speed at 1x, min at -3x, and max at 3x.
-	gui.add(frame.setup("Frame", 1, 1, video_player.getTotalNumFrames()));
+	gui.add(frame.setup("Frame", 1, 1, video_player.getTotalNumFrames())); // Add the frame slider, default frame is at 1, min at 1, and max at total frame number.
 
 	// Link the buttons to their respective methods.
 	load_button.addListener(this, &ofApp::load);					  // Link the Load button to the load method.

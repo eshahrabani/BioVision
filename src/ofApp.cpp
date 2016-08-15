@@ -1,7 +1,12 @@
 #include "ofApp.h"
 
 // Constructor.
-ofApp::ofApp() : ofBaseApp() {}
+ofApp::ofApp() : ofBaseApp() {
+
+	// Start handlers. 
+	mouseHandler = new MouseHandler(this);
+	keyHandler = new KeyHandler(this);
+}
 
 // Destructor.
 ofApp::~ofApp() {
@@ -31,10 +36,6 @@ void ofApp::setup(){
 	previous_frame_button.addListener(this, &ofApp::previous_frame);  // Link the previous frame button to the previous_frame method. 
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      // Link the play speed slider to the play_speed_changed method.
 	frame.addListener(this, &ofApp::frame_changed);
-
-	// Start handlers. 
-	mouseHandler = new MouseHandler(this);
-	keyHandler = new KeyHandler(this);
 }
 
 //--------------------------------------------------------------

@@ -38,6 +38,7 @@ class ofApp : public ofBaseApp{
 		void previous_frame();				   // Listens to the previous frame button.
 		void play_speed_changed(float &f);	   // Listens to the play speed slider. 
 		void frame_changed(int &frame);
+		void analyze_toggled(bool &b);
 
 		// Helper methods.
 		void resizeVideoPlayer();
@@ -55,6 +56,8 @@ class ofApp : public ofBaseApp{
 		
 		// FIX: doesn't work when clicked on.
 		ofxSlider<int> frame;
+		
+		ofParameter<bool> analyze_toggle;		 // Analyze toggle. 
 
 		ofVideoPlayer video_player;				 // Video player.
 		Marquee marquee;						 // Marquee for selecting regions of the video player.

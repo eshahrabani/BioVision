@@ -28,6 +28,7 @@ void ofApp::setup(){
 	gui.add(previous_frame_button.setup("Previous frame"));			  // Add the previous frame button.
 	gui.add(play_speed.setup("Play speed", 1.0, -3.0, 3.0));		  // Add the play speed slider, default speed at 1x, min at -3x, and max at 3x.
 	gui.add(frame.setup("Frame", 1, 1, video_player.getTotalNumFrames())); // Add the frame slider, default frame is at 1, min at 1, and max at total frame number.
+	gui.add(analyze_toggle.set("Analyze", false));
 
 	// Link the buttons to their respective methods.
 	load_button.addListener(this, &ofApp::load);					  // Link the Load button to the load method.
@@ -36,6 +37,7 @@ void ofApp::setup(){
 	previous_frame_button.addListener(this, &ofApp::previous_frame);  // Link the previous frame button to the previous_frame method. 
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      // Link the play speed slider to the play_speed_changed method.
 	frame.addListener(this, &ofApp::frame_changed);
+	analyze_toggle.addListener(this, &ofApp::analyze_toggled);
 }
 
 //--------------------------------------------------------------
@@ -221,6 +223,20 @@ void ofApp::play_speed_changed(float &f) {
 void ofApp::frame_changed(int &frame) {
 	if (!video_player.isLoaded()) return;
 	video_player.setFrame(frame);
+}
+
+void ofApp::analyze_toggled(bool &b) {
+	if (!video_player.isLoaded()) {
+		if (b) {
+			analyze_toggle = !analyze_toggle;
+		}
+		return;
+	}
+
+	if(b) analyze_toggle.setName("Analyzing");
+	else analyze_toggle.setName("Analyze");
+
+	// Computer vision analysis here. 
 }
 
 // Updates the size of the video player according to the current dimensions of the app.

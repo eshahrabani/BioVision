@@ -45,6 +45,19 @@ void ofApp::setup(){
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      
 	frame.addListener(this, &ofApp::frame_changed);
 	analyze_toggle.addListener(this, &ofApp::analyze_toggled);
+
+	// Setup computer vision.
+	bLearnBackground = true;
+	ofRectangle ROI(0, 0, 320, 240);
+	colorImg.allocate(320, 240);
+	grayImage.allocate(320, 240);
+	grayBg.allocate(320, 240);
+	grayDiff.allocate(320, 240);
+
+	colorImg.setROI(ROI);
+	grayImage.setROI(ROI);
+	grayBg.setROI(ROI);
+	grayDiff.setROI(ROI);
 }
 
 //--------------------------------------------------------------
@@ -244,7 +257,28 @@ void ofApp::analyze_toggled(bool &b) {
 		analyze_toggle.setName("Analyze");
 
 	// Computer vision analysis.
-
+	colorImg.setFromPixels(video_player.getPixelsRef());
+	grayImage = colorImg;
+	if (bLearnBackground) {
+		grayBg = grayImage;
+		bLearnBackground = false;
+	}
+	grayDiff.absDiff(grayBg, grayImage);
+	grayDiff.threshold(30);
+	contourFinder.findContours(grayDiff, 5, (340 * 240) / 4, 4, false, true);
+	ofSetHexColor(0xffffff);
+	colorImg.draw(0, 0, 320, 240);
+	grayDiff.draw(0, 240, 320, 240);
+	ofDrawRectangle(320, 0, 320, 240);
+	contourFinder.draw(320, 0, 320, 240);
+	ofColor c(255, 255, 255);
+	for (int i = 0; i < contourFinder.nBlobs; i++) {
+		ofRectangle r = contourFinder.blobs.at(i).boundingRect;
+		r.x += 320; r.y += 240;
+		c.setHsb(i * 64, 255, 255);
+		ofSetColor(c);
+		ofDrawRectangle(r);
+	}
 }
 
 // Updates the size of the video player according to the current dimensions of the app.

@@ -2,10 +2,10 @@
 
 #include "ofMain.h"
 #include "ofxGui.h"
+#include "ofxOpenCv.h"
 #include "Marquee.h"
 #include "MouseHandler.h"
 #include "KeyHandler.h"
-
 
 class ofApp : public ofBaseApp{
 
@@ -74,4 +74,10 @@ class ofApp : public ofBaseApp{
 		// Handlers. 
 		MouseHandler* mouseHandler;
 		KeyHandler* keyHandler;
+
+		// Vision analysis.
+		bool bLearnBackground;
+		ofxCvContourFinder contourFinder;
+		ofxCvColorImage colorImg;
+		ofxCvGrayscaleImage grayImage, grayBg, grayDiff;
 };

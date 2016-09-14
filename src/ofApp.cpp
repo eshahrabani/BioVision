@@ -55,6 +55,7 @@ void ofApp::setup(){
 	grayImage.allocate(w, h);
 	grayBg.allocate(w, h);
 	grayDiff.allocate(w, h);
+	threshold.allocate(w, h);
 }
 
 //--------------------------------------------------------------
@@ -73,6 +74,18 @@ void ofApp::draw(){
 
 	// Draw the marquee.
 	marquee.draw();
+
+	if (contourFinder.blobs.size() > 0) {
+		contourFinder.draw(vid_width, 0, vid_width, vid_height);
+		/*ofColor c(255, 255, 255);
+		for (int i = 0; i < contourFinder.nBlobs; i++) {
+			ofRectangle r = contourFinder.blobs.at(i).boundingRect;
+			r.x += vid_width; r.y += vid_height;
+			c.setHsb(i * 64, 255, 255);
+			ofSetColor(c);
+			ofDrawRectangle(r);
+		}*/
+	}
 }
 
 //--------------------------------------------------------------
@@ -253,31 +266,20 @@ void ofApp::analyze_toggled(bool &b) {
 	} else
 		analyze_toggle.setName("Analyze");
 
+	// Don't perform analysis if toggled off. 
+	if (!b) return;
+
 	// Computer vision analysis.
 	colorImg.setFromPixels(video_player.getPixels());
 	colorImg.setROI(0, 0, vid_width, vid_height);
 	grayImage.setROI(0, 0, vid_width, vid_height);
+	threshold.setROI(0, 0, vid_width, vid_height);
 	grayImage = colorImg;
-	if (bLearnBackground) {
-		grayBg = grayImage;
-		bLearnBackground = false;
-	}
-	grayDiff.absDiff(grayBg, grayImage);
-	grayDiff.threshold(30);
-	contourFinder.findContours(grayDiff, 5, (340 * 240) / 4, 4, false, true);
-	ofSetHexColor(0xffffff);
-	colorImg.draw(0, 0, 320, 240);
-	grayDiff.draw(0, 240, 320, 240);
-	ofDrawRectangle(320, 0, 320, 240);
-	contourFinder.draw(320, 0, 320, 240);
-	ofColor c(255, 255, 255);
-	for (int i = 0; i < contourFinder.nBlobs; i++) {
-		ofRectangle r = contourFinder.blobs.at(i).boundingRect;
-		r.x += 320; r.y += 240;
-		c.setHsb(i * 64, 255, 255);
-		ofSetColor(c);
-		ofDrawRectangle(r);
-	}
+	threshold = grayImage;
+	threshold.threshold(100);
+	contourFinder.findContours(threshold, 5, vid_width * vid_height, 100, 
+		false, true);
+
 	cout << "Finished analysis.\n\n";
 }
 

@@ -79,5 +79,5 @@ class ofApp : public ofBaseApp{
 		bool bLearnBackground;
 		ofxCvContourFinder contourFinder;
 		ofxCvColorImage colorImg;
-		ofxCvGrayscaleImage grayImage, grayBg, grayDiff;
+		ofxCvGrayscaleImage grayImage, threshold, grayBg, grayDiff;
 };

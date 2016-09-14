@@ -47,17 +47,14 @@ void ofApp::setup(){
 	analyze_toggle.addListener(this, &ofApp::analyze_toggled);
 
 	// Setup computer vision.
-	bLearnBackground = true;
-	ofRectangle ROI(0, 0, 320, 240);
-	colorImg.allocate(320, 240);
-	grayImage.allocate(320, 240);
-	grayBg.allocate(320, 240);
-	grayDiff.allocate(320, 240);
+	float w = vid_width;
+	float h = vid_height;
 
-	colorImg.setROI(ROI);
-	grayImage.setROI(ROI);
-	grayBg.setROI(ROI);
-	grayDiff.setROI(ROI);
+	bLearnBackground = true;
+	colorImg.allocate(w, h);
+	grayImage.allocate(w, h);
+	grayBg.allocate(w, h);
+	grayDiff.allocate(w, h);
 }
 
 //--------------------------------------------------------------
@@ -257,7 +254,9 @@ void ofApp::analyze_toggled(bool &b) {
 		analyze_toggle.setName("Analyze");
 
 	// Computer vision analysis.
-	colorImg.setFromPixels(video_player.getPixelsRef());
+	colorImg.setFromPixels(video_player.getPixels());
+	colorImg.setROI(0, 0, vid_width, vid_height);
+	grayImage.setROI(0, 0, vid_width, vid_height);
 	grayImage = colorImg;
 	if (bLearnBackground) {
 		grayBg = grayImage;
@@ -279,6 +278,7 @@ void ofApp::analyze_toggled(bool &b) {
 		ofSetColor(c);
 		ofDrawRectangle(r);
 	}
+	cout << "Finished analysis.\n\n";
 }
 
 // Updates the size of the video player according to the current dimensions of the app.

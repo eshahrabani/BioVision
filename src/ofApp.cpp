@@ -20,16 +20,11 @@ void ofApp::setup(){
 	// Start the main gui panel.
 	gui.setup("BioVision");
 
-	// Add the video buttons. 
-	gui.add(load_button.setup("Load"));		
-	
-	// Add the play toggle, start it at paused (false). 
+	// Add video buttons. 
+	gui.add(load_button.setup("Load"));	
 	gui.add(play_toggle.set("Play", false));						  
 	gui.add(next_frame_button.setup("Next frame"));				      
 	gui.add(previous_frame_button.setup("Previous frame"));		
-	
-	// Add the play speed slider, default speed at 1x, min at -3x, 
-	// and max at 3x.
 	gui.add(play_speed.setup("Play speed", 1.0, -3.0, 3.0));		  
 	
 	// Add the analyze toggle.

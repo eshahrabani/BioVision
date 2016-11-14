@@ -29,19 +29,6 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo); 
 		void gotMessage(ofMessage msg);
-		
-		// GUI listener methods.
-		void load();                           	
-		void play_toggled(bool &b);            
-		void play_or_pause();		           
-		void next_frame();					   
-		void previous_frame();				  
-		void play_speed_changed(float &f);	  
-		void analyze_toggled(bool &b);
-
-		// Helper methods.
-		void resizeVideoPlayer();
-		void updateDimensions(int w, int h);
 
 		// GUI components.
 		ofxPanel gui;							 
@@ -56,7 +43,31 @@ class ofApp : public ofBaseApp{
 		ofParameter<bool> analyze_toggle;		  
 
 		ofVideoPlayer video_player;				 
-		Marquee marquee;						 
+		Marquee marquee;		
+
+		// GUI listener methods.
+		void load();
+		void play_toggled(bool &b);
+		void play_or_pause();
+		void next_frame();
+		void previous_frame();
+		void play_speed_changed(float &f);
+		void analyze_toggled(bool &b);
+
+		// Handlers. 
+		MouseHandler* mouseHandler;
+		KeyHandler* keyHandler;
+
+		// Vision analysis.
+		// TODO: restructure. 
+		bool bLearnBackground;
+		ofxCvContourFinder contourFinder;
+		ofxCvColorImage colorImg;
+		ofxCvGrayscaleImage grayImage, threshold, grayBg, grayDiff;
+
+		// Helper methods.
+		void resizeVideoPlayer();
+		void updateDimensions(int w, int h);
 
 		// Globals.
 		int app_width = ofGetWidth();					  
@@ -66,14 +77,4 @@ class ofApp : public ofBaseApp{
 		int vid_height = app_height / 2;				  
 		int vid_x = app_width / 2 - vid_width / 2;	   
 		int vid_y = app_height / 2 - vid_height / 2;      
-
-		// Handlers. 
-		MouseHandler* mouseHandler;
-		KeyHandler* keyHandler;
-
-		// Vision analysis.
-		bool bLearnBackground;
-		ofxCvContourFinder contourFinder;
-		ofxCvColorImage colorImg;
-		ofxCvGrayscaleImage grayImage, threshold, grayBg, grayDiff;
 };

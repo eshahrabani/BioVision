@@ -2,10 +2,10 @@
 
 #include "ofMain.h"
 #include "ofxGui.h"
+#include "ofxOpenCv.h"
 #include "Marquee.h"
 #include "MouseHandler.h"
 #include "KeyHandler.h"
-
 
 class ofApp : public ofBaseApp{
 
@@ -29,46 +29,52 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo); 
 		void gotMessage(ofMessage msg);
+
+		// GUI components.
+		ofxPanel gui;							 
 		
+		ofxButton load_button;					
+		ofParameter<bool> play_toggle;			
+		
+		ofxButton next_frame_button;		     
+		ofxButton previous_frame_button;		 
+		ofxSlider<float> play_speed;			 
+		
+		ofParameter<bool> analyze_toggle;		  
+
+		ofVideoPlayer video_player;				 
+		Marquee marquee;		
+
 		// GUI listener methods.
-		void load();                           // Listens to the Load button.	
-		void play_toggled(bool &b);            // Listens to the Play toggle button.
-		void play_or_pause();		           // Global app method for playing or pausing the video.
-		void next_frame();					   // Listens to the next frame button.
-		void previous_frame();				   // Listens to the previous frame button.
-		void play_speed_changed(float &f);	   // Listens to the play speed slider. 
-		void frame_changed(int &frame);
+		void load();
+		void play_toggled(bool &b);
+		void play_or_pause();
+		void next_frame();
+		void previous_frame();
+		void play_speed_changed(float &f);
+		void analyze_toggled(bool &b);
+
+		// Handlers. 
+		MouseHandler* mouseHandler;
+		KeyHandler* keyHandler;
+
+		// Vision analysis.
+		// TODO: restructure. 
+		bool bLearnBackground;
+		ofxCvContourFinder contourFinder;
+		ofxCvColorImage colorImg;
+		ofxCvGrayscaleImage grayImage, threshold, grayBg, grayDiff;
 
 		// Helper methods.
 		void resizeVideoPlayer();
 		void updateDimensions(int w, int h);
 
-		// GUI components.
-		ofxPanel gui;							 // Main interface panel.
-		
-		ofxButton load_button;					 // Load button.
-		ofParameter<bool> play_toggle;			 // Play/Pause toggle.
-		
-		ofxButton next_frame_button;		     // Next frame button.
-		ofxButton previous_frame_button;		 // Previous frame button.
-		ofxSlider<float> play_speed;			 // Play speed slider.
-		
-		// FIX: doesn't work when clicked on.
-		ofxSlider<int> frame;
-
-		ofVideoPlayer video_player;				 // Video player.
-		Marquee marquee;						 // Marquee for selecting regions of the video player.
-
 		// Globals.
-		int app_width = ofGetWidth();					  // Store the width of the app.
-		int app_height = ofGetHeight();				      // Store the height of the app.
+		int app_width = ofGetWidth();					  
+		int app_height = ofGetHeight();				     
 		
-		int vid_width = app_width / 2;					  // Calculate the desired width of the video.
-		int vid_height = app_height / 2;				  // Calculate the desired height of the video.
-		int vid_x = app_width / 2 - vid_width / 2;	      // Calculate the left-corner x position of the video.
-		int vid_y = app_height / 2 - vid_height / 2;      // Calculate the left-corner y position of the video.
-
-		// Handlers. 
-		MouseHandler* mouseHandler;
-		KeyHandler* keyHandler;
+		int vid_width = app_width / 2;					
+		int vid_height = app_height / 2;				  
+		int vid_x = app_width / 2 - vid_width / 2;	   
+		int vid_y = app_height / 2 - vid_height / 2;      
 };

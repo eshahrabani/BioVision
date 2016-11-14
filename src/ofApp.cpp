@@ -31,10 +31,8 @@ void ofApp::setup(){
 	// Add the play speed slider, default speed at 1x, min at -3x, 
 	// and max at 3x.
 	gui.add(play_speed.setup("Play speed", 1.0, -3.0, 3.0));		  
-
-	// Add the frame slider, default frame is at 1, min at 1, 
-	// and max at total frame number.
-	gui.add(frame.setup("Frame", 1, 1, video_player.getTotalNumFrames())); 
+	
+	// Add the analyze toggle.
 	gui.add(analyze_toggle.set("Analyze", false));
 
 	// Link the buttons to their respective methods.
@@ -43,10 +41,10 @@ void ofApp::setup(){
 	next_frame_button.addListener(this, &ofApp::next_frame);		  
 	previous_frame_button.addListener(this, &ofApp::previous_frame);  
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      
-	frame.addListener(this, &ofApp::frame_changed);
 	analyze_toggle.addListener(this, &ofApp::analyze_toggled);
 
 	// Setup computer vision.
+	// TODO: restructure after timeline is implemented. 
 	float w = vid_width;
 	float h = vid_height;
 
@@ -214,8 +212,8 @@ void ofApp::next_frame() {
 
 	// Go one frame forward.
 	cout << "Going forward one frame.\n\n";
-	if (frame < video_player.getTotalNumFrames()) 
-		frame = frame + 1;
+	if (video_player.getCurrentFrame() < video_player.getTotalNumFrames())
+		video_player.nextFrame();
 }
 
 void ofApp::previous_frame() {
@@ -231,20 +229,14 @@ void ofApp::previous_frame() {
 
 	// Go one frame backward.
 	cout << "Going backward one frame.\n\n";
-	if (frame > 1) 
-		frame = frame - 1;
+	if (video_player.getCurrentFrame() > 1)
+		video_player.previousFrame();
 }
 
 void ofApp::play_speed_changed(float &f) {
 	if (!video_player.isLoaded()) 
 		return;
 	video_player.setSpeed(f);
-}
-
-void ofApp::frame_changed(int &frame) {
-	if (!video_player.isLoaded()) 
-		return;
-	video_player.setFrame(frame);
 }
 
 void ofApp::analyze_toggled(bool &b) {

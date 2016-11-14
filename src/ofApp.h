@@ -37,7 +37,6 @@ class ofApp : public ofBaseApp{
 		void next_frame();					   
 		void previous_frame();				  
 		void play_speed_changed(float &f);	  
-		void frame_changed(int &frame);
 		void analyze_toggled(bool &b);
 
 		// Helper methods.
@@ -53,9 +52,6 @@ class ofApp : public ofBaseApp{
 		ofxButton next_frame_button;		     
 		ofxButton previous_frame_button;		 
 		ofxSlider<float> play_speed;			 
-		
-		// FIX: doesn't work when clicked on.
-		ofxSlider<int> frame;
 		
 		ofParameter<bool> analyze_toggle;		  
 

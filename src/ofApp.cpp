@@ -38,6 +38,11 @@ void ofApp::setup(){
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      
 	analyze_toggle.addListener(this, &ofApp::analyze_toggled);
 
+	// Load gui images.
+	playButtonImg.load(playButtonPath);
+	pauseButtonImg.load(pauseButtonPath);
+	stopButtonImg.load(stopButtonPath);
+
 	// Setup computer vision.
 	// TODO: restructure after timeline is implemented. 
 	float w = vid_width;
@@ -64,6 +69,10 @@ void ofApp::draw(){
 
 	// Draw the video player according to current dimensions.
 	video_player.draw(vid_x, vid_y, vid_width, vid_height);
+
+	// Draw gui images.
+	playButtonImg.draw(playButtonImgX, playButtonImgY, playButtonImgWidth, 
+		playButtonImgHeight);
 
 	// Draw the marquee.
 	marquee.draw();

@@ -45,6 +45,10 @@ class ofApp : public ofBaseApp{
 		ofVideoPlayer video_player;				 
 		Marquee marquee;		
 
+		ofImage playButtonImg;
+		ofImage pauseButtonImg;
+		ofImage stopButtonImg;
+
 		// GUI listener methods.
 		void load();
 		void play_toggled(bool &b);
@@ -76,5 +80,17 @@ class ofApp : public ofBaseApp{
 		int vid_width = app_width / 2;					
 		int vid_height = app_height / 2;				  
 		int vid_x = app_width / 2 - vid_width / 2;	   
-		int vid_y = app_height / 2 - vid_height / 2;      
+		int vid_y = app_height / 2 - vid_height / 2;
+
+		int playButtonImgWidth = vid_width / 4;
+		int playButtonImgHeight = app_height / 12;
+		int playButtonImgX = app_width / 2;
+		int playButtonImgY = (3 * app_height) / 4;
+
+
+		// Constants.
+		// Note: filenames are relative to the bin/data/ directory. 
+		const string playButtonPath = "gui/PlayButton.jpg";
+		const string pauseButtonPath = "gui/PauseButton.jpg";
+		const string stopButtonPath = "gui/PauseButton.jpg";
 };

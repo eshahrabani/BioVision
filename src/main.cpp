@@ -2,6 +2,7 @@
 #include "ofApp.h"
 
 //========================================================================
+// COMPATIBILITY: BioVision uses OpenFrameworks v0.9.7.
 int main( ){
 	ofSetupOpenGL(1024,768,OF_WINDOW);			// <-------- setup the GL context
 

@@ -71,11 +71,11 @@ void ofApp::draw(){
 	video_player.draw(vid_x, vid_y, vid_width, vid_height);
 
 	// Draw gui images.
-	playButtonImg.draw(playButtonImgX, playButtonImgY, playButtonImgWidth, 
-		playButtonImgHeight);
+	//playButtonImg.draw(playButtonImgX, playButtonImgY, playButtonImgWidth, 
+		//playButtonImgHeight);
 
 	// Draw the marquee.
-	marquee.draw();
+	//marquee.draw();
 
 	if (contourFinder.blobs.size() > 0) {
 		contourFinder.draw(vid_width, 0, vid_width, vid_height);

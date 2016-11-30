@@ -12,6 +12,9 @@ ofApp::~ofApp() {
 	// Delete the handlers.
 	delete mouseHandler;
 	delete keyHandler;
+
+	// Delete the timeline.
+	delete timeline;
 }
 
 //--------------------------------------------------------------
@@ -37,6 +40,10 @@ void ofApp::setup(){
 	previous_frame_button.addListener(this, &ofApp::previous_frame);  
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      
 	analyze_toggle.addListener(this, &ofApp::analyze_toggled);
+
+	// Setup timeline.
+	timeline = new Timeline(vid_x + vid_height, vid_y + vid_height, 
+		vid_width, vid_height/4, ofColor(67, 80, 102));
 
 	// Load gui images.
 	playButtonImg.load(playButtonPath);
@@ -76,6 +83,9 @@ void ofApp::draw(){
 
 	// Draw the marquee.
 	//marquee.draw();
+
+	// Draw the timeline.
+	timeline->draw();
 
 	if (contourFinder.blobs.size() > 0) {
 		contourFinder.draw(vid_width, 0, vid_width, vid_height);

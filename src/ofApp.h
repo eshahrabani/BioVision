@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxOpenCv.h"
+#include "Timeline.h"
 #include "Marquee.h"
 #include "MouseHandler.h"
 #include "KeyHandler.h"
@@ -42,7 +43,8 @@ class ofApp : public ofBaseApp{
 		
 		ofParameter<bool> analyze_toggle;		  
 
-		ofVideoPlayer video_player;				 
+		ofVideoPlayer video_player;		
+		Timeline* timeline;
 		Marquee marquee;		
 
 		ofImage playButtonImg;

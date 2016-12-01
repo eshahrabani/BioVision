@@ -5,6 +5,16 @@ Timeline::Timeline(int x, int y, float w, float h, ofColor color) {
 	this->w = w;
 	this->h = h;
 	this->color = color;
+	
+	int n = numNotches();
+	for (int i = 0; i < n; i++) {
+		int x_pos = x + i*(w / n);
+		int y_pos = (i % 5 == 0) ? y : y + h/2;
+		int width = 1;
+		int height = (i % 5 == 0) ? h : h / 2;
+		ofRectangle rect = ofRectangle(x_pos, y_pos, width, height);
+		notches.push_back(rect);
+	}
 }
 
 int Timeline::getX() {
@@ -28,6 +38,19 @@ ofColor Timeline::getColor() {
 }
 
 void Timeline::draw() {
+	// Draw the outer box.
 	ofSetColor(color);
+	ofFill();
 	ofDrawRectangle(x, y, w, h);
+
+	// Draw the notches.
+	ofSetColor(255, 255, 255);
+	ofNoFill();
+	for (ofRectangle notch : notches) {
+		ofDrawRectangle(notch);
+	}
+}
+
+int Timeline::numNotches() {
+	return 60;
 }

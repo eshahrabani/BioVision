@@ -19,4 +19,10 @@ private:
 	int x, y;
 	float w, h;
 	ofColor color;
+
+	// Vector of the timeline notches.
+	std::vector<ofRectangle> notches;
+
+	// Methods.
+	int numNotches();
 };

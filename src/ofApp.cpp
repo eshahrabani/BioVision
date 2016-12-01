@@ -42,7 +42,7 @@ void ofApp::setup(){
 	analyze_toggle.addListener(this, &ofApp::analyze_toggled);
 
 	// Setup timeline.
-	timeline = new Timeline(vid_x + vid_height, vid_y + vid_height, 
+	timeline = new Timeline(vid_x, vid_y + vid_height, 
 		vid_width, vid_height/4, ofColor(67, 80, 102));
 
 	// Load gui images.

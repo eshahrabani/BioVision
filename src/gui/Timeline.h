@@ -4,25 +4,35 @@
 class Timeline {
 public:
 	// Constructor.
-	Timeline(int x, int y, float w, float h, ofColor color);
+	Timeline(int x, int y, float w, float h, const ofColor& color, int numNotches);
 
-	// Read-only methods.
+	// Getter methods. 
 	int getX();
 	int getY();
 	float width();
 	float height();
-	ofColor getColor();
+	const ofColor& getColor();
+	int getNumNotches();
+	const std::vector<ofRectangle>& getNotches();
 
-	// Void methods.
+	// Setter methods.
+	void setX(int);
+	void setY(int);
+	void width(float);
+	void height(float);
+	void setColor(const ofColor&);
+	void setNumNotches(int);
+
 	void draw();
 private:
 	int x, y;
 	float w, h;
 	ofColor color;
+	int numNotches;
 
 	// Vector of the timeline notches.
 	std::vector<ofRectangle> notches;
 
 	// Methods.
-	int numNotches();
+	void populateNotchesVector();
 };

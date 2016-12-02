@@ -43,7 +43,7 @@ void ofApp::setup(){
 
 	// Setup timeline.
 	timeline = new Timeline(vid_x, vid_y + vid_height, 
-		vid_width, vid_height/4, ofColor(67, 80, 102));
+		vid_width, vid_height/4, ofColor(67, 80, 102), 100);
 
 	// Load gui images.
 	playButtonImg.load(playButtonPath);

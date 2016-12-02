@@ -5,6 +5,11 @@ ofApp::ofApp() : ofBaseApp() {
 	// Start handlers. 
 	mouseHandler = new MouseHandler(this);
 	keyHandler = new KeyHandler(this);
+
+	// Setup timeline.
+	timeline = new Timeline(vid_x, vid_y + vid_height,
+		vid_width, vid_height / 4, ofColor(67, 80, 102), 100);
+
 }
 
 // Destructor.
@@ -41,10 +46,6 @@ void ofApp::setup(){
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      
 	analyze_toggle.addListener(this, &ofApp::analyze_toggled);
 
-	// Setup timeline.
-	timeline = new Timeline(vid_x, vid_y + vid_height, 
-		vid_width, vid_height/4, ofColor(67, 80, 102), 100);
-
 	// Load gui images.
 	playButtonImg.load(playButtonPath);
 	pauseButtonImg.load(pauseButtonPath);
@@ -65,8 +66,30 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	// Update the frames of the video player.
+	if (!video_player.isLoaded()) {
+		return;
+	}
+	// Update the frames of the video playe.rc
 	video_player.update();
+
+	// Update the position of the timeline's play slider.
+	float duration = video_player.getDuration();
+	int currentFrame = video_player.getCurrentFrame();
+
+	int nFrames = video_player.getTotalNumFrames();
+	float currentTime = duration * ((float)currentFrame / (float)nFrames);
+	currentTime = fmod(currentTime, timeline->getNumNotches()); 
+	float pixelsPerSecond = timeline->width() / timeline->getNumNotches(); // Each notch is 1 second. 
+	float currentX = timeline->getX() + (currentTime * pixelsPerSecond);
+	float currentY = timeline->getY();
+	timeline->setPlaySliderPosition(currentX, currentY);
+	cout << "Slider pos: " << timeline->getPlaySliderPosition() << endl;
+	cout << "CurrentX: " << currentX << endl;
+	cout << "Duration: " << duration << endl;
+	cout << "Current frame: " << currentFrame << endl;
+	cout << "currentTime: " << currentTime << endl;
+	cout << "nFrames: " << nFrames << endl;
+	cout << "Pixels per second: " << pixelsPerSecond << endl;
 }
 
 //--------------------------------------------------------------

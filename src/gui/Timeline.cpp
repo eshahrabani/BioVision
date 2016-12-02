@@ -1,5 +1,5 @@
 #include "Timeline.h"
-Timeline::Timeline(int x, int y, float w, float h, const ofColor& color, int numNotches) {
+Timeline::Timeline(float x, float y, float w, float h, const ofColor& color, int numNotches) {
 	setX(x);
 	setY(y);
 	width(w);
@@ -9,11 +9,11 @@ Timeline::Timeline(int x, int y, float w, float h, const ofColor& color, int num
 	playSlider.set(x, y, 1, h);
 }
 
-int Timeline::getX() {
+float Timeline::getX() {
 	return x;
 }
 
-int Timeline::getY() {
+float Timeline::getY() {
 	return y;
 }
 
@@ -41,11 +41,11 @@ const ofPoint& Timeline::getPlaySliderPosition() {
 	return ofPoint(playSlider.getX(), playSlider.getY());
 }
 
-void Timeline::setX(int x) {
+void Timeline::setX(float x) {
 	this->x = x;
 }
 
-void Timeline::setY(int y) {
+void Timeline::setY(float y) {
 	this->y = y;
 }
 
@@ -65,8 +65,8 @@ void Timeline::setNumNotches(int n) {
 	this->numNotches = n;
 }
 
-void Timeline::setPlaySliderPosition(int x, int y) {
-	playSlider.setPosition(x, y);
+void Timeline::setPlaySliderPosition(float x, float y) {
+	playSlider.set(x, y, 1, h);
 }
 
 

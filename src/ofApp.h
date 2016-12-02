@@ -1,5 +1,6 @@
 #pragma once
 
+#include <math.h>
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxOpenCv.h"

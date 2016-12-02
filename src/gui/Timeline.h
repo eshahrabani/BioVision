@@ -14,6 +14,7 @@ public:
 	const ofColor& getColor();
 	int getNumNotches();
 	const std::vector<ofRectangle>& getNotches();
+	const ofPoint& getPlaySliderPosition();
 
 	// Setter methods.
 	void setX(int);
@@ -22,7 +23,9 @@ public:
 	void height(float);
 	void setColor(const ofColor&);
 	void setNumNotches(int);
+	void setPlaySliderPosition(int, int);
 
+	// Draws the timeline.
 	void draw();
 private:
 	int x, y;
@@ -32,6 +35,9 @@ private:
 
 	// Vector of the timeline notches.
 	std::vector<ofRectangle> notches;
+	
+	// Play slider indicating video location. 
+	ofRectangle playSlider;
 
 	// Methods.
 	void populateNotchesVector();

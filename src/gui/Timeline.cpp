@@ -6,6 +6,7 @@ Timeline::Timeline(int x, int y, float w, float h, const ofColor& color, int num
 	height(h);
 	setColor(color);
 	setNumNotches(numNotches);
+	playSlider.set(x, y, 1, h);
 }
 
 int Timeline::getX() {
@@ -36,6 +37,10 @@ const std::vector<ofRectangle>& Timeline::getNotches() {
 	return notches;
 }
 
+const ofPoint& Timeline::getPlaySliderPosition() {
+	return ofPoint(playSlider.getX(), playSlider.getY());
+}
+
 void Timeline::setX(int x) {
 	this->x = x;
 }
@@ -60,6 +65,11 @@ void Timeline::setNumNotches(int n) {
 	this->numNotches = n;
 }
 
+void Timeline::setPlaySliderPosition(int x, int y) {
+	playSlider.setPosition(x, y);
+}
+
+
 void Timeline::draw() {
 	// Draw the outer box.
 	ofSetColor(color);
@@ -78,6 +88,11 @@ void Timeline::draw() {
 	for (ofRectangle notch : notches) {
 		ofDrawRectangle(notch);
 	}
+
+	// Draw the play slider.
+	ofSetColor(50, 255, 61);
+	ofNoFill();
+	ofDrawRectangle(playSlider);
 }
 
 void Timeline::populateNotchesVector() {

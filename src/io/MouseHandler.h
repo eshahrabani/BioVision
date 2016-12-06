@@ -39,7 +39,8 @@ public:
 	int last_clicked_button; 
 
 	// Bools.
-	bool pressed_inside_player = false;
+	bool pressedInsidePlayer = false;
+	bool pressedInsideTimeline = false;
 
 	// Pointer to ofApp.
 	ofApp* app;

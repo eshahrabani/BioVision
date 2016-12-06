@@ -69,6 +69,15 @@ void Timeline::setPlaySliderPosition(float x, float y) {
 	playSlider.set(x, y, 1, h);
 }
 
+void Timeline::setPlaySliderX(float x) {
+	// Check if x is inside the timeline.
+	if (x < this->x || x > this->x + w) {
+		return;
+	}
+
+	float origY = playSlider.y;
+	playSlider.set(x, origY, 1, h);
+}
 
 void Timeline::draw() {
 	// Draw the outer box.
@@ -93,6 +102,11 @@ void Timeline::draw() {
 	ofSetColor(50, 255, 61);
 	ofNoFill();
 	ofDrawRectangle(playSlider);
+}
+
+bool Timeline::isInside(float x, float y) {
+	ofRectangle rect = ofRectangle(this->x, this->y, w, h);
+	return rect.inside(x, y);
 }
 
 void Timeline::populateNotchesVector() {

@@ -24,9 +24,13 @@ public:
 	void setColor(const ofColor&);
 	void setNumNotches(int);
 	void setPlaySliderPosition(float, float);
+	void setPlaySliderX(float);
 
 	// Draws the timeline.
 	void draw();
+
+	// Test if a point is inside the timeline.
+	bool isInside(float, float);
 private:
 	float x, y;
 	float w, h;

@@ -83,13 +83,6 @@ void ofApp::update(){
 	float currentX = timeline->getX() + (currentTime * pixelsPerSecond);
 	float currentY = timeline->getY();
 	timeline->setPlaySliderPosition(currentX, currentY);
-	cout << "Slider pos: " << timeline->getPlaySliderPosition() << endl;
-	cout << "CurrentX: " << currentX << endl;
-	cout << "Duration: " << duration << endl;
-	cout << "Current frame: " << currentFrame << endl;
-	cout << "currentTime: " << currentTime << endl;
-	cout << "nFrames: " << nFrames << endl;
-	cout << "Pixels per second: " << pixelsPerSecond << endl;
 }
 
 //--------------------------------------------------------------
@@ -190,9 +183,9 @@ void ofApp::load() {
 	video_player.loadMovie(result.filePath);											
 	
 	// Check successful load.
-	if (video_player.isLoaded())
+	if (video_player.isLoaded()) {
 		cout << "File loaded successfully.\n\n";
-	// Return otherwise. 
+	}
 	else 
 		return;
 

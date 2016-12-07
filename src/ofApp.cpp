@@ -5,6 +5,11 @@ ofApp::ofApp() : ofBaseApp() {
 	// Start handlers. 
 	mouseHandler = new MouseHandler(this);
 	keyHandler = new KeyHandler(this);
+
+	// Setup timeline.
+	timeline = new Timeline(vid_x, vid_y + vid_height,
+		vid_width, vid_height / 4, ofColor(67, 80, 102), 100);
+
 }
 
 // Destructor.
@@ -12,6 +17,9 @@ ofApp::~ofApp() {
 	// Delete the handlers.
 	delete mouseHandler;
 	delete keyHandler;
+
+	// Delete the timeline.
+	delete timeline;
 }
 
 //--------------------------------------------------------------
@@ -38,6 +46,11 @@ void ofApp::setup(){
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      
 	analyze_toggle.addListener(this, &ofApp::analyze_toggled);
 
+	// Load gui images.
+	playButtonImg.load(playButtonPath);
+	pauseButtonImg.load(pauseButtonPath);
+	stopButtonImg.load(stopButtonPath);
+
 	// Setup computer vision.
 	// TODO: restructure after timeline is implemented. 
 	float w = vid_width;
@@ -53,8 +66,23 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	// Update the frames of the video player.
+	if (!video_player.isLoaded()) {
+		return;
+	}
+	// Update the frames of the video playe.rc
 	video_player.update();
+
+	// Update the position of the timeline's play slider.
+	float duration = video_player.getDuration();
+	int currentFrame = video_player.getCurrentFrame();
+
+	int nFrames = video_player.getTotalNumFrames();
+	float currentTime = duration * ((float)currentFrame / (float)nFrames);
+	currentTime = fmod(currentTime, timeline->getNumNotches()); 
+	float pixelsPerSecond = timeline->width() / timeline->getNumNotches(); // Each notch is 1 second. 
+	float currentX = timeline->getX() + (currentTime * pixelsPerSecond);
+	float currentY = timeline->getY();
+	timeline->setPlaySliderPosition(currentX, currentY);
 }
 
 //--------------------------------------------------------------
@@ -65,8 +93,15 @@ void ofApp::draw(){
 	// Draw the video player according to current dimensions.
 	video_player.draw(vid_x, vid_y, vid_width, vid_height);
 
+	// Draw gui images.
+	//playButtonImg.draw(playButtonImgX, playButtonImgY, playButtonImgWidth, 
+		//playButtonImgHeight);
+
 	// Draw the marquee.
-	marquee.draw();
+	//marquee.draw();
+
+	// Draw the timeline.
+	timeline->draw();
 
 	if (contourFinder.blobs.size() > 0) {
 		contourFinder.draw(vid_width, 0, vid_width, vid_height);
@@ -148,9 +183,9 @@ void ofApp::load() {
 	video_player.loadMovie(result.filePath);											
 	
 	// Check successful load.
-	if (video_player.isLoaded())
+	if (video_player.isLoaded()) {
 		cout << "File loaded successfully.\n\n";
-	// Return otherwise. 
+	}
 	else 
 		return;
 

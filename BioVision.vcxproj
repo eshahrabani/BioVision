@@ -172,6 +172,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\gui\Marquee.cpp" />
+    <ClCompile Include="src\gui\Timeline.cpp" />
     <ClCompile Include="src\io\KeyHandler.cpp" />
     <ClCompile Include="src\io\MouseHandler.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -194,6 +195,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\gui\Marquee.h" />
+    <ClInclude Include="src\gui\Timeline.h" />
     <ClInclude Include="src\io\KeyHandler.h" />
     <ClInclude Include="src\io\MouseHandler.h" />
     <ClInclude Include="src\ofApp.h" />

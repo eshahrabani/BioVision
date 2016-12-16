@@ -43,8 +43,7 @@ class ofApp : public ofBaseApp{
 		ofxSlider<float> play_speed;			 
 		
 		ofParameter<bool> analyze_toggle;		  
-
-		ofVideoPlayer video_player;		
+	
 		Timeline* timeline;
 		Marquee marquee;		
 
@@ -78,7 +77,7 @@ class ofApp : public ofBaseApp{
 
 		// Globals.
 		int app_width = ofGetWidth();					  
-		int app_height = ofGetHeight();				     
+		int app_height = ofGetHeight();		
 		
 		int vid_width = app_width / 2;					
 		int vid_height = app_height / 2;				  

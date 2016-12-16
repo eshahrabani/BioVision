@@ -2,26 +2,33 @@
 Timeline::Timeline(float x, float y, float w, float h, const ofColor& color, int numNotches) {
 	setX(x);
 	setY(y);
-	width(w);
-	height(h);
+	setTimelineWidth(w);
+	setTimelineHeight(h);
 	setColor(color);
 	setNumNotches(numNotches);
 	playSlider.set(x, y, 1, h);
 }
 
-float Timeline::getX() {
+Timeline::Timeline(float vidX, float vidY, float vidWidth, float vidHeight, 
+	float tX, float tY, float tWidth, float tHeight, 
+	const ofColor & tColor, int numNotches) 
+{
+
+}
+
+float Timeline::getTimelineX() {
 	return x;
 }
 
-float Timeline::getY() {
+float Timeline::getTimelineY() {
 	return y;
 }
 
-float Timeline::width() {
+float Timeline::getTimelineWidth() {
 	return w;
 }
 
-float Timeline::height() {
+float Timeline::getTimelineHeight() {
 	return h;
 }
 
@@ -49,11 +56,11 @@ void Timeline::setY(float y) {
 	this->y = y;
 }
 
-void Timeline::width(float w) {
+void Timeline::setTimelineWidth(float w) {
 	this->w = w;
 }
 
-void Timeline::height(float h) {
+void Timeline::setTimelineHeight(float h) {
 	this->h = h;
 }
 
@@ -77,6 +84,47 @@ void Timeline::setPlaySliderX(float x) {
 
 	float origY = playSlider.y;
 	playSlider.set(x, origY, 1, h);
+}
+
+void Timeline::play() {
+	if (videoPlayer.isLoaded() && videoPlayer.isPaused()) {
+		videoPlayer.setPaused(false);
+	}
+}
+
+void Timeline::pause() {
+	if (videoPlayer.isLoaded() && videoPlayer.isPlaying()) {
+		videoPlayer.setPaused(true);
+	}
+}
+
+void Timeline::load() {
+	// Open load dialog.
+	ofFileDialogResult result = ofSystemLoadDialog();
+	cout << "Attempting to load file: " << result.filePath << endl << endl;
+
+	// Attempt to load the file. Will refuse to load if the file extension 
+	// is invalid, and notifies the user in the console. 
+	videoPlayer.loadMovie(result.filePath);
+
+	// Check successful load.
+	if (videoPlayer.isLoaded()) {
+		cout << "File loaded successfully.\n\n";
+	}
+	else
+		return;
+
+	// Unreachable if the video did not load properly. 
+	// Displays the first frame.
+	videoPlayer.setPaused(true);
+}
+
+bool Timeline::isLoaded() {
+	return videoPlayer.isLoaded();
+}
+
+void Timeline::update() {
+	videoPlayer.update();
 }
 
 void Timeline::draw() {

@@ -66,23 +66,7 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	if (!video_player.isLoaded()) {
-		return;
-	}
-	// Update the frames of the video playe.rc
-	video_player.update();
-
-	// Update the position of the timeline's play slider.
-	float duration = video_player.getDuration();
-	int currentFrame = video_player.getCurrentFrame();
-
-	int nFrames = video_player.getTotalNumFrames();
-	float currentTime = duration * ((float)currentFrame / (float)nFrames);
-	currentTime = fmod(currentTime, timeline->getNumNotches()); 
-	float pixelsPerSecond = timeline->width() / timeline->getNumNotches(); // Each notch is 1 second. 
-	float currentX = timeline->getX() + (currentTime * pixelsPerSecond);
-	float currentY = timeline->getY();
-	timeline->setPlaySliderPosition(currentX, currentY);
+	timeline->update();
 }
 
 //--------------------------------------------------------------
@@ -174,24 +158,7 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 }
 
 void ofApp::load() {
-	// Open load dialog.
-	ofFileDialogResult result = ofSystemLoadDialog();							
-	cout << "Attempting to load file: " << result.filePath << endl << endl;	
-
-	// Attempt to load the file. Will refuse to load if the file extension 
-	// is invalid, and notifies the user in the console. 
-	video_player.loadMovie(result.filePath);											
-	
-	// Check successful load.
-	if (video_player.isLoaded()) {
-		cout << "File loaded successfully.\n\n";
-	}
-	else 
-		return;
-
-	// Unreachable if the video did not load properly. 
-	// Displays the first frame.
-	video_player.setPaused(true);
+	timeline->load();
 }
 
 

@@ -54,7 +54,6 @@ class ofApp : public ofBaseApp{
 		// GUI listener methods.
 		void load();
 		void play_toggled(bool &b);
-		void play_or_pause();
 		void next_frame();
 		void previous_frame();
 		void play_speed_changed(float &f);
@@ -72,6 +71,8 @@ class ofApp : public ofBaseApp{
 		ofxCvGrayscaleImage grayImage, threshold, grayBg, grayDiff;
 
 		// Helper methods.
+		void play();
+		void pause();
 		void resizeVideoPlayer();
 		void updateDimensions(int w, int h);
 

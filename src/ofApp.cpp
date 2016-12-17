@@ -74,9 +74,6 @@ void ofApp::draw(){
 	// Draw the gui and its components.
 	gui.draw();
 
-	// Draw the video player according to current dimensions.
-	video_player.draw(vid_x, vid_y, vid_width, vid_height);
-
 	// Draw gui images.
 	//playButtonImg.draw(playButtonImgX, playButtonImgY, playButtonImgWidth, 
 		//playButtonImgHeight);
@@ -141,7 +138,7 @@ void ofApp::mouseExited(int x, int y){
 }
 
 //--------------------------------------------------------------
-// When we detect the window has been resized, call updateDimensions() 
+// When we detect the window has been resized, call updateDimensions 
 // to update all of our components that need to be updated.
 void ofApp::windowResized(int w, int h){
 	updateDimensions(w, h);
@@ -163,19 +160,18 @@ void ofApp::load() {
 
 
 // This method is called when the state of the play toggle is changed,
-// either graphically or via code. 
+// either graphically or via code (play_toggle = !play_toggle).  
 void ofApp::play_toggled(bool &play) {
-	if (video_player.isLoaded()) {
+	if (timeline->isVideoLoaded()) {
 		if (play) {
 			// If the play toggle is enabled, play the video 
 			// and change the toggle name to "Playing".
-			video_player.setPaused(false);
-			play_toggle.setName("Playing");
+			timeline->play();
 			cout << "Playing video.\n\n";  
 		} else {
 			// If the play toggle is disabled, pause the video 
 			// and change the toggle name to "Play".
-			video_player.setPaused(true);
+			timeline->pause();
 			play_toggle.setName("Play");
 			cout << "Pausing video.\n\n";
 		}
@@ -189,57 +185,24 @@ void ofApp::play_toggled(bool &play) {
 	}
 }
 
-// This method is used to either play or pause the video by inverting 
-// the state of the play toggle, which is being listened to by play_toggled().
-// This also updates the GUI.
-void ofApp::play_or_pause() {
-	play_toggle = !play_toggle;
-}
-
 void ofApp::next_frame() {
-	// Exit method if video isn't loaded.
-	if (!video_player.isLoaded()) 
-		return;
-
-	// If video is currently playing, pause it.
-	if (play_toggle) {
-		cout << "Pausing video.\n\n";
-		play_or_pause();
-	}
-
-	// Go one frame forward.
-	cout << "Going forward one frame.\n\n";
-	if (video_player.getCurrentFrame() < video_player.getTotalNumFrames())
-		video_player.nextFrame();
+	timeline->nextFrame();
 }
 
 void ofApp::previous_frame() {
-	// Exit method if video isn't loaded.
-	if (!video_player.isLoaded()) 
-		return;
-
-	// If video is currently playing, pause it.
-	if (play_toggle) {
-		cout << "Pausing video.\n\n";
-		play_or_pause();
-	}
-
-	// Go one frame backward.
-	cout << "Going backward one frame.\n\n";
-	if (video_player.getCurrentFrame() > 1)
-		video_player.previousFrame();
+	timeline->previousFrame();
 }
 
 void ofApp::play_speed_changed(float &f) {
-	if (!video_player.isLoaded()) 
-		return;
-	video_player.setSpeed(f);
+	timeline->setVideoSpeed(f);
 }
 
+// TODO: needs encapsulation of analysis into 
+// analyzer object. 
 void ofApp::analyze_toggled(bool &b) {
 	// If video isn't loaded, exit this method after reverting the toggle 
 	// (if it's on). 
-	if (!video_player.isLoaded()) {
+	if (!timeline->isVideoLoaded()) {
 		if (b) 
 			analyze_toggle = !analyze_toggle;
 		return;
@@ -250,16 +213,18 @@ void ofApp::analyze_toggled(bool &b) {
 	if (b) {
 		analyze_toggle.setName("Analyzing");
 		cout << "Performing computer vision analysis.\n\n";
-		if (play_toggle) 
-			play_or_pause();
-	} else
+		if (play_toggle)
+			timeline->pause();
+	}
+	else {
 		analyze_toggle.setName("Analyze");
 
-	// Don't perform analysis if toggled off. 
-	if (!b) return;
+		// Don't perform any analysis if toggled off. 
+		return;
+	}
 
 	// Computer vision analysis.
-	colorImg.setFromPixels(video_player.getPixels());
+	colorImg.setFromPixels(timeline->getVideoPixels());
 	colorImg.setROI(0, 0, vid_width, vid_height);
 	grayImage.setROI(0, 0, vid_width, vid_height);
 	threshold.setROI(0, 0, vid_width, vid_height);
@@ -270,6 +235,14 @@ void ofApp::analyze_toggled(bool &b) {
 		false, true);
 
 	cout << "Finished analysis.\n\n";
+}
+
+void ofApp::play() {
+	timeline->play();
+}
+
+void ofApp::pause() {
+	timeline->pause();
 }
 
 // Updates the size of the video player according to the current dimensions of the app.

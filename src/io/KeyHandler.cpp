@@ -13,7 +13,12 @@ void KeyHandler::handlePressed(int key) {
 	// If p is pressed, play or pause the video.
 	case 'P':
 	case 'p':
-		app->play_or_pause();
+		if (app->timeline->isVideoPlaying()) {
+			app->pause();
+		} 
+		else {
+			app->play();
+		}
 		break;
 
 	// If l is pressed, open the load dialog.

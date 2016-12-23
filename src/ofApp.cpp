@@ -7,8 +7,13 @@ ofApp::ofApp() : ofBaseApp() {
 	keyHandler = new KeyHandler(this);
 
 	// Setup timeline.
-	timeline = new Timeline(vid_x, vid_y + vid_height,
-		vid_width, vid_height / 4, ofColor(67, 80, 102), 100);
+	float tX = vid_x;
+	float tY = vid_y + vid_height;
+	float tWidth = vid_width;
+	float tHeight = vid_height / 4;
+	timeline = new Timeline(vid_x, vid_y, vid_width, vid_height, 
+		tX, tY, tWidth, tHeight,
+		ofColor(67, 80, 102), 100);
 
 }
 

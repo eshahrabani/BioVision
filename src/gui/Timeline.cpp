@@ -248,7 +248,7 @@ void Timeline::update() {
 	float duration = videoPlayer.getDuration();
 
 	float currentTime = (currentFrame / nFrames) * duration;
-	float currentTime = fmod(currentTime, numNotches); 
+	currentTime = fmod(currentTime, numNotches); 
 	float newX = (currentTime / numNotches) * (tX + tWidth);
 	setPlaySliderX(newX);
 }

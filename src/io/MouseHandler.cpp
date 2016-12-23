@@ -15,7 +15,7 @@ void MouseHandler::handleDragged(int x, int y, int button) {
 	// If control is pressed, draw a marquee.
 	if (button == OF_MOUSE_BUTTON_LEFT) {
 		if (pressedInsidePlayer) {
-			if (app->video_player.isLoaded()) {
+			if (app->timeline->isVideoLoaded()) {
 
 				// Create marquee.
 				if (app->keyHandler->ctrl_pressed) {
@@ -59,7 +59,7 @@ void MouseHandler::handlePressed(int x, int y, int button) {
 			pressedInsidePlayer = true;
 		}
 
-		if (app->timeline->isInside(x, y)) {
+		if (app->timeline->isInsideTimeline(x, y)) {
 			pressedInsideTimeline = true;
 			app->timeline->setPlaySliderX(x);
 		}

@@ -128,7 +128,7 @@ void Timeline::load() {
 	ofFileDialogResult result = ofSystemLoadDialog();
 	cout << "Attempting to load file: " << result.filePath << endl << endl;
 
-	// Attempt to load the file. Will refuse to load if the file extension 
+	// Attempt to load the file. Will refuse to load if the file extension
 	// is invalid, and notifies the user in the console. 
 	videoPlayer.loadMovie(result.filePath);
 
@@ -215,18 +215,18 @@ void Timeline::restartVideo() {
 // calling the draw method. Otherwise, bugs will occur. 
 void Timeline::update() {
 
-	// No need to run any code in here unless the video is loaded.
+	// Make sure the notches vector is populated.
+	if (notches.size() != numNotches) {
+		populateNotchesVector();
+	}
+
+	// No need to run any code below unless the video is loaded.
 	if (!videoPlayer.isLoaded()) {
 		return;
 	}
 
 	// Update the frames of the video player.
 	videoPlayer.update();
-
-	// Make sure the notches vector is populated.
-	if (notches.size() != numNotches) {
-		populateNotchesVector();
-	}
 
 	// Update the position of the play slider.
 	//
@@ -244,13 +244,25 @@ void Timeline::update() {
 	// the x-pixel position of the slider since we
 	// know the width of the timeline. 
 	int currentFrame = videoPlayer.getCurrentFrame();
+	if (currentFrame == 0) return;
+
 	int nFrames = videoPlayer.getTotalNumFrames();
 	float duration = videoPlayer.getDuration();
 
-	float currentTime = (currentFrame / nFrames) * duration;
+	float currentTime = ((float)currentFrame / (float)nFrames) * duration;
 	currentTime = fmod(currentTime, numNotches); 
-	float newX = (currentTime / numNotches) * (tX + tWidth);
+	float newX = tX + (currentTime / numNotches) * tWidth;
 	setPlaySliderX(newX);
+
+	// For debugging.
+	/* 
+	cout << "currentFrame: " << currentFrame << endl;
+	cout << "nFrames: " << nFrames << endl;
+	cout << "duration: " << duration << endl;
+	cout << "currentTime: " << currentTime << endl;
+	cout << "newX: " << newX << endl;
+	cout << "play slider coords: " << getPlaySliderPosition() << endl;
+	*/
 }
 
 // Must only be called after invoking the update method. 

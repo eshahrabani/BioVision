@@ -60,6 +60,12 @@ void MouseHandler::handlePressed(int x, int y, int button) {
 		}
 
 		if (app->timeline->isInsideTimeline(x, y)) {
+			
+			// Pause if video is playing.
+			if (app->timeline->isVideoPlaying()) {
+				app->pause();
+			}
+
 			pressedInsideTimeline = true;
 			app->timeline->setPlaySliderX(x);
 		}

@@ -51,6 +51,8 @@ public:
 	void pause();
 	void nextFrame();
 	void previousFrame();
+	void setFrame(int);
+	void setFrameFromMouseX(float);
 	void setVideoSpeed(float);
 	void restartVideo();
 	

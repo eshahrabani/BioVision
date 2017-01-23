@@ -73,6 +73,7 @@ class ofApp : public ofBaseApp{
 		// Helper methods.
 		void play();
 		void pause();
+		void restartVideo();
 		void resizeVideoPlayer();
 		void updateDimensions(int w, int h);
 

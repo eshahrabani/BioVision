@@ -64,6 +64,9 @@
     <ClCompile Include="src\gui\Timeline.cpp">
       <Filter>src\gui</Filter>
     </ClCompile>
+    <ClCompile Include="src\io\Logger.cpp">
+      <Filter>src\io</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -718,6 +721,9 @@
     </ClInclude>
     <ClInclude Include="src\gui\Timeline.h">
       <Filter>src\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\io\Logger.h">
+      <Filter>src\io</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

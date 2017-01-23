@@ -196,6 +196,33 @@ void Timeline::previousFrame() {
 	}
 }
 
+void Timeline::setFrame(int f) {
+	// Set the last frame if f > total frames. 
+	if (f <= videoPlayer.getTotalNumFrames()) {
+		videoPlayer.setFrame(f);
+	}
+	else {
+		videoPlayer.setFrame(videoPlayer.getTotalNumFrames());
+	}
+}
+
+void Timeline::setFrameFromMouseX(float x) {
+	if (x < tX || x > tX + tWidth) {
+		return;
+	}
+
+	int nFrames = videoPlayer.getTotalNumFrames();
+	float pct = x / (tX + tWidth);
+	int currentFrame = pct * (float)nFrames;
+	cout << "nFrames: " << nFrames << endl;
+	cout << "pct: " << pct << endl;
+	cout << "Calculated currentFrame: " << currentFrame << endl;
+	cout << endl;
+
+	// May not have been rounded properly. Test casting behavior of float->int. 
+	setFrame(currentFrame);
+}
+
 void Timeline::setVideoSpeed(float f) {
 	if (!videoPlayer.isLoaded()) {
 		return;
@@ -245,6 +272,7 @@ void Timeline::update() {
 	// know the width of the timeline. 
 	int currentFrame = videoPlayer.getCurrentFrame();
 	if (currentFrame == 0) return;
+	//cout << "Timeline update: currentFrame = " << currentFrame << endl;
 
 	int nFrames = videoPlayer.getTotalNumFrames();
 	float duration = videoPlayer.getDuration();

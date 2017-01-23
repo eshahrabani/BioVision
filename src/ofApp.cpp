@@ -14,7 +14,8 @@ ofApp::ofApp() : ofBaseApp() {
 	timeline = new Timeline(vid_x, vid_y, vid_width, vid_height, 
 		tX, tY, tWidth, tHeight,
 		ofColor(67, 80, 102), 100);
-
+	
+	cout << "Initializing ofApp.\n\n";
 }
 
 // Destructor.
@@ -25,11 +26,15 @@ ofApp::~ofApp() {
 
 	// Delete the timeline.
 	delete timeline;
+
+	cout << "Destroying ofApp.\n\n";
 }
 
 //--------------------------------------------------------------
 // Called once on startup. 
 void ofApp::setup(){
+	cout << "Running ofApp.setup().\n\n";
+
 	// Start the main gui panel.
 	gui.setup("BioVision");
 
@@ -146,6 +151,7 @@ void ofApp::mouseExited(int x, int y){
 // When we detect the window has been resized, call updateDimensions 
 // to update all of our components that need to be updated.
 void ofApp::windowResized(int w, int h){
+	cout << "Window resized.\n\n";
 	updateDimensions(w, h);
 }
 
@@ -167,16 +173,17 @@ void ofApp::load() {
 // This method is called when the state of the play toggle is changed,
 // either graphically or via code (play_toggle = !play_toggle).  
 void ofApp::play_toggled(bool &play) {
+	cout << "Play has been toggled.\n\n";
 	if (timeline->isVideoLoaded()) {
 		if (play) {
 			// If the play toggle is enabled, play the video 
 			// and change the toggle name to "Playing".
-			timeline->play();
+			this->play();
 			cout << "Playing video.\n\n";  
 		} else {
 			// If the play toggle is disabled, pause the video 
 			// and change the toggle name to "Play".
-			timeline->pause();
+			this->pause();
 			play_toggle.setName("Play");
 			cout << "Pausing video.\n\n";
 		}
@@ -185,7 +192,7 @@ void ofApp::play_toggled(bool &play) {
 		if (play) {
 			// If the play toggle is currently on, turn it back off.
 			cout << "Load a video before playing.\n\n";
-			play_toggle = !play_toggle;
+			play_toggle.setWithoutEventNotifications(false);
 		}
 	}
 }
@@ -243,15 +250,25 @@ void ofApp::analyze_toggled(bool &b) {
 }
 
 void ofApp::play() {
+	cout << "Playing ofApp.\n\n";
+	play_toggle.setWithoutEventNotifications(true);
 	timeline->play();
 }
 
 void ofApp::pause() {
+	cout << "Pausing ofApp.\n\n";
+	play_toggle.setWithoutEventNotifications(false);
 	timeline->pause();
+}
+
+void ofApp::restartVideo() {
+	cout << "Restarting ofApp.\n\n";
+	timeline->restartVideo();
 }
 
 // Updates the size of the video player according to the current dimensions of the app.
 void ofApp::resizeVideoPlayer() {
+	cout << "Resizing video player.\n\n";
 	vid_width = app_width / 2;					  
 	vid_height = app_height / 2;				  
 	vid_x = app_width / 2 - vid_width / 2;	      
@@ -261,7 +278,7 @@ void ofApp::resizeVideoPlayer() {
 // Updates the app to accomodate a new window size.
 // Later: handle the resizing of other components besides the video player.
 void ofApp::updateDimensions(int w, int h) {
-	
+	cout << "Updating dimensions.\n\n";
 	// Store the new width and height of the app in our global variables.
 	app_width = w;					  
 	app_height = h;	

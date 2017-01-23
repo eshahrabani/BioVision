@@ -149,6 +149,9 @@ bool Timeline::isVideoLoaded() {
 }
 
 bool Timeline::isVideoPlaying() {
+	if (!videoPlayer.isLoaded()) {
+		return false;
+	}
 	return videoPlayer.isPlaying();
 }
 
@@ -173,10 +176,9 @@ void Timeline::nextFrame() {
 		return;
 	}
 
-	// Make sure video is paused.
-	pause();
-
 	// Go forward one frame if we are not at the end of the video.
+	// No need to make sure the video is paused since that check
+	// is performed in ofApp.
 	if (videoPlayer.getCurrentFrame() < videoPlayer.getTotalNumFrames()) {
 		videoPlayer.nextFrame();
 	}
@@ -187,9 +189,6 @@ void Timeline::previousFrame() {
 		return;
 	}
 
-	// Make sure video is paused.
-	pause();
-
 	// Go backward one frame if we are not at the beginning of the video.
 	if (videoPlayer.getCurrentFrame() > 1) {
 		videoPlayer.previousFrame();
@@ -197,6 +196,10 @@ void Timeline::previousFrame() {
 }
 
 void Timeline::setFrame(int f) {
+	if (!videoPlayer.isLoaded()) {
+		return;
+	}
+
 	// Set the last frame if f > total frames. 
 	if (f <= videoPlayer.getTotalNumFrames()) {
 		videoPlayer.setFrame(f);
@@ -207,6 +210,7 @@ void Timeline::setFrame(int f) {
 }
 
 void Timeline::setFrameFromMouseX(float x) {
+	// Make sure x is in the width range of the timeline. 
 	if (x < tX || x > tX + tWidth) {
 		return;
 	}
@@ -238,23 +242,7 @@ void Timeline::restartVideo() {
 	play();
 }
 
-// The update method must always be called right before 
-// calling the draw method. Otherwise, bugs will occur. 
-void Timeline::update() {
-
-	// Make sure the notches vector is populated.
-	if (notches.size() != numNotches) {
-		populateNotchesVector();
-	}
-
-	// No need to run any code below unless the video is loaded.
-	if (!videoPlayer.isLoaded()) {
-		return;
-	}
-
-	// Update the frames of the video player.
-	videoPlayer.update();
-
+void Timeline::updatePlaySlider() {
 	// Update the position of the play slider.
 	//
 	// Calculate percentage complete via the current
@@ -278,12 +266,12 @@ void Timeline::update() {
 	float duration = videoPlayer.getDuration();
 
 	float currentTime = ((float)currentFrame / (float)nFrames) * duration;
-	currentTime = fmod(currentTime, numNotches); 
+	currentTime = fmod(currentTime, numNotches);
 	float newX = tX + (currentTime / numNotches) * tWidth;
 	setPlaySliderX(newX);
 
 	// For debugging.
-	/* 
+	/*
 	cout << "currentFrame: " << currentFrame << endl;
 	cout << "nFrames: " << nFrames << endl;
 	cout << "duration: " << duration << endl;
@@ -291,6 +279,27 @@ void Timeline::update() {
 	cout << "newX: " << newX << endl;
 	cout << "play slider coords: " << getPlaySliderPosition() << endl;
 	*/
+}
+
+// The update method must always be called right before 
+// calling the draw method. Otherwise, bugs will occur. 
+void Timeline::update() {
+
+	// Make sure the notches vector is populated.
+	if (notches.size() != numNotches) {
+		populateNotchesVector();
+	}
+
+	// No need to run any code below unless the video is loaded.
+	if (!videoPlayer.isLoaded()) {
+		return;
+	}
+
+	// Update the frames of the video player.
+	videoPlayer.update();
+	
+	// Update the position of the play slider. 
+	updatePlaySlider();
 }
 
 // Must only be called after invoking the update method. 

@@ -1,3 +1,13 @@
+// Timeline class for the app. This class contains the video player
+// and encapsulates all of the methods of the player.
+//
+// Important note: calling functions of the player within this class
+// that affects state of the video player (e.g. play) makes it difficult
+// for ofApp to keep track of state (for GUI). Therefore, use ofApp to call
+// methods such as play() and pause(). In sum, the flow of control
+// should always be ofApp -> Timeline -> video player, with no bidirectional
+// communication. 
+
 #pragma once
 #include "ofMain.h"
 
@@ -57,6 +67,7 @@ public:
 	void restartVideo();
 	
 	// Updates the timeline.
+	void updatePlaySlider();
 	void update();
 
 	// Draws the timeline.

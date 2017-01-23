@@ -37,7 +37,9 @@ void MouseHandler::handleDragged(int x, int y, int button) {
 			}
 		}
 		if (pressedInsideTimeline) {
-			app->timeline->setFrameFromMouseX(x);
+			// No need to pause since a click must have occured
+			// on the timeline, during which the video is paused.
+			app->setFrameFromMouseX(x);
 		}
 	}
 
@@ -59,18 +61,14 @@ void MouseHandler::handlePressed(int x, int y, int button) {
 			pressedInsidePlayer = true;
 		}
 
-		Timeline* timeline = app->timeline;
-		if (timeline->isInsideTimeline(x, y) && timeline->isVideoLoaded()) {
+		if (app->isInsideTimeline(x, y) && app->isVideoLoaded()) {
 			cout << "Clicked inside timeline.\n\n";
 			pressedInsideTimeline = true;
 			
-			// Pause if video is playing.
-			if (timeline->isVideoPlaying()) {
-				cout << "Pausing video since it's playing.\n\n";
-				app->pause();
-			}
+			// Make sure video is paused.
+			app->pause();
 			cout << "Setting timeline frame with x coordinate: " << x << endl << endl;
-			timeline->setFrameFromMouseX(x);
+			app->setFrameFromMouseX(x);
 		}
 	}
 }

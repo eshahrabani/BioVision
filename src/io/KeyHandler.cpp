@@ -13,7 +13,7 @@ void KeyHandler::handlePressed(int key) {
 	// If p is pressed, play or pause the video.
 	case 'P':
 	case 'p':
-		if (app->timeline->isVideoPlaying()) {
+		if (app->isVideoPlaying()) {
 			app->pause();
 		} 
 		else {
@@ -47,6 +47,8 @@ void KeyHandler::handlePressed(int key) {
 	case 'f': 
 	{
 		// Reference var to the speed slider. 
+		// Changing the value of this var will affect the value
+		// of the actual slider object in ofApp. 
 		ofxSlider<float>& speed = app->play_speed;
 
 		// Check boundaries. 

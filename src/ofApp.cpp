@@ -179,6 +179,7 @@ void ofApp::play_toggled(bool &play) {
 			// If the play toggle is enabled, play the video 
 			// and change the toggle name to "Playing".
 			this->play();
+			play_toggle.setName("Playing");
 			cout << "Playing video.\n\n";  
 		} else {
 			// If the play toggle is disabled, pause the video 
@@ -192,17 +193,12 @@ void ofApp::play_toggled(bool &play) {
 		if (play) {
 			// If the play toggle is currently on, turn it back off.
 			cout << "Load a video before playing.\n\n";
+
+			// Turns off the play toggle without recursively triggering 
+			// the containing method (play_toggled).
 			play_toggle.setWithoutEventNotifications(false);
 		}
 	}
-}
-
-void ofApp::next_frame() {
-	timeline->nextFrame();
-}
-
-void ofApp::previous_frame() {
-	timeline->previousFrame();
 }
 
 void ofApp::play_speed_changed(float &f) {
@@ -251,19 +247,57 @@ void ofApp::analyze_toggled(bool &b) {
 
 void ofApp::play() {
 	cout << "Playing ofApp.\n\n";
+
+	// Turn the play toggle on without triggering play_toggled.
 	play_toggle.setWithoutEventNotifications(true);
 	timeline->play();
 }
 
 void ofApp::pause() {
 	cout << "Pausing ofApp.\n\n";
+
+	// Turn the play toggle off without triggering play_toggled.
 	play_toggle.setWithoutEventNotifications(false);
 	timeline->pause();
+}
+
+void ofApp::next_frame() {
+	if (timeline->isVideoPlaying()) {
+		pause();
+	}
+	timeline->nextFrame();
+}
+
+void ofApp::previous_frame() {
+	if (timeline->isVideoPlaying()) {
+		pause();
+	}
+	timeline->previousFrame();
+}
+
+bool ofApp::isVideoLoaded() {
+	return timeline->isVideoLoaded();
+}
+
+bool ofApp::isVideoPlaying() {
+	return timeline->isVideoPlaying();
+}
+
+void ofApp::setFrame(int f) {
+	timeline->setFrame(f);
+}
+
+void ofApp::setFrameFromMouseX(float x) {
+	timeline->setFrameFromMouseX(x);
 }
 
 void ofApp::restartVideo() {
 	cout << "Restarting ofApp.\n\n";
 	timeline->restartVideo();
+}
+
+bool ofApp::isInsideTimeline(float x, float y) {
+	return timeline->isInsideTimeline(x, y);
 }
 
 // Updates the size of the video player according to the current dimensions of the app.

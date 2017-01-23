@@ -1,3 +1,7 @@
+// ofApp is the main class of this application. 
+// It encapsulates the methods of the Timeline, so 
+// all functionality should be routed through ofApp.
+
 #pragma once
 
 #include <math.h>
@@ -54,8 +58,6 @@ class ofApp : public ofBaseApp{
 		// GUI listener methods.
 		void load();
 		void play_toggled(bool &b);
-		void next_frame();
-		void previous_frame();
 		void play_speed_changed(float &f);
 		void analyze_toggled(bool &b);
 
@@ -70,10 +72,19 @@ class ofApp : public ofBaseApp{
 		ofxCvColorImage colorImg;
 		ofxCvGrayscaleImage grayImage, threshold, grayBg, grayDiff;
 
-		// Helper methods.
+		// Video controls.
 		void play();
 		void pause();
+		void next_frame();
+		void previous_frame();
+		bool isVideoLoaded();
+		bool isVideoPlaying();
+		void setFrame(int);
+		void setFrameFromMouseX(float);
 		void restartVideo();
+
+		// Helper methods. 
+		bool isInsideTimeline(float, float);
 		void resizeVideoPlayer();
 		void updateDimensions(int w, int h);
 

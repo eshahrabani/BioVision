@@ -14,8 +14,6 @@ ofApp::ofApp() : ofBaseApp() {
 	timeline = new Timeline(vid_x, vid_y, vid_width, vid_height, 
 		tX, tY, tWidth, tHeight,
 		ofColor(67, 80, 102), 100);
-	
-	cout << "Initializing ofApp.\n\n";
 }
 
 // Destructor.
@@ -26,21 +24,15 @@ ofApp::~ofApp() {
 
 	// Delete the timeline.
 	delete timeline;
-
-	cout << "Destroying ofApp.\n\n";
 }
 
 //--------------------------------------------------------------
 // Called once on startup. 
 void ofApp::setup(){
-	logger.writeVerbose("Running ofApp.setup()");
-
 	// Start the main gui panel.
-	logger.writeVerbose("Starting the BioVision gui panel.");
 	gui.setup("BioVision");
 
 	// Add video buttons. 
-	logger.writeVerbose("Adding all video buttons.");
 	gui.add(load_button.setup("Load"));	
 	gui.add(play_toggle.set("Play", false));						  
 	gui.add(next_frame_button.setup("Next frame"));				      
@@ -158,7 +150,7 @@ void ofApp::mouseExited(int x, int y){
 // When we detect the window has been resized, call updateDimensions 
 // to update all of our components that need to be updated.
 void ofApp::windowResized(int w, int h){
-	cout << "Window resized.\n\n";
+	logger.writeVerbose("Window resized.");
 	updateDimensions(w, h);
 }
 
@@ -180,7 +172,7 @@ void ofApp::load() {
 // This method is called when the state of the play toggle is changed,
 // either graphically or via code (play_toggle = !play_toggle).  
 void ofApp::play_toggled(bool &play) {
-	logger.writeNormal("Play has been toggled.");
+	logger.writeVerbose("Play has been toggled.");
 	if (timeline->isVideoLoaded()) {
 		if (play) {
 			// If the play toggle is enabled, play the video 
@@ -209,6 +201,7 @@ void ofApp::play_toggled(bool &play) {
 }
 
 void ofApp::play_speed_changed(float &f) {
+	logger.writeVerbose("Setting new play speed from ofApp.");
 	timeline->setVideoSpeed(f);
 }
 
@@ -227,7 +220,7 @@ void ofApp::analyze_toggled(bool &b) {
 	// and pause the video if it's currently playing. 
 	if (b) {
 		analyze_toggle.setName("Analyzing");
-		cout << "Performing computer vision analysis.\n\n";
+		logger.writeNormal("Performing computer vision analysis.");
 		if (play_toggle)
 			timeline->pause();
 	}
@@ -249,11 +242,11 @@ void ofApp::analyze_toggled(bool &b) {
 	contourFinder.findContours(threshold, 5, vid_width * vid_height, 100, 
 		false, true);
 
-	cout << "Finished analysis.\n\n";
+	logger.writeNormal("Finished vision analysis.");
 }
 
 void ofApp::play() {
-	cout << "Playing ofApp.\n\n";
+	logger.writeVerbose("Playing the video.");
 
 	// Turn the play toggle on without triggering play_toggled.
 	play_toggle.setWithoutEventNotifications(true);
@@ -261,7 +254,7 @@ void ofApp::play() {
 }
 
 void ofApp::pause() {
-	cout << "Pausing ofApp.\n\n";
+	logger.writeVerbose("Pausing the video.");
 
 	// Turn the play toggle off without triggering play_toggled.
 	play_toggle.setWithoutEventNotifications(false);
@@ -270,8 +263,12 @@ void ofApp::pause() {
 
 void ofApp::next_frame() {
 	if (timeline->isVideoPlaying()) {
+		logger.writeVerbose(
+			"Video is playing; pausing it before jumping to next frame."
+		);
 		pause();
 	}
+	logger.writeVerbose("Jumping to next frame.");
 	timeline->nextFrame();
 }
 
@@ -291,15 +288,17 @@ bool ofApp::isVideoPlaying() {
 }
 
 void ofApp::setFrame(int f) {
+	logger.writeVerbose("Setting new frame from ofApp.");
 	timeline->setFrame(f);
 }
 
 void ofApp::setFrameFromMouseX(float x) {
+	logger.writeVerbose("Setting new frame from ofApp using mouse X.");
 	timeline->setFrameFromMouseX(x);
 }
 
 void ofApp::restartVideo() {
-	cout << "Restarting ofApp.\n\n";
+	logger.writeVerbose("Restarting ofApp.");
 	timeline->restartVideo();
 }
 
@@ -309,7 +308,7 @@ bool ofApp::isInsideTimeline(float x, float y) {
 
 // Updates the size of the video player according to the current dimensions of the app.
 void ofApp::resizeVideoPlayer() {
-	cout << "Resizing video player.\n\n";
+	logger.writeVerbose("Resizing video player.");
 	vid_width = app_width / 2;					  
 	vid_height = app_height / 2;				  
 	vid_x = app_width / 2 - vid_width / 2;	      

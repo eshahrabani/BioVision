@@ -33,12 +33,14 @@ ofApp::~ofApp() {
 //--------------------------------------------------------------
 // Called once on startup. 
 void ofApp::setup(){
-	cout << "Running ofApp.setup().\n\n";
+	logger.writeVerbose("Running ofApp.setup()");
 
 	// Start the main gui panel.
+	logger.writeVerbose("Starting the BioVision gui panel.");
 	gui.setup("BioVision");
 
 	// Add video buttons. 
+	logger.writeVerbose("Adding all video buttons.");
 	gui.add(load_button.setup("Load"));	
 	gui.add(play_toggle.set("Play", false));						  
 	gui.add(next_frame_button.setup("Next frame"));				      
@@ -109,11 +111,13 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+	logger.writeDebug(key + " has been pressed. Sending to handler...");
 	keyHandler->handlePressed(key);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
+	logger.writeDebug(key + " has been released. Sending to handler...");
 	keyHandler->handleReleased(key);
 }
 
@@ -124,16 +128,19 @@ void ofApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
+	logger.writeDebug("Mouse has been dragged. Sending to handler...");
 	mouseHandler->handleDragged(x, y, button);
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
+	logger.writeDebug("Mouse has been pressed. Sending to handler...");
 	mouseHandler->handlePressed(x, y, button);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
+	logger.writeDebug("Mouse has been released. Sending to handler...");
 	mouseHandler->handleReleased(x, y, button);
 }
 
@@ -173,26 +180,26 @@ void ofApp::load() {
 // This method is called when the state of the play toggle is changed,
 // either graphically or via code (play_toggle = !play_toggle).  
 void ofApp::play_toggled(bool &play) {
-	cout << "Play has been toggled.\n\n";
+	logger.writeNormal("Play has been toggled.");
 	if (timeline->isVideoLoaded()) {
 		if (play) {
 			// If the play toggle is enabled, play the video 
 			// and change the toggle name to "Playing".
 			this->play();
 			play_toggle.setName("Playing");
-			cout << "Playing video.\n\n";  
+			logger.writeNormal("Playing video.");
 		} else {
 			// If the play toggle is disabled, pause the video 
 			// and change the toggle name to "Play".
 			this->pause();
 			play_toggle.setName("Play");
-			cout << "Pausing video.\n\n";
+			logger.writeNormal("Pausing video.");
 		}
 	} else { 
 		// File has not been loaded.
 		if (play) {
 			// If the play toggle is currently on, turn it back off.
-			cout << "Load a video before playing.\n\n";
+			logger.writeNormal("Load a video before playing.");
 
 			// Turns off the play toggle without recursively triggering 
 			// the containing method (play_toggled).

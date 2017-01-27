@@ -6,7 +6,7 @@ using std::cout;
 using std::endl;
 using std::string;
 
-enum class LoggerLevel {
+enum LoggerLevel {
 	NORMAL = 0,
 	DEBUG = 1,
 	VERBOSE = 2
@@ -29,4 +29,4 @@ public:
 	void writeNormal(string);
 	void writeDebug(string);
 	void writeVerbose(string);
-}; 
+};

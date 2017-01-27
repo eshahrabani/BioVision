@@ -8,16 +8,21 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxOpenCv.h"
+#include "Logger.h"
 #include "Timeline.h"
 #include "Marquee.h"
 #include "MouseHandler.h"
 #include "KeyHandler.h"
+
 
 class ofApp : public ofBaseApp{
 
 	public:
 		ofApp();
 		~ofApp();
+
+		// Some user config:
+		LoggerLevel loggerLevel = LoggerLevel::NORMAL;
 
 		// Default event methods.
 		void setup();
@@ -87,6 +92,9 @@ class ofApp : public ofBaseApp{
 		bool isInsideTimeline(float, float);
 		void resizeVideoPlayer();
 		void updateDimensions(int w, int h);
+
+		// Logger.
+		Logger logger = Logger(loggerLevel);
 
 		// Globals.
 		int app_width = ofGetWidth();					  

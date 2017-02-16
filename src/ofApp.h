@@ -90,11 +90,6 @@ class ofApp : public ofBaseApp{
 		void setFrameFromMouseX(float);
 		void restartVideo();
 
-		// Helper methods. 
-		bool isInsideTimeline(float, float);
-		void resizeVideoPlayer();
-		void updateDimensions(int w, int h);
-
 		// Logger.
 		Logger logger = Logger(loggerLevel);
 
@@ -118,4 +113,9 @@ class ofApp : public ofBaseApp{
 		const string playButtonPath = "gui/PlayButton.jpg";
 		const string pauseButtonPath = "gui/PauseButton.jpg";
 		const string stopButtonPath = "gui/PauseButton.jpg";
+
+		// Helper methods. 
+		bool isInsideTimeline(float, float);
+		void resizeVideoPlayer();
+		void updateDimensions(int w, int h);
 };

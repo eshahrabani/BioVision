@@ -95,9 +95,8 @@ void ofApp::draw(){
 	timeline->draw();
 
 	for (ofxCvBlob blob : contourFinder.blobs) {
-		ofSetColor(50, 26, 56);
-		ofPolyline polyline(blob.pts);
-		polyline.draw();
+		ofSetColor(96, 96, 96);
+		blob.draw(app_width / 2, app_height / 4);
 	}
 }
 
@@ -320,7 +319,7 @@ void ofApp::resizeVideoPlayer() {
 // Updates the app to accomodate a new window size.
 // Later: handle the resizing of other components besides the video player.
 void ofApp::updateDimensions(int w, int h) {
-	cout << "Updating dimensions.\n\n";
+	logger.writeVerbose("Updating dimensions.");
 	// Store the new width and height of the app in our global variables.
 	app_width = w;					  
 	app_height = h;	
@@ -328,4 +327,3 @@ void ofApp::updateDimensions(int w, int h) {
 	// Update the size of the video player.
 	resizeVideoPlayer();
 }
-

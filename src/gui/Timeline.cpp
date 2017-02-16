@@ -142,6 +142,7 @@ void Timeline::load() {
 	// Unreachable if the video did not load properly. 
 	// Displays the first frame.
 	videoPlayer.setPaused(true);
+	this->numNotches = (int) videoPlayer.getDuration();
 }
 
 bool Timeline::isVideoLoaded() {

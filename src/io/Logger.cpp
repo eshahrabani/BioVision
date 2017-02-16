@@ -20,10 +20,6 @@ void Logger::writeNormal(string s) {
 	this->write(LoggerMessage(s, LoggerLevel::NORMAL));
 }
 
-void Logger::writeDebug(string s) {
-	this->write(LoggerMessage(s, LoggerLevel::DEBUG));
-}
-
 void Logger::writeVerbose(string s) {
 	this->write(LoggerMessage(s, LoggerLevel::VERBOSE));
 }

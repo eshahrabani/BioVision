@@ -5,6 +5,7 @@
 #pragma once
 
 #include <math.h>
+#include <random>
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxOpenCv.h"
@@ -22,7 +23,7 @@ class ofApp : public ofBaseApp{
 		~ofApp();
 
 		// Some user config:
-		LoggerLevel loggerLevel = LoggerLevel::NORMAL;
+		LoggerLevel loggerLevel = LoggerLevel::VERBOSE;
 
 		// Default event methods.
 		void setup();
@@ -76,6 +77,7 @@ class ofApp : public ofBaseApp{
 		ofxCvContourFinder contourFinder;
 		ofxCvColorImage colorImg;
 		ofxCvGrayscaleImage grayImage, threshold, grayBg, grayDiff;
+		std::vector<ofPolyline> polylines;
 
 		// Video controls.
 		void play();
@@ -102,14 +104,14 @@ class ofApp : public ofBaseApp{
 		
 		int vid_width = app_width / 2;					
 		int vid_height = app_height / 2;				  
-		int vid_x = app_width / 2 - vid_width / 2;	   
+		//int vid_x = app_width / 2 - vid_width / 2;	   
+		int vid_x = 0;
 		int vid_y = app_height / 2 - vid_height / 2;
 
 		int playButtonImgWidth = vid_width / 4;
 		int playButtonImgHeight = app_height / 12;
 		int playButtonImgX = app_width / 2;
 		int playButtonImgY = (3 * app_height) / 4;
-
 
 		// Constants.
 		// Note: filenames are relative to the bin/data/ directory. 

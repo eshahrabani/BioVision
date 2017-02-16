@@ -8,8 +8,7 @@ using std::string;
 
 enum LoggerLevel {
 	NORMAL = 0,
-	DEBUG = 1,
-	VERBOSE = 2
+	VERBOSE = 1
 };
 
 class LoggerMessage : string {
@@ -27,6 +26,5 @@ public:
 	void write(string, LoggerLevel);
 	void write(LoggerMessage);
 	void writeNormal(string);
-	void writeDebug(string);
 	void writeVerbose(string);
 };

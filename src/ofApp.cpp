@@ -2,6 +2,8 @@
 
 // Constructor.
 ofApp::ofApp() : ofBaseApp() {
+	logger.writeVerbose("Running ofApp constructor.");
+
 	// Start handlers. 
 	mouseHandler = new MouseHandler(this);
 	keyHandler = new KeyHandler(this);
@@ -18,6 +20,8 @@ ofApp::ofApp() : ofBaseApp() {
 
 // Destructor.
 ofApp::~ofApp() {
+	logger.writeVerbose("Running ofApp destructor.");
+
 	// Delete the handlers.
 	delete mouseHandler;
 	delete keyHandler;
@@ -29,6 +33,8 @@ ofApp::~ofApp() {
 //--------------------------------------------------------------
 // Called once on startup. 
 void ofApp::setup(){
+	logger.writeVerbose("Running ofApp setup method.");
+
 	// Start the main gui panel.
 	gui.setup("BioVision");
 
@@ -88,28 +94,22 @@ void ofApp::draw(){
 	// Draw the timeline.
 	timeline->draw();
 
-	if (contourFinder.blobs.size() > 0) {
-		contourFinder.draw(vid_width, 0, vid_width, vid_height);
-		/*ofColor c(255, 255, 255);
-		for (int i = 0; i < contourFinder.nBlobs; i++) {
-			ofRectangle r = contourFinder.blobs.at(i).boundingRect;
-			r.x += vid_width; r.y += vid_height;
-			c.setHsb(i * 64, 255, 255);
-			ofSetColor(c);
-			ofDrawRectangle(r);
-		}*/
+	for (ofxCvBlob blob : contourFinder.blobs) {
+		ofSetColor(50, 26, 56);
+		ofPolyline polyline(blob.pts);
+		polyline.draw();
 	}
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	logger.writeDebug(key + " has been pressed. Sending to handler...");
+	logger.writeVerbose(key + " has been pressed. Sending to handler...");
 	keyHandler->handlePressed(key);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-	logger.writeDebug(key + " has been released. Sending to handler...");
+	logger.writeVerbose(key + " has been released. Sending to handler...");
 	keyHandler->handleReleased(key);
 }
 
@@ -120,19 +120,16 @@ void ofApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-	logger.writeDebug("Mouse has been dragged. Sending to handler...");
 	mouseHandler->handleDragged(x, y, button);
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-	logger.writeDebug("Mouse has been pressed. Sending to handler...");
 	mouseHandler->handlePressed(x, y, button);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-	logger.writeDebug("Mouse has been released. Sending to handler...");
 	mouseHandler->handleReleased(x, y, button);
 }
 
@@ -150,7 +147,9 @@ void ofApp::mouseExited(int x, int y){
 // When we detect the window has been resized, call updateDimensions 
 // to update all of our components that need to be updated.
 void ofApp::windowResized(int w, int h){
-	logger.writeVerbose("Window resized.");
+	logger.writeVerbose(
+		"Detected window resize. Updating dimensions of components."
+	);
 	updateDimensions(w, h);
 }
 
@@ -165,6 +164,7 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 }
 
 void ofApp::load() {
+	logger.writeVerbose("From ofApp: calling load() on timeline.");
 	timeline->load();
 }
 
@@ -208,6 +208,8 @@ void ofApp::play_speed_changed(float &f) {
 // TODO: needs encapsulation of analysis into 
 // analyzer object. 
 void ofApp::analyze_toggled(bool &b) {
+	logger.writeVerbose("Analyze toggled.");
+
 	// If video isn't loaded, exit this method after reverting the toggle 
 	// (if it's on). 
 	if (!timeline->isVideoLoaded()) {
@@ -239,7 +241,7 @@ void ofApp::analyze_toggled(bool &b) {
 	grayImage = colorImg;
 	threshold = grayImage;
 	threshold.threshold(100);
-	contourFinder.findContours(threshold, 5, vid_width * vid_height, 100, 
+	contourFinder.findContours(threshold, 5, vid_width * vid_height, 10, 
 		false, true);
 
 	logger.writeNormal("Finished vision analysis.");

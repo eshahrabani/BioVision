@@ -95,10 +95,24 @@ void ofApp::draw(){
 
 	// Draw the timeline.
 	timeline->draw();
-
-	for (ofxCvBlob blob : contourFinder.blobs) {
-		ofSetColor(96, 96, 96);
-		blob.draw(app_width / 2, app_height / 4);
+	
+	// Draw the blobs found by the contour finder.
+	ofSetColor(96, 96, 96);
+	if (contourFinder.nBlobs > 0) {
+		// Offset the drawing locations of the blobs. 
+		for (ofxCvBlob blob : contourFinder.blobs) {
+			logger.writeNormal("Offsetting blobs.");
+			for (int i = 0; i < blob.pts.size(); i++) {
+				ofPoint pt = blob.pts[i];
+				float x = pt.x;
+				float y = pt.y;
+				x += app_width / 2;
+				y += app_height / 4;
+				blob.pts[i].set(x, y);
+			}
+			ofPolyline polyline(blob.pts);
+			polyline.draw();
+		}
 	}
 }
 

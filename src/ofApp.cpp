@@ -81,6 +81,8 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	ofSetColor(255, 255, 255);
+
 	// Draw the gui and its components.
 	gui.draw();
 

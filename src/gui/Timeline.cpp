@@ -305,25 +305,35 @@ void Timeline::update() {
 
 // Must only be called after invoking the update method. 
 void Timeline::draw() {
-	// Draw the video player.
-	videoPlayer.draw(vidX, vidY, vidWidth, vidHeight);
-
-	// Draw the outer box.
-	ofSetColor(timelineColor);
-	ofFill();
-	ofDrawRectangle(tX, tY, tWidth, tHeight);
-
-	// Draw the notches.
+	// Draw unfilled rectangles around the video player
+	// area and the analysis display area.
+	ofSetColor(0, 0, 0);
+	ofNoFill();
+	ofDrawRectangle(vidX, vidY, vidWidth, vidHeight);
+	ofDrawRectangle(vidX + vidWidth, vidY, vidWidth, vidHeight);
 	ofSetColor(255, 255, 255);
-	ofNoFill();
-	for (ofRectangle notch : notches) {
-		ofDrawRectangle(notch);
-	}
 
-	// Draw the play slider.
-	ofSetColor(50, 255, 61);
-	ofNoFill();
-	ofDrawRectangle(playSlider);
+	if (videoPlayer.isLoaded()) {
+		// Draw the video player.
+		videoPlayer.draw(vidX, vidY, vidWidth, vidHeight);
+
+		// Draw the outer box.
+		ofSetColor(timelineColor);
+		ofFill();
+		ofDrawRectangle(tX, tY, tWidth, tHeight);
+
+		// Draw the notches.
+		ofSetColor(255, 255, 255);
+		ofNoFill();
+		for (ofRectangle notch : notches) {
+			ofDrawRectangle(notch);
+		}
+
+		// Draw the play slider.
+		ofSetColor(50, 255, 61);
+		ofNoFill();
+		ofDrawRectangle(playSlider);
+	}
 }
 
 bool Timeline::isInsideTimeline(float x, float y) {

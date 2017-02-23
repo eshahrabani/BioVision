@@ -101,7 +101,6 @@ void ofApp::draw(){
 	if (contourFinder.nBlobs > 0) {
 		// Offset the drawing locations of the blobs. 
 		for (ofxCvBlob blob : contourFinder.blobs) {
-			logger.writeNormal("Offsetting blobs.");
 			for (int i = 0; i < blob.pts.size(); i++) {
 				ofPoint pt = blob.pts[i];
 				float x = pt.x;

@@ -94,14 +94,13 @@ class ofApp : public ofBaseApp{
 		Logger logger = Logger(loggerLevel);
 
 		// Globals.
-		int app_width = ofGetWidth();					  
-		int app_height = ofGetHeight();		
+		int app_width;					  
+		int app_height;		
 		
-		int vid_width = app_width / 2;					
-		int vid_height = app_height / 2;				  
-		//int vid_x = app_width / 2 - vid_width / 2;	   
-		int vid_x = 0;
-		int vid_y = app_height / 2 - vid_height / 2;
+		int vid_width;					
+		int vid_height;				  	   
+		int vid_x;
+		int vid_y;
 
 		int playButtonImgWidth = vid_width / 4;
 		int playButtonImgHeight = app_height / 12;
@@ -116,6 +115,5 @@ class ofApp : public ofBaseApp{
 
 		// Helper methods. 
 		bool isInsideTimeline(float, float);
-		void resizeVideoPlayer();
 		void updateDimensions(int w, int h);
 };

@@ -35,6 +35,11 @@ ofApp::~ofApp() {
 void ofApp::setup(){
 	logger.writeVerbose("Running ofApp setup method.");
 
+	// Store app width and height.
+	app_width = ofGetWidth();
+	app_height = ofGetHeight();
+	updateDimensions(app_width, app_height);
+
 	// Start the main gui panel.
 	gui.setup("BioVision");
 
@@ -97,22 +102,23 @@ void ofApp::draw(){
 	timeline->draw();
 	
 	// Draw the blobs found by the contour finder.
-	ofSetColor(96, 96, 96);
-	if (contourFinder.nBlobs > 0) {
+	ofSetColor(153, 0, 0);
+	/*if (contourFinder.nBlobs > 0) {
 		// Offset the drawing locations of the blobs. 
 		for (ofxCvBlob blob : contourFinder.blobs) {
 			for (int i = 0; i < blob.pts.size(); i++) {
 				ofPoint pt = blob.pts[i];
 				float x = pt.x;
 				float y = pt.y;
-				x += app_width / 2;
-				y += app_height / 4;
+				//x = vid_x;
+				//y += vid_y;
 				blob.pts[i].set(x, y);
 			}
 			ofPolyline polyline(blob.pts);
 			polyline.draw();
 		}
-	}
+	}*/
+	contourFinder.draw(vid_x, vid_y, vid_width, vid_height);
 }
 
 //--------------------------------------------------------------
@@ -322,15 +328,6 @@ bool ofApp::isInsideTimeline(float x, float y) {
 	return timeline->isInsideTimeline(x, y);
 }
 
-// Updates the size of the video player according to the current dimensions of the app.
-void ofApp::resizeVideoPlayer() {
-	logger.writeVerbose("Resizing video player.");
-	vid_width = app_width / 2;					  
-	vid_height = app_height / 2;				  
-	vid_x = app_width / 2 - vid_width / 2;	      
-	vid_y = app_height / 2 - vid_height / 2;      
-}
-
 // Updates the app to accomodate a new window size.
 // Later: handle the resizing of other components besides the video player.
 void ofApp::updateDimensions(int w, int h) {
@@ -338,7 +335,9 @@ void ofApp::updateDimensions(int w, int h) {
 	// Store the new width and height of the app in our global variables.
 	app_width = w;					  
 	app_height = h;	
-	
-	// Update the size of the video player.
-	resizeVideoPlayer();
+
+	vid_width = app_width / 2;
+	vid_height = app_height / 2;
+	vid_x = 0;
+	vid_y = app_height / 2 - vid_height / 2;
 }

@@ -7,15 +7,6 @@ ofApp::ofApp() : ofBaseApp() {
 	// Start handlers. 
 	mouseHandler = new MouseHandler(this);
 	keyHandler = new KeyHandler(this);
-
-	// Setup timeline.
-	float tX = vid_x;
-	float tY = vid_y + vid_height;
-	float tWidth = vid_width;
-	float tHeight = vid_height / 4;
-	timeline = new Timeline(vid_x, vid_y, vid_width, vid_height, 
-		tX, tY, tWidth, tHeight,
-		ofColor(67, 80, 102), 100);
 }
 
 // Destructor.
@@ -61,11 +52,6 @@ void ofApp::setup(){
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      
 	analyze_toggle.addListener(this, &ofApp::analyze_toggled);
 
-	// Load gui images.
-	playButtonImg.load(playButtonPath);
-	pauseButtonImg.load(pauseButtonPath);
-	stopButtonImg.load(stopButtonPath);
-
 	// Setup computer vision.
 	// TODO: restructure after timeline is implemented. 
 	float w = vid_width;
@@ -77,6 +63,15 @@ void ofApp::setup(){
 	grayBg.allocate(w, h);
 	grayDiff.allocate(w, h);
 	threshold.allocate(w, h);
+
+	// Setup timeline.
+	float tX = vid_x;
+	float tY = vid_y + vid_height;
+	float tWidth = vid_width;
+	float tHeight = vid_height / 4;
+	timeline = new Timeline(vid_x, vid_y, vid_width, vid_height,
+		tX, tY, tWidth, tHeight,
+		ofColor(67, 80, 102), 100);
 }
 
 //--------------------------------------------------------------

@@ -11,10 +11,8 @@ void MouseHandler::handleMoved(int x, int y) {
 }
 
 void MouseHandler::handleDragged(int x, int y, int button) {
-
-	// If control is pressed, draw a marquee.
 	if (button == OF_MOUSE_BUTTON_LEFT) {
-		if (pressedInsidePlayer) {
+		/*if (pressedInsidePlayer) {
 			if (app->timeline->isVideoLoaded()) {
 
 				// Create marquee.
@@ -35,7 +33,36 @@ void MouseHandler::handleDragged(int x, int y, int button) {
 					app->marquee.set(new_x, new_y, app->marquee.width(), app->marquee.height());
 				}
 			}
+		
+		}*/
+
+		// If ctrl pressed, move contourfinder blobs.
+		KeyHandler& kh = *(app->keyHandler);
+		if (kh.ctrl_pressed && app->contours.size() > 0) {
+			float dx = x - pos_x;
+			float dy = y - pos_y;
+
+			// Apply displacements to left corner of every point. 
+			std::vector<ofPolyline>* contours = &(app->contours);
+			for (int i = 0; i < contours->size(); i++) {
+				// Store the polyline so we can modify it.
+				ofPolyline p = (*contours)[i];
+
+				for (int j = 0; j < p.size(); j++) {
+					// Store the point so we can modify it.
+					ofPoint pt = p[j];
+
+					// Modify point then reassign back to the polyline.
+					pt.x += dx;
+					pt.y += dy;
+					p[j] = ofPoint(pt);
+				}
+				// Reassign polyline back to polyline vector.
+				(*contours)[i] = p;
+			}
 		}
+
+		// If in timeline, update the frame position.
 		if (pressedInsideTimeline) {
 			// No need to pause since a click must have occured
 			// on the timeline, during which the video is paused.
@@ -43,6 +70,7 @@ void MouseHandler::handleDragged(int x, int y, int button) {
 		}
 	}
 
+	// Updates internal coordinates once we're done with them.
 	handleMoved(x, y);
 }
 

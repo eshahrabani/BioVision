@@ -52,18 +52,6 @@ void ofApp::setup(){
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      
 	analyze_toggle.addListener(this, &ofApp::analyze_toggled);
 
-	// Setup computer vision.
-	// TODO: restructure after timeline is implemented. 
-	float w = vid_width;
-	float h = vid_height;
-
-	bLearnBackground = true;
-	colorImg.allocate(w, h);
-	grayImage.allocate(w, h);
-	grayBg.allocate(w, h);
-	grayDiff.allocate(w, h);
-	threshold.allocate(w, h);
-
 	// Setup timeline.
 	float tX = vid_x;
 	float tY = vid_y + vid_height;
@@ -97,34 +85,23 @@ void ofApp::draw(){
 	timeline->draw();
 	
 	// Draw the blobs found by the contour finder.
-	ofSetColor(153, 0, 0);
-	/*if (contourFinder.nBlobs > 0) {
-		// Offset the drawing locations of the blobs. 
-		for (ofxCvBlob blob : contourFinder.blobs) {
-			for (int i = 0; i < blob.pts.size(); i++) {
-				ofPoint pt = blob.pts[i];
-				float x = pt.x;
-				float y = pt.y;
-				//x = vid_x;
-				//y += vid_y;
-				blob.pts[i].set(x, y);
-			}
-			ofPolyline polyline(blob.pts);
-			polyline.draw();
-		}
-	}*/
-	contourFinder.draw(vid_x, vid_y, vid_width, vid_height);
+	ofSetColor(66, 244, 170);
+	
+	if (contourFinder.nBlobs > 0) {
+		contours = blobsToPolylines(contourFinder.blobs);
+	}
+	for (ofPolyline p : contours) {
+		drawPolyline(p, vid_x, vid_y);
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	logger.writeVerbose(key + " has been pressed. Sending to handler...");
 	keyHandler->handlePressed(key);
 }
 
 //--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-	logger.writeVerbose(key + " has been released. Sending to handler...");
+void ofApp::keyReleased(int key) {
 	keyHandler->handleReleased(key);
 }
 
@@ -248,16 +225,26 @@ void ofApp::analyze_toggled(bool &b) {
 		return;
 	}
 
+	float w = vid_width;
+	float h = vid_height;
+
+	bLearnBackground = true;
+	colorImg.allocate(w, h);
+	grayImage.allocate(w, h);
+	grayBg.allocate(w, h);
+	grayDiff.allocate(w, h);
+	threshold.allocate(w, h);
+	
 	// Computer vision analysis.
 	colorImg.setFromPixels(timeline->getVideoPixels());
-	colorImg.setROI(0, 0, vid_width, vid_height);
-	grayImage.setROI(0, 0, vid_width, vid_height);
-	threshold.setROI(0, 0, vid_width, vid_height);
+	colorImg.setROI(0, 0, w, h);
+	grayImage.setROI(0, 0, w, h);
+	threshold.setROI(0, 0, w, h);
 	grayImage = colorImg;
 	threshold = grayImage;
 	threshold.threshold(100);
 	contourFinder.findContours(threshold, 5, vid_width * vid_height, 10, 
-		false, true);
+		false, false);
 
 	logger.writeNormal("Finished vision analysis.");
 }

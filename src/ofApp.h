@@ -14,6 +14,7 @@
 #include "Marquee.h"
 #include "MouseHandler.h"
 #include "KeyHandler.h"
+#include "functions.h"
 
 
 class ofApp : public ofBaseApp{
@@ -77,7 +78,7 @@ class ofApp : public ofBaseApp{
 		ofxCvContourFinder contourFinder;
 		ofxCvColorImage colorImg;
 		ofxCvGrayscaleImage grayImage, threshold, grayBg, grayDiff;
-		std::vector<ofPolyline> polylines;
+		std::vector<ofPolyline> contours; // Vector of polylines, each representing a blob object.
 
 		// Video controls.
 		void play();

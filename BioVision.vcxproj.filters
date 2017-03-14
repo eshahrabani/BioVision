@@ -67,6 +67,9 @@
     <ClCompile Include="src\io\Logger.cpp">
       <Filter>src\io</Filter>
     </ClCompile>
+    <ClCompile Include="src\util\functions.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -170,6 +173,9 @@
     </Filter>
     <Filter Include="src\gui">
       <UniqueIdentifier>{97c2268a-4bce-4b1a-aea5-0287629a61ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\util">
+      <UniqueIdentifier>{81940891-9497-4ad1-9b93-2996f74cd75a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -724,6 +730,9 @@
     </ClInclude>
     <ClInclude Include="src\io\Logger.h">
       <Filter>src\io</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\functions.h">
+      <Filter>src\util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

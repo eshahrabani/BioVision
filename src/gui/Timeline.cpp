@@ -316,7 +316,7 @@ void Timeline::draw() {
 	if (videoPlayer.isLoaded()) {
 		// Draw the video player.
 		videoPlayer.draw(vidX, vidY, vidWidth, vidHeight);
-
+		
 		// Draw the outer box.
 		ofSetColor(timelineColor);
 		ofFill();

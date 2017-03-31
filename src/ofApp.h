@@ -103,7 +103,7 @@ class ofApp : public ofBaseApp{
 		ofxCvContourFinder contourFinder;
 		ofxCvColorImage colorImg;
 		ofxCvGrayscaleImage grayImage, threshold, grayBg, grayDiff;
-		std::vector<ofPolyline> contours; 
+		vector<ofPolyline> contours; 
 
 
 		/* -------------------- VIDEO CONTROLS -------------------- */

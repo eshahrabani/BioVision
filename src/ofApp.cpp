@@ -90,14 +90,11 @@ void ofApp::draw(){
 	labelY = vid_y - 10.0;
 	ofDrawBitmapString("Analysis", labelX, labelY);
 	
-	// Draw the blobs found by the contour finder.
+	// Draw the contours found by the contour finder.
 	ofSetColor(66, 244, 170);
-	
-	if (contourFinder.nBlobs > 0) {
-		contours = blobsToPolylines(contourFinder.blobs);
-	}
-	for (ofPolyline p : contours) {
-		drawPolyline(p, vid_x, vid_y);
+	if (contours.size() > 0) {
+		// Use (vid_x, vid_y) as the anchor point to draw the contours.
+		drawPolylines(contours, vid_x, vid_y);
 	}
 }
 
@@ -171,8 +168,15 @@ void ofApp::updateDimensions(int w, int h) {
 	app_width = w;					  
 	app_height = h;	
 
+	// Video width should always be half of app width.
 	vid_width = app_width / 2;
+
+	// Video height should always be half of app height.
 	vid_height = app_height / 2;
+
+	// Video x position should always be on the left.
 	vid_x = 0;
-	vid_y = app_height / 2 - vid_height / 2;
+
+	// Video y position should always be at 1/4 of the height.
+	vid_y = app_height / 4; 
 }

@@ -123,6 +123,8 @@ void KeyHandler::handleReleased(int key) {
 	switch (key) {
 
 		// If the control key is released, set its global boolean to false.
+	case OF_KEY_LEFT_CONTROL:
+	case OF_KEY_RIGHT_CONTROL:
 	case OF_KEY_CONTROL:
 		ctrl_pressed = false;
 		break;
@@ -137,6 +139,8 @@ void KeyHandler::handleReleased(int key) {
 		left_pressed = false;
 		break;
 
+	case OF_KEY_LEFT_ALT:
+	case OF_KEY_RIGHT_ALT:
 	case OF_KEY_ALT:
 		alt_pressed = false;
 		break;

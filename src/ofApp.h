@@ -27,9 +27,16 @@ class ofApp : public ofBaseApp{
 		LoggerLevel loggerLevel = LoggerLevel::VERBOSE;
 		Logger logger = Logger(loggerLevel);
 
+
 		/* -------------------- OPENFRAMEWORKS EVENT LISTENERS --------------------*/
+
+		// Setup() is called on initiation of ofApp, only once.
 		void setup();
+		
+		// update() is called many times per second, always preceding draw(). 
 		void update();
+
+		// draw() is called many timers per second, always succeeding update().
 		void draw();
 
 		void keyPressed(int key);
@@ -44,30 +51,51 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo); 
 		void gotMessage(ofMessage msg);
 
+
 		/* -------------------- GUI COMPONENTS --------------------*/
-		ofxPanel gui;							 
 		
-		ofxButton load_button;					
+		// The main panel consisting of the load button, etc. 
+		ofxPanel mainPanel;							 
+		
+		// The load button on the main panel.
+		ofxButton load_button;			
+
+		// The play toggle on the main panel.
 		ofParameter<bool> play_toggle;			
 		
-		ofxButton next_frame_button;		     
-		ofxButton previous_frame_button;		 
+		// The next frame button on the main panel.
+		ofxButton next_frame_button;		  
+
+		// The previous frame button on the main panel.
+		ofxButton previous_frame_button;	
+
+		// The play speed slider on the main panel.
 		ofxSlider<float> play_speed;			 
 		
+		// The analyze toggle on the main panel.
 		ofParameter<bool> analyze_toggle;		  
 	
+		// The timeline component.
 		Timeline* timeline;
+
+		// The marquee component. 
 		Marquee marquee;		
 
-		ofImage playButtonImg;
-		ofImage pauseButtonImg;
-		ofImage stopButtonImg;
 
 		/* -------------------- GUI LISTENERS --------------------*/
+		
+		// The function attached to the load button.
 		void load();
+
+		// The function attached to the play toggle.
 		void play_toggled(bool &b);
+
+		// The function attached to the play slider.
 		void play_speed_changed(float &f);
+
+		// The function attached to the analyze toggle.
 		void analyze_toggled(bool &b);
+
 
 		/* -------------------- VISION ANALYSIS -------------------- */
 		bool bLearnBackground;
@@ -76,31 +104,73 @@ class ofApp : public ofBaseApp{
 		ofxCvGrayscaleImage grayImage, threshold, grayBg, grayDiff;
 		std::vector<ofPolyline> contours; 
 
+
 		/* -------------------- VIDEO CONTROLS -------------------- */
+		
+		// Play the timeline video.
 		void play();
+
+		// Pause the timeline video.
 		void pause();
+
+		// Go to the next frame in the video.
 		void next_frame();
+
+		// Go to the previous frame in the video.
 		void previous_frame();
+
+		// Check if the timeline video is loaded.
 		bool isVideoLoaded();
+
+		// Check if the timeline video is playing. 
 		bool isVideoPlaying();
+
+		// Set the frame of the video.
 		void setFrame(int);
+
+		// Set the frame of the video using the position of a click on 
+		// the timeline. 
 		void setFrameFromMouseX(float);
+
+		// Restart the timeline video. 
 		void restartVideo();
 
+
 		/* -------------------- I/O HANDLERS -------------------- */
+
+		// Controls all mouse events for ofApp.
 		MouseHandler* mouseHandler;
+
+		// Controls all key events for ofApp.
 		KeyHandler* keyHandler;
 
+
 		/* -------------------- GLOBAL VARIABLES -------------------- */
-		int app_width;					  
+
+		// The width of the app.
+		int app_width;			
+
+		// The height of the app.
 		int app_height;		
 		
-		int vid_width;					
-		int vid_height;				  	   
+		// The width of the video.
+		int vid_width;				
+
+		// The height of the video.
+		int vid_height;				
+
+		// The x coordinate of the video relative to the app. 
 		int vid_x;
+
+		// The y coordinate of the video relative to the app.
 		int vid_y;
 
+
 		/* -------------------- HELPER METHODS -------------------- */
+
+		// Check if a point is inside the timeline. 
 		bool isInsideTimeline(float, float);
+
+		// Update the dimensions of ofApp. 
 		void updateDimensions(int w, int h);
 };

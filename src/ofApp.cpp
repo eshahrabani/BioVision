@@ -32,17 +32,17 @@ void ofApp::setup(){
 	updateDimensions(app_width, app_height);
 
 	// Start the main gui panel.
-	gui.setup("BioVision");
+	mainPanel.setup("BioVision");
 
 	// Add video buttons. 
-	gui.add(load_button.setup("Load"));	
-	gui.add(play_toggle.set("Play", false));						  
-	gui.add(next_frame_button.setup("Next frame"));				      
-	gui.add(previous_frame_button.setup("Previous frame"));		
-	gui.add(play_speed.setup("Play speed", 1.0, -3.0, 3.0));		  
+	mainPanel.add(load_button.setup("Load"));	
+	mainPanel.add(play_toggle.set("Play", false));						  
+	mainPanel.add(next_frame_button.setup("Next frame"));				      
+	mainPanel.add(previous_frame_button.setup("Previous frame"));		
+	mainPanel.add(play_speed.setup("Play speed", 1.0, -3.0, 3.0));		  
 	
 	// Add the analyze toggle.
-	gui.add(analyze_toggle.set("Analyze", false));
+	mainPanel.add(analyze_toggle.set("Analyze", false));
 
 	// Link the buttons to their respective methods.
 	load_button.addListener(this, &ofApp::load);					 
@@ -72,7 +72,7 @@ void ofApp::draw(){
 	ofSetColor(255, 255, 255);
 
 	// Draw the gui and its components.
-	gui.draw();
+	mainPanel.draw();
 
 	// Draw the timeline.
 	timeline->draw();
@@ -307,8 +307,6 @@ bool ofApp::isInsideTimeline(float x, float y) {
 	return timeline->isInsideTimeline(x, y);
 }
 
-// Updates the app to accomodate a new window size.
-// Later: handle the resizing of other components besides the video player.
 void ofApp::updateDimensions(int w, int h) {
 	logger.writeVerbose("Updating dimensions.");
 	// Store the new width and height of the app in our global variables.

@@ -10,6 +10,16 @@
 #include "ofApp.h"
 
 /*
+Applies a displacement to each point of a single polyline.
+*/
+ofPolyline displacePolyline(const ofPolyline &polyline, float dx, float dy);
+
+/*
+Applies a displacement to each point of every polyline.
+*/
+vector<ofPolyline> displacePolylines(const vector<ofPolyline> &polylines, float dx, float dy);
+
+/*
  * Draw a polyline using (x,y) as an offset anchor point. 
  *
  * For example (x,y) = (2,3) uses the point (2,3) to offset 

@@ -305,12 +305,10 @@ void Timeline::update() {
 
 // Must only be called after invoking the update method. 
 void Timeline::draw() {
-	// Draw unfilled rectangles around the video player
-	// area and the analysis display area.
+	// Draw unfilled rectangles around the video player area.
 	ofSetColor(0, 0, 0);
 	ofNoFill();
 	ofDrawRectangle(vidX, vidY, vidWidth, vidHeight);
-	ofDrawRectangle(vidX + vidWidth, vidY, vidWidth, vidHeight);
 	ofSetColor(255, 255, 255);
 
 	if (videoPlayer.isLoaded()) {

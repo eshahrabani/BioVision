@@ -74,15 +74,12 @@ void ofApp::draw(){
 	// Draw the gui and its components.
 	gui.draw();
 
-	// Draw gui images.
-	//playButtonImg.draw(playButtonImgX, playButtonImgY, playButtonImgWidth, 
-		//playButtonImgHeight);
-
-	// Draw the marquee.
-	//marquee.draw();
-
 	// Draw the timeline.
 	timeline->draw();
+
+	// Draw the analysis area.
+	ofSetColor(0, 0, 0);
+	ofDrawRectangle(vid_x + vid_width, vid_y, vid_width, vid_height);
 	
 	// Draw the blobs found by the contour finder.
 	ofSetColor(66, 244, 170);

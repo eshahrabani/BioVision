@@ -70,6 +70,12 @@
     <ClCompile Include="src\util\functions.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
+    <ClCompile Include="src\ofApp\controls.cpp">
+      <Filter>src\ofApp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ofApp\listeners.cpp">
+      <Filter>src\ofApp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -176,6 +182,9 @@
     </Filter>
     <Filter Include="src\util">
       <UniqueIdentifier>{81940891-9497-4ad1-9b93-2996f74cd75a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ofApp">
+      <UniqueIdentifier>{06f036f0-4a86-4504-82b6-0db418d24323}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

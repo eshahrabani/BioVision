@@ -1,25 +1,29 @@
 #include "functions.h"
-
-// Draws a polyline with anchor point (x,y) representing the top left corner. 
-void drawPolyline(ofPolyline polyline, float x=0.0, float y=0.0) {
-	// Add x,y to each point in the polyline.
-	// This unfortunately needs to be done assuming deep copies of everything are returned,
-	// since OF likes to insist on immutability. 
+ 
+void drawPolyline(const ofPolyline& polyline, float x=0.0, float y=0.0) {
 	ofPolyline p = ofPolyline();
+
+	// Perform the offset on a new polyline. 
 	for (ofPoint pt : polyline.getVertices()) {
 		p.addVertex(ofPoint(pt.x + x, pt.y + y));
 	}
 	p.draw();
 }
 
-ofPolyline blobToPolyline(ofxCvBlob blob) {
+void drawPolylines(const vector<ofPolyline>& polylines, float x = 0.0, float y = 0.0) {
+	for (ofPolyline p : polylines) {
+		p.draw();
+	}
+}
+
+ofPolyline blobToPolyline(const ofxCvBlob& blob) {
 	return(ofPolyline(blob.pts));
 }
 
-std::vector<ofPolyline> blobsToPolylines(std::vector<ofxCvBlob> blobs) {
-	std::vector<ofPolyline> polylines;
+vector<ofPolyline> blobsToPolylines(const vector<ofxCvBlob>& blobs) {
+	vector<ofPolyline> polylines;
 	for (ofxCvBlob blob : blobs) {
-		polylines.push_back(blobToPolyline(blob));
+		polylines.push_back(ofPolyline(blob.pts));
 	}
 	return polylines;
 }

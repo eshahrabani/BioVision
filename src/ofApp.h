@@ -16,6 +16,7 @@
 #include "KeyHandler.h"
 #include "functions.h"
 
+using std::vector;
 
 class ofApp : public ofBaseApp{
 

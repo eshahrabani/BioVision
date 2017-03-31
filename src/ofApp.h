@@ -23,10 +23,11 @@ class ofApp : public ofBaseApp{
 		ofApp();
 		~ofApp();
 
-		// Some user config:
+		/* -------------------- LOGGER CONFIGURATION --------------------*/
 		LoggerLevel loggerLevel = LoggerLevel::VERBOSE;
+		Logger logger = Logger(loggerLevel);
 
-		// Default event methods.
+		/* -------------------- OPENFRAMEWORKS EVENT LISTENERS --------------------*/
 		void setup();
 		void update();
 		void draw();
@@ -43,7 +44,7 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo); 
 		void gotMessage(ofMessage msg);
 
-		// GUI components.
+		/* -------------------- GUI COMPONENTS --------------------*/
 		ofxPanel gui;							 
 		
 		ofxButton load_button;					
@@ -62,25 +63,20 @@ class ofApp : public ofBaseApp{
 		ofImage pauseButtonImg;
 		ofImage stopButtonImg;
 
-		// GUI listener methods.
+		/* -------------------- GUI LISTENERS --------------------*/
 		void load();
 		void play_toggled(bool &b);
 		void play_speed_changed(float &f);
 		void analyze_toggled(bool &b);
 
-		// Handlers. 
-		MouseHandler* mouseHandler;
-		KeyHandler* keyHandler;
-
-		// Vision analysis.
-		// TODO: restructure. 
+		/* -------------------- VISION ANALYSIS -------------------- */
 		bool bLearnBackground;
 		ofxCvContourFinder contourFinder;
 		ofxCvColorImage colorImg;
 		ofxCvGrayscaleImage grayImage, threshold, grayBg, grayDiff;
-		std::vector<ofPolyline> contours; // Vector of polylines, each representing a blob object.
+		std::vector<ofPolyline> contours; 
 
-		// Video controls.
+		/* -------------------- VIDEO CONTROLS -------------------- */
 		void play();
 		void pause();
 		void next_frame();
@@ -91,10 +87,11 @@ class ofApp : public ofBaseApp{
 		void setFrameFromMouseX(float);
 		void restartVideo();
 
-		// Logger.
-		Logger logger = Logger(loggerLevel);
+		/* -------------------- I/O HANDLERS -------------------- */
+		MouseHandler* mouseHandler;
+		KeyHandler* keyHandler;
 
-		// Globals.
+		/* -------------------- GLOBAL VARIABLES -------------------- */
 		int app_width;					  
 		int app_height;		
 		
@@ -103,18 +100,7 @@ class ofApp : public ofBaseApp{
 		int vid_x;
 		int vid_y;
 
-		int playButtonImgWidth = vid_width / 4;
-		int playButtonImgHeight = app_height / 12;
-		int playButtonImgX = app_width / 2;
-		int playButtonImgY = (3 * app_height) / 4;
-
-		// Constants.
-		// Note: filenames are relative to the bin/data/ directory. 
-		const string playButtonPath = "gui/PlayButton.jpg";
-		const string pauseButtonPath = "gui/PauseButton.jpg";
-		const string stopButtonPath = "gui/PauseButton.jpg";
-
-		// Helper methods. 
+		/* -------------------- HELPER METHODS -------------------- */
 		bool isInsideTimeline(float, float);
 		void updateDimensions(int w, int h);
 };

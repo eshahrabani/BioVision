@@ -64,6 +64,18 @@
     <ClCompile Include="src\gui\Timeline.cpp">
       <Filter>src\gui</Filter>
     </ClCompile>
+    <ClCompile Include="src\io\Logger.cpp">
+      <Filter>src\io</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util\functions.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ofApp\controls.cpp">
+      <Filter>src\ofApp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ofApp\listeners.cpp">
+      <Filter>src\ofApp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -167,6 +179,12 @@
     </Filter>
     <Filter Include="src\gui">
       <UniqueIdentifier>{97c2268a-4bce-4b1a-aea5-0287629a61ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\util">
+      <UniqueIdentifier>{81940891-9497-4ad1-9b93-2996f74cd75a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ofApp">
+      <UniqueIdentifier>{06f036f0-4a86-4504-82b6-0db418d24323}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -718,6 +736,12 @@
     </ClInclude>
     <ClInclude Include="src\gui\Timeline.h">
       <Filter>src\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\io\Logger.h">
+      <Filter>src\io</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\functions.h">
+      <Filter>src\util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -2,18 +2,17 @@
 
 // Constructor.
 ofApp::ofApp() : ofBaseApp() {
+	logger.writeVerbose("Running ofApp constructor.");
+
 	// Start handlers. 
 	mouseHandler = new MouseHandler(this);
 	keyHandler = new KeyHandler(this);
-
-	// Setup timeline.
-	timeline = new Timeline(vid_x, vid_y + vid_height,
-		vid_width, vid_height / 4, ofColor(67, 80, 102), 100);
-
 }
 
 // Destructor.
 ofApp::~ofApp() {
+	logger.writeVerbose("Running ofApp destructor.");
+
 	// Delete the handlers.
 	delete mouseHandler;
 	delete keyHandler;
@@ -25,18 +24,25 @@ ofApp::~ofApp() {
 //--------------------------------------------------------------
 // Called once on startup. 
 void ofApp::setup(){
+	logger.writeVerbose("Running ofApp setup method.");
+
+	// Store app width and height.
+	app_width = ofGetWidth();
+	app_height = ofGetHeight();
+	updateDimensions(app_width, app_height);
+
 	// Start the main gui panel.
-	gui.setup("BioVision");
+	mainPanel.setup("BioVision");
 
 	// Add video buttons. 
-	gui.add(load_button.setup("Load"));	
-	gui.add(play_toggle.set("Play", false));						  
-	gui.add(next_frame_button.setup("Next frame"));				      
-	gui.add(previous_frame_button.setup("Previous frame"));		
-	gui.add(play_speed.setup("Play speed", 1.0, -3.0, 3.0));		  
+	mainPanel.add(load_button.setup("Load"));	
+	mainPanel.add(play_toggle.set("Play", false));						  
+	mainPanel.add(next_frame_button.setup("Next frame"));				      
+	mainPanel.add(previous_frame_button.setup("Previous frame"));		
+	mainPanel.add(play_speed.setup("Play speed", 1.0, -3.0, 3.0));		  
 	
 	// Add the analyze toggle.
-	gui.add(analyze_toggle.set("Analyze", false));
+	mainPanel.add(analyze_toggle.set("Analyze", false));
 
 	// Link the buttons to their respective methods.
 	load_button.addListener(this, &ofApp::load);					 
@@ -46,73 +52,43 @@ void ofApp::setup(){
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      
 	analyze_toggle.addListener(this, &ofApp::analyze_toggled);
 
-	// Load gui images.
-	playButtonImg.load(playButtonPath);
-	pauseButtonImg.load(pauseButtonPath);
-	stopButtonImg.load(stopButtonPath);
-
-	// Setup computer vision.
-	// TODO: restructure after timeline is implemented. 
-	float w = vid_width;
-	float h = vid_height;
-
-	bLearnBackground = true;
-	colorImg.allocate(w, h);
-	grayImage.allocate(w, h);
-	grayBg.allocate(w, h);
-	grayDiff.allocate(w, h);
-	threshold.allocate(w, h);
+	// Setup timeline.
+	float tX = vid_x;
+	float tY = vid_y + vid_height;
+	float tWidth = vid_width;
+	float tHeight = vid_height / 4;
+	timeline = new Timeline(vid_x, vid_y, vid_width, vid_height,
+		tX, tY, tWidth, tHeight,
+		ofColor(67, 80, 102), 100);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	if (!video_player.isLoaded()) {
-		return;
-	}
-	// Update the frames of the video playe.rc
-	video_player.update();
-
-	// Update the position of the timeline's play slider.
-	float duration = video_player.getDuration();
-	int currentFrame = video_player.getCurrentFrame();
-
-	int nFrames = video_player.getTotalNumFrames();
-	float currentTime = duration * ((float)currentFrame / (float)nFrames);
-	currentTime = fmod(currentTime, timeline->getNumNotches()); 
-	float pixelsPerSecond = timeline->width() / timeline->getNumNotches(); // Each notch is 1 second. 
-	float currentX = timeline->getX() + (currentTime * pixelsPerSecond);
-	float currentY = timeline->getY();
-	timeline->setPlaySliderPosition(currentX, currentY);
+	timeline->update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	ofSetColor(255, 255, 255);
+
 	// Draw the gui and its components.
-	gui.draw();
-
-	// Draw the video player according to current dimensions.
-	video_player.draw(vid_x, vid_y, vid_width, vid_height);
-
-	// Draw gui images.
-	//playButtonImg.draw(playButtonImgX, playButtonImgY, playButtonImgWidth, 
-		//playButtonImgHeight);
-
-	// Draw the marquee.
-	//marquee.draw();
+	mainPanel.draw();
 
 	// Draw the timeline.
 	timeline->draw();
 
-	if (contourFinder.blobs.size() > 0) {
-		contourFinder.draw(vid_width, 0, vid_width, vid_height);
-		/*ofColor c(255, 255, 255);
-		for (int i = 0; i < contourFinder.nBlobs; i++) {
-			ofRectangle r = contourFinder.blobs.at(i).boundingRect;
-			r.x += vid_width; r.y += vid_height;
-			c.setHsb(i * 64, 255, 255);
-			ofSetColor(c);
-			ofDrawRectangle(r);
-		}*/
+	// Draw the analysis area.
+	ofSetColor(0, 0, 0);
+	ofDrawRectangle(vid_x + vid_width, vid_y, vid_width, vid_height);
+	
+	// Draw the blobs found by the contour finder.
+	ofSetColor(66, 244, 170);
+	
+	if (contourFinder.nBlobs > 0) {
+		contours = blobsToPolylines(contourFinder.blobs);
+	}
+	for (ofPolyline p : contours) {
+		drawPolyline(p, vid_x, vid_y);
 	}
 }
 
@@ -122,7 +98,7 @@ void ofApp::keyPressed(int key){
 }
 
 //--------------------------------------------------------------
-void ofApp::keyReleased(int key){
+void ofApp::keyReleased(int key) {
 	keyHandler->handleReleased(key);
 }
 
@@ -157,9 +133,12 @@ void ofApp::mouseExited(int x, int y){
 }
 
 //--------------------------------------------------------------
-// When we detect the window has been resized, call updateDimensions() 
+// When we detect the window has been resized, call updateDimensions 
 // to update all of our components that need to be updated.
 void ofApp::windowResized(int w, int h){
+	logger.writeVerbose(
+		"Detected window resize. Updating dimensions of components."
+	);
 	updateDimensions(w, h);
 }
 
@@ -173,155 +152,18 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }
 
-void ofApp::load() {
-	// Open load dialog.
-	ofFileDialogResult result = ofSystemLoadDialog();							
-	cout << "Attempting to load file: " << result.filePath << endl << endl;	
-
-	// Attempt to load the file. Will refuse to load if the file extension 
-	// is invalid, and notifies the user in the console. 
-	video_player.loadMovie(result.filePath);											
-	
-	// Check successful load.
-	if (video_player.isLoaded()) {
-		cout << "File loaded successfully.\n\n";
-	}
-	else 
-		return;
-
-	// Unreachable if the video did not load properly. 
-	// Displays the first frame.
-	video_player.setPaused(true);
+bool ofApp::isInsideTimeline(float x, float y) {
+	return timeline->isInsideTimeline(x, y);
 }
 
-
-// This method is called when the state of the play toggle is changed,
-// either graphically or via code. 
-void ofApp::play_toggled(bool &play) {
-	if (video_player.isLoaded()) {
-		if (play) {
-			// If the play toggle is enabled, play the video 
-			// and change the toggle name to "Playing".
-			video_player.setPaused(false);
-			play_toggle.setName("Playing");
-			cout << "Playing video.\n\n";  
-		} else {
-			// If the play toggle is disabled, pause the video 
-			// and change the toggle name to "Play".
-			video_player.setPaused(true);
-			play_toggle.setName("Play");
-			cout << "Pausing video.\n\n";
-		}
-	} else { 
-		// File has not been loaded.
-		if (play) {
-			// If the play toggle is currently on, turn it back off.
-			cout << "Load a video before playing.\n\n";
-			play_toggle = !play_toggle;
-		}
-	}
-}
-
-// This method is used to either play or pause the video by inverting 
-// the state of the play toggle, which is being listened to by play_toggled().
-// This also updates the GUI.
-void ofApp::play_or_pause() {
-	play_toggle = !play_toggle;
-}
-
-void ofApp::next_frame() {
-	// Exit method if video isn't loaded.
-	if (!video_player.isLoaded()) 
-		return;
-
-	// If video is currently playing, pause it.
-	if (play_toggle) {
-		cout << "Pausing video.\n\n";
-		play_or_pause();
-	}
-
-	// Go one frame forward.
-	cout << "Going forward one frame.\n\n";
-	if (video_player.getCurrentFrame() < video_player.getTotalNumFrames())
-		video_player.nextFrame();
-}
-
-void ofApp::previous_frame() {
-	// Exit method if video isn't loaded.
-	if (!video_player.isLoaded()) 
-		return;
-
-	// If video is currently playing, pause it.
-	if (play_toggle) {
-		cout << "Pausing video.\n\n";
-		play_or_pause();
-	}
-
-	// Go one frame backward.
-	cout << "Going backward one frame.\n\n";
-	if (video_player.getCurrentFrame() > 1)
-		video_player.previousFrame();
-}
-
-void ofApp::play_speed_changed(float &f) {
-	if (!video_player.isLoaded()) 
-		return;
-	video_player.setSpeed(f);
-}
-
-void ofApp::analyze_toggled(bool &b) {
-	// If video isn't loaded, exit this method after reverting the toggle 
-	// (if it's on). 
-	if (!video_player.isLoaded()) {
-		if (b) 
-			analyze_toggle = !analyze_toggle;
-		return;
-	}
-	
-	// If toggle is on, change the analyze toggle name to "analyzing"
-	// and pause the video if it's currently playing. 
-	if (b) {
-		analyze_toggle.setName("Analyzing");
-		cout << "Performing computer vision analysis.\n\n";
-		if (play_toggle) 
-			play_or_pause();
-	} else
-		analyze_toggle.setName("Analyze");
-
-	// Don't perform analysis if toggled off. 
-	if (!b) return;
-
-	// Computer vision analysis.
-	colorImg.setFromPixels(video_player.getPixels());
-	colorImg.setROI(0, 0, vid_width, vid_height);
-	grayImage.setROI(0, 0, vid_width, vid_height);
-	threshold.setROI(0, 0, vid_width, vid_height);
-	grayImage = colorImg;
-	threshold = grayImage;
-	threshold.threshold(100);
-	contourFinder.findContours(threshold, 5, vid_width * vid_height, 100, 
-		false, true);
-
-	cout << "Finished analysis.\n\n";
-}
-
-// Updates the size of the video player according to the current dimensions of the app.
-void ofApp::resizeVideoPlayer() {
-	vid_width = app_width / 2;					  
-	vid_height = app_height / 2;				  
-	vid_x = app_width / 2 - vid_width / 2;	      
-	vid_y = app_height / 2 - vid_height / 2;      
-}
-
-// Updates the app to accomodate a new window size.
-// Later: handle the resizing of other components besides the video player.
 void ofApp::updateDimensions(int w, int h) {
-	
+	logger.writeVerbose("Updating dimensions.");
 	// Store the new width and height of the app in our global variables.
 	app_width = w;					  
 	app_height = h;	
-	
-	// Update the size of the video player.
-	resizeVideoPlayer();
-}
 
+	vid_width = app_width / 2;
+	vid_height = app_height / 2;
+	vid_x = 0;
+	vid_y = app_height / 2 - vid_height / 2;
+}

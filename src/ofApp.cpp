@@ -74,12 +74,21 @@ void ofApp::draw(){
 	// Draw the gui and its components.
 	mainPanel.draw();
 
-	// Draw the timeline.
+	// Draw the timeline and a label above it.
 	timeline->draw();
+	
+	float labelX = vid_x + (vid_width / 2);
+	float labelY = vid_y - 10.0;
+	ofSetColor(0, 0, 0);
+	ofDrawBitmapString("Video", labelX, labelY);
 
-	// Draw the analysis area.
+	// Draw the analysis area and a label above it.
 	ofSetColor(0, 0, 0);
 	ofDrawRectangle(vid_x + vid_width, vid_y, vid_width, vid_height);
+
+	labelX = vid_x + vid_width + (vid_width / 2);
+	labelY = vid_y - 10.0;
+	ofDrawBitmapString("Analysis", labelX, labelY);
 	
 	// Draw the blobs found by the contour finder.
 	ofSetColor(66, 244, 170);

@@ -37,29 +37,12 @@ void MouseHandler::handleDragged(int x, int y, int button) {
 		}*/
 
 		// If ctrl pressed, move contourfinder blobs.
-		KeyHandler& kh = *(app->keyHandler);
-		if (kh.ctrl_pressed && app->contours.size() > 0) {
+		KeyHandler* kh = app->keyHandler;
+		if (kh->ctrl_pressed && app->contours.size() > 0) {
 			float dx = x - pos_x;
 			float dy = y - pos_y;
 
-			// Apply displacements to left corner of every point. 
-			std::vector<ofPolyline>* contours = &(app->contours);
-			for (int i = 0; i < contours->size(); i++) {
-				// Store the polyline so we can modify it.
-				ofPolyline p = (*contours)[i];
-
-				for (int j = 0; j < p.size(); j++) {
-					// Store the point so we can modify it.
-					ofPoint pt = p[j];
-
-					// Modify point then reassign back to the polyline.
-					pt.x += dx;
-					pt.y += dy;
-					p[j] = ofPoint(pt);
-				}
-				// Reassign polyline back to polyline vector.
-				(*contours)[i] = p;
-			}
+			app->contours = displacePolylines(app->contours, dx, dy);
 		}
 
 		// If in timeline, update the frame position.

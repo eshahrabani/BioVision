@@ -93,5 +93,9 @@ void ofApp::analyze_toggled(bool &b) {
 	contourFinder.findContours(threshold, 5, vid_width * vid_height, 10,
 		false, false);
 
+	// Update the contours vector in ofApp.
+	this->contours = blobsToPolylines(contourFinder.blobs);
+
+	// Log completion. 
 	logger.writeNormal("Finished vision analysis.");
 }

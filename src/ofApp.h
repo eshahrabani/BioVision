@@ -1,7 +1,3 @@
-// ofApp is the main class of this application. 
-// It encapsulates the methods of the Timeline, so 
-// all functionality should be routed through ofApp.
-
 #pragma once
 
 #include <math.h>
@@ -18,6 +14,9 @@
 
 using std::vector;
 
+// ofApp is the main class of this application. 
+// It encapsulates the methods of the Timeline, so 
+// all functionality should be routed through ofApp.
 class ofApp : public ofBaseApp{
 
 	public:

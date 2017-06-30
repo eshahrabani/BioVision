@@ -198,11 +198,12 @@
     <ClCompile Include="src\util\functions.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\gui\Marquee.h" />
-    <ClInclude Include="src\gui\Timeline.h" />
-    <ClInclude Include="src\io\KeyHandler.h" />
-    <ClInclude Include="src\io\Logger.h" />
-    <ClInclude Include="src\io\MouseHandler.h" />
+    <ClInclude Include="src\include\functions.h" />
+    <ClInclude Include="src\include\KeyHandler.h" />
+    <ClInclude Include="src\include\Logger.h" />
+    <ClInclude Include="src\include\Marquee.h" />
+    <ClInclude Include="src\include\MouseHandler.h" />
+    <ClInclude Include="src\include\Timeline.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxBaseGui.h" />
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxButton.h" />
@@ -382,7 +383,6 @@
     <ClInclude Include="..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\videostab\optical_flow.hpp" />
     <ClInclude Include="..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\videostab\stabilizer.hpp" />
     <ClInclude Include="..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\videostab\videostab.hpp" />
-    <ClInclude Include="src\util\functions.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">

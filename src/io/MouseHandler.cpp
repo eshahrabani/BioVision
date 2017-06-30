@@ -63,23 +63,25 @@ void MouseHandler::handlePressed(int x, int y, int button) {
 	last_clicked_button = button;
 
 	if (button == OF_MOUSE_BUTTON_LEFT) {
-
-		// TODO: Needs streamline via custom videoplayer class. 
 		ofRectangle area;
 		area.set(app->vid_x, app->vid_y, app->vid_width, app->vid_height);
 
 		if (area.inside(x, y)) {
-			pressedInsidePlayer = true;
+			this->pressedInsidePlayer = true;
 		}
 
 		if (app->isInsideTimeline(x, y) && app->isVideoLoaded()) {
-			cout << "Clicked inside timeline.\n\n";
 			pressedInsideTimeline = true;
 			
 			// Make sure video is paused.
 			app->pause();
-			cout << "Setting timeline frame with x coordinate: " << x << endl << endl;
 			app->setFrameFromMouseX(x);
+		}
+
+		// If pressed inside player and polygonSelection is true, build a polygon selection.
+		cout << app->polygonSelection;
+		if (pressedInsidePlayer && app->polygonSelection) {
+			app->selectedArea.addVertex(x, y);
 		}
 	}
 }

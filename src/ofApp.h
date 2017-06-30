@@ -101,6 +101,9 @@ class ofApp : public ofBaseApp{
 		// The function attached to the analyze toggle.
 		void analyze_toggled(bool &b);
 
+		// The function attached to the polygon selector toggle.
+		void polygonSelectorToggled(bool &b);
+
 
 		/* -------------------- VISION ANALYSIS -------------------- */
 		bool bLearnBackground;
@@ -170,6 +173,11 @@ class ofApp : public ofBaseApp{
 		// The y coordinate of the video relative to the app.
 		int vid_y;
 
+		// The state of the polygon selector tool.
+		bool polygonSelection = false;
+
+		// The selected area via the polygon selector tool.
+		ofPolyline selectedArea;
 
 		/* -------------------- HELPER METHODS -------------------- */
 

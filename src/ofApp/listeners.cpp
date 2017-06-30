@@ -99,3 +99,9 @@ void ofApp::analyze_toggled(bool &b) {
 	// Log completion. 
 	logger.writeNormal("Finished vision analysis.");
 }
+
+void ofApp::polygonSelectorToggled(bool &b) {
+	// Reset the selected area when toggled.
+	this->selectedArea.clear();
+	this->polygonSelection = b;
+}

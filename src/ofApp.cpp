@@ -54,6 +54,7 @@ void ofApp::setup(){
 	previous_frame_button.addListener(this, &ofApp::previous_frame);  
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      
 	analyze_toggle.addListener(this, &ofApp::analyze_toggled);
+	polygonSelectorToggle.addListener(this, &ofApp::polygonSelectorToggled);
 
 	// Setup timeline.
 	float tX = vid_x;
@@ -99,6 +100,10 @@ void ofApp::draw(){
 		// Use (vid_x, vid_y) as the anchor point to draw the contours.
 		drawPolylines(contours, vid_x, vid_y);
 	}
+
+	// Draw the selected area.
+	ofSetColor(255, 0, 0);
+	selectedArea.draw();
 }
 
 //--------------------------------------------------------------

@@ -76,6 +76,9 @@ class ofApp : public ofBaseApp{
 		
 		// The analyze toggle on the main panel.
 		ofParameter<bool> analyze_toggle;		  
+
+		// The polygon selector toggle on the main panel.
+		ofParameter<bool> polygonSelectorToggle;
 	
 		// The timeline component.
 		Timeline* timeline;

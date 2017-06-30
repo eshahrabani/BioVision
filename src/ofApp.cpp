@@ -44,6 +44,9 @@ void ofApp::setup(){
 	// Add the analyze toggle.
 	mainPanel.add(analyze_toggle.set("Analyze", false));
 
+	// Add the polygon selector toggle.
+	mainPanel.add(polygonSelectorToggle.set("Polygon Selector Tool", false));
+
 	// Link the buttons to their respective methods.
 	load_button.addListener(this, &ofApp::load);					 
 	play_toggle.addListener(this, &ofApp::play_toggled);              

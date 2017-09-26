@@ -104,7 +104,7 @@ void ofApp::draw(){
 	ofDrawBitmapString("Analysis", labelX, labelY);
 	
 	// Draw the contours found by the contour finder.
-	ofSetColor(66, 244, 170);
+	ofSetColor(255, 0, 0);
 	if (contours.size() > 0) {
 		// Use (vid_x, vid_y) as the anchor point to draw the contours.
 		drawPolylines(contours, vid_x, vid_y);

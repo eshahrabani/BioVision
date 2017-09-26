@@ -79,7 +79,6 @@ void MouseHandler::handlePressed(int x, int y, int button) {
 		}
 
 		// If pressed inside player and polygonSelection is true, build a polygon selection.
-		cout << app->polygonSelection;
 		if (pressedInsidePlayer && app->polygonSelection) {
 			app->selectedArea.addVertex(x, y);
 		}

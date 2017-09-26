@@ -192,8 +192,11 @@ class ofApp : public ofBaseApp{
 		// The state of the polygon selector tool.
 		bool polygonSelection = false;
 
-		// The selected area via the polygon selector tool.
+		// The currently selected area via the polygon selector tool.
 		ofPolyline selectedArea;
+
+		// All the objects selected for the current frame.
+		std::vector<ofPolyline> selectedAreas;
 
 		/* -------------------- HELPER METHODS -------------------- */
 

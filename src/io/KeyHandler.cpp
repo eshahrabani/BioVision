@@ -103,6 +103,8 @@ void KeyHandler::handlePressed(int key) {
 	case OF_KEY_RETURN:
 		if (app->selectedArea.getVertices().size() > 0) {
 			app->selectedArea.close();
+			app->selectedAreas.push_back(app->selectedArea);
+			app->selectedArea.clear();
 		}
 		break;
 

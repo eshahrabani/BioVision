@@ -108,6 +108,12 @@ void ofApp::draw(){
 	// Draw the selected area.
 	ofSetColor(255, 0, 0);
 	selectedArea.draw();
+
+	// Draw all selected objects.
+	ofSetColor(66, 117, 238);
+	for (ofPolyline p : selectedAreas) {
+		p.draw();
+	}
 }
 
 //--------------------------------------------------------------

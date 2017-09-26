@@ -2,6 +2,8 @@
 
 #include <math.h>
 #include <random>
+#include <iostream>
+#include <fstream>
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxOpenCv.h"
@@ -13,6 +15,7 @@
 #include "functions.h"
 
 using std::vector;
+using std::ofstream;
 
 // ofApp is the main class of this application. 
 // It encapsulates the methods of the Timeline, so 
@@ -115,6 +118,7 @@ class ofApp : public ofBaseApp{
 		// Output mode toggle listener.
 		void outputModeToggled(bool &b);
 
+		// Save frame button listener.
 		void saveFrame();
 
 
@@ -197,6 +201,8 @@ class ofApp : public ofBaseApp{
 
 		// All the objects selected for the current frame.
 		std::vector<ofPolyline> selectedAreas;
+
+		ofstream output;
 
 		/* -------------------- HELPER METHODS -------------------- */
 

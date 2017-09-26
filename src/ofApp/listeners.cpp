@@ -107,5 +107,25 @@ void ofApp::polygonSelectorToggled(bool &b) {
 }
 
 void ofApp::saveFrame() {
+	// Follow schema: frame, centroids..., areas...
+	float frame = this->getCurrentFrame();
 
+	vector<ofPoint> centroids;
+	vector<float> areas;
+	for (ofPolyline p : this->selectedAreas) {
+		centroids.push_back(p.getCentroid2D());
+		areas.push_back(p.getArea());
+	}
+
+	this->output << frame << ",";
+	for (ofPoint centroid : centroids) {
+		this->output << "[" << centroid.x << "," << centroid.y << "],";
+	}
+
+	for (float area : areas) {
+		this->output << area << ",";
+	}
+
+	this->output << "\n";
+	this->selectedAreas.clear();
 }

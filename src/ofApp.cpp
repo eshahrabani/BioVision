@@ -19,6 +19,9 @@ ofApp::~ofApp() {
 
 	// Delete the timeline.
 	delete timeline;
+
+	// Close the output file.
+	output.close();
 }
 
 //--------------------------------------------------------------
@@ -67,6 +70,8 @@ void ofApp::setup(){
 	timeline = new Timeline(vid_x, vid_y, vid_width, vid_height,
 		tX, tY, tWidth, tHeight,
 		ofColor(67, 80, 102), 100);
+	
+	output.open("data/output.txt");
 }
 
 //--------------------------------------------------------------

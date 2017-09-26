@@ -24,17 +24,6 @@ void ofApp::next_frame() {
 		pause();
 	}
 	logger.writeVerbose("Jumping to next frame.");
-
-	// Save the polygon data in file then clear the selected area.
-	ofPolyline selected = this->selectedArea;
-	ofPoint centroid = selected.getCentroid2D();
-	float area = selected.getArea();
-
-	logger.writeNormal(std::to_string(centroid.x));
-	logger.writeNormal(std::to_string(centroid.y));
-	logger.writeNormal(std::to_string(area));
-
-	this->selectedArea.clear();
 	timeline->nextFrame();
 }
 

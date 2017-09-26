@@ -79,6 +79,9 @@ class ofApp : public ofBaseApp{
 
 		// The polygon selector toggle on the main panel.
 		ofParameter<bool> polygonSelectorToggle;
+
+		// Output mode toggle.
+		ofParameter<bool> outputModeToggle;
 	
 		// The timeline component.
 		Timeline* timeline;
@@ -103,6 +106,9 @@ class ofApp : public ofBaseApp{
 
 		// The function attached to the polygon selector toggle.
 		void polygonSelectorToggled(bool &b);
+
+		// Output mode toggle listener.
+		void outputModeToggled(bool &b);
 
 
 		/* -------------------- VISION ANALYSIS -------------------- */
@@ -178,6 +184,8 @@ class ofApp : public ofBaseApp{
 
 		// The state of the polygon selector tool.
 		bool polygonSelection = false;
+
+		bool outputMode = false;
 
 		// The selected area via the polygon selector tool.
 		ofPolyline selectedArea;

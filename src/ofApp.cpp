@@ -46,6 +46,7 @@ void ofApp::setup(){
 
 	// Add the polygon selector toggle.
 	mainPanel.add(polygonSelectorToggle.set("Polygon Selector Tool", false));
+	mainPanel.add(outputModeToggle.set("Output Mode", false));
 
 	// Link the buttons to their respective methods.
 	load_button.addListener(this, &ofApp::load);					 
@@ -55,6 +56,7 @@ void ofApp::setup(){
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      
 	analyze_toggle.addListener(this, &ofApp::analyze_toggled);
 	polygonSelectorToggle.addListener(this, &ofApp::polygonSelectorToggled);
+	outputModeToggle.addListener(this, &ofApp::outputModeToggled);
 
 	// Setup timeline.
 	float tX = vid_x;

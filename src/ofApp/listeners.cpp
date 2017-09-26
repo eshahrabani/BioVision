@@ -105,3 +105,7 @@ void ofApp::polygonSelectorToggled(bool &b) {
 	this->selectedArea.clear();
 	this->polygonSelection = b;
 }
+
+void ofApp::outputModeToggled(bool &b) {
+	this->outputMode = b;
+}

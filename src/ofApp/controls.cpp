@@ -47,6 +47,11 @@ void ofApp::setFrame(int f) {
 	timeline->setFrame(f);
 }
 
+int ofApp::getCurrentFrame()
+{
+	return timeline->getCurrentFrame();
+}
+
 void ofApp::setFrameFromMouseX(float x) {
 	logger.writeVerbose("Setting new frame from ofApp using mouse X.");
 	timeline->setFrameFromMouseX(x);

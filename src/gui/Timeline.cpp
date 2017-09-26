@@ -53,6 +53,11 @@ float Timeline::getVidHeight() {
 	return vidHeight;
 }
 
+int Timeline::getCurrentFrame()
+{
+	return videoPlayer.getCurrentFrame();
+}
+
 const ofColor& Timeline::getColor() {
 	return timelineColor;
 }

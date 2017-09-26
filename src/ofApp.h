@@ -136,6 +136,9 @@ class ofApp : public ofBaseApp{
 		// Set the frame of the video.
 		void setFrame(int);
 
+		// Get the current frame of the video.
+		int getCurrentFrame();
+
 		// Set the frame of the video using the position of a click on 
 		// the timeline. 
 		void setFrameFromMouseX(float);

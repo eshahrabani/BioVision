@@ -29,6 +29,8 @@ public:
 	float getVidWidth();
 	float getVidHeight();
 
+	int getCurrentFrame();
+
 	const ofColor& getColor();
 	int getNumNotches();
 	const std::vector<ofRectangle>& getNotches();

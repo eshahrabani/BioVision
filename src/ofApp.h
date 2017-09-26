@@ -57,7 +57,9 @@ class ofApp : public ofBaseApp{
 		/* -------------------- GUI COMPONENTS --------------------*/
 		
 		// The main panel consisting of the load button, etc. 
-		ofxPanel mainPanel;							 
+		ofxPanel mainPanel;			
+
+		ofxPanel toolsPanel;
 		
 		// The load button on the main panel.
 		ofxButton load_button;			
@@ -82,6 +84,9 @@ class ofApp : public ofBaseApp{
 
 		// Output mode toggle.
 		ofParameter<bool> outputModeToggle;
+
+		// Save frame button.
+		ofxButton saveFrameButton;
 	
 		// The timeline component.
 		Timeline* timeline;
@@ -109,6 +114,8 @@ class ofApp : public ofBaseApp{
 
 		// Output mode toggle listener.
 		void outputModeToggled(bool &b);
+
+		void saveFrame();
 
 
 		/* -------------------- VISION ANALYSIS -------------------- */
@@ -184,8 +191,6 @@ class ofApp : public ofBaseApp{
 
 		// The state of the polygon selector tool.
 		bool polygonSelection = false;
-
-		bool outputMode = false;
 
 		// The selected area via the polygon selector tool.
 		ofPolyline selectedArea;

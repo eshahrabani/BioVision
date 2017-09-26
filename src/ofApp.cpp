@@ -33,20 +33,20 @@ void ofApp::setup(){
 
 	// Start the main gui panel.
 	mainPanel.setup("BioVision");
+	toolsPanel.setup("Analysis Controls");
 
 	// Add video buttons. 
 	mainPanel.add(load_button.setup("Load"));	
 	mainPanel.add(play_toggle.set("Play", false));						  
 	mainPanel.add(next_frame_button.setup("Next frame"));				      
 	mainPanel.add(previous_frame_button.setup("Previous frame"));		
-	mainPanel.add(play_speed.setup("Play speed", 1.0, -3.0, 3.0));		  
-	
-	// Add the analyze toggle.
-	mainPanel.add(analyze_toggle.set("Analyze", false));
+	mainPanel.add(play_speed.setup("Play speed", 1.0, -3.0, 3.0));
+	mainPanel.setPosition(0, 0);
 
-	// Add the polygon selector toggle.
-	mainPanel.add(polygonSelectorToggle.set("Polygon Selector Tool", false));
-	mainPanel.add(outputModeToggle.set("Output Mode", false));
+	toolsPanel.add(analyze_toggle.set("Analyze (beta)", false));
+	toolsPanel.add(polygonSelectorToggle.set("Polygon Selector Tool", false));
+	toolsPanel.add(saveFrameButton.setup("Save Frame"));
+	toolsPanel.setPosition(this->app_width - toolsPanel.getWidth(), 0);
 
 	// Link the buttons to their respective methods.
 	load_button.addListener(this, &ofApp::load);					 
@@ -54,9 +54,10 @@ void ofApp::setup(){
 	next_frame_button.addListener(this, &ofApp::next_frame);		  
 	previous_frame_button.addListener(this, &ofApp::previous_frame);  
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      
+	
 	analyze_toggle.addListener(this, &ofApp::analyze_toggled);
 	polygonSelectorToggle.addListener(this, &ofApp::polygonSelectorToggled);
-	outputModeToggle.addListener(this, &ofApp::outputModeToggled);
+	saveFrameButton.addListener(this, &ofApp::saveFrame);
 
 	// Setup timeline.
 	float tX = vid_x;
@@ -79,6 +80,7 @@ void ofApp::draw(){
 
 	// Draw the gui and its components.
 	mainPanel.draw();
+	toolsPanel.draw();
 
 	// Draw the timeline and a label above it.
 	timeline->draw();

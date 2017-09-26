@@ -106,6 +106,6 @@ void ofApp::polygonSelectorToggled(bool &b) {
 	this->polygonSelection = b;
 }
 
-void ofApp::outputModeToggled(bool &b) {
-	this->outputMode = b;
+void ofApp::saveFrame() {
+
 }

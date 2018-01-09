@@ -129,7 +129,6 @@ class ofApp : public ofBaseApp{
 		ofxCvGrayscaleImage grayImage, threshold, grayBg, grayDiff;
 		vector<ofPolyline> contours; 
 
-
 		/* -------------------- VIDEO CONTROLS -------------------- */
 		
 		// Play the timeline video.
@@ -205,6 +204,8 @@ class ofApp : public ofBaseApp{
 		ofstream output;
 
 		/* -------------------- HELPER METHODS -------------------- */
+
+		void analyze();
 
 		// Check if a point is inside the timeline. 
 		bool isInsideTimeline(float, float);

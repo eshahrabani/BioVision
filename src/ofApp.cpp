@@ -98,6 +98,10 @@ void ofApp::draw(){
 	// Draw the analysis area and a label above it.
 	ofSetColor(0, 0, 0);
 	ofDrawRectangle(vid_x + vid_width, vid_y, vid_width, vid_height);
+	if (this->threshold.bAllocated) {
+		ofSetColor(255, 255, 255);
+		this->threshold.draw(vid_x + vid_width, vid_y, vid_width, vid_height);
+	}
 
 	labelX = vid_x + vid_width + (vid_width / 2);
 	labelY = vid_y - 10.0;

@@ -71,7 +71,11 @@ void ofApp::analyze_toggled(bool &b) {
 		// Don't perform any analysis if toggled off. 
 		return;
 	}
+	
+	this->analyze();
+}
 
+void ofApp::analyze() {
 	float w = vid_width;
 	float h = vid_height;
 
@@ -89,7 +93,7 @@ void ofApp::analyze_toggled(bool &b) {
 	threshold.setROI(0, 0, w, h);
 	grayImage = colorImg;
 	threshold = grayImage;
-	threshold.adaptiveThreshold(20);
+	threshold.adaptiveThreshold(5);
 	contourFinder.findContours(threshold, 5, vid_width * vid_height, 10,
 		false, false);
 

@@ -48,6 +48,7 @@ void ofApp::play_speed_changed(float &f) {
 // analyzer object. 
 void ofApp::analyze_toggled(bool &b) {
 	logger.writeVerbose("Analyze toggled.");
+	this->bAnalyze = b;
 
 	// If video isn't loaded, exit this method after reverting the toggle 
 	// (if it's on). 

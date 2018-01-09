@@ -201,6 +201,8 @@ class ofApp : public ofBaseApp{
 		// All the objects selected for the current frame.
 		std::vector<ofPolyline> selectedAreas;
 
+		bool bAnalyze = false;
+
 		ofstream output;
 
 		/* -------------------- HELPER METHODS -------------------- */

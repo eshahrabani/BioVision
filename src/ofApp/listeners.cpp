@@ -89,7 +89,7 @@ void ofApp::analyze_toggled(bool &b) {
 	threshold.setROI(0, 0, w, h);
 	grayImage = colorImg;
 	threshold = grayImage;
-	threshold.threshold(100);
+	threshold.adaptiveThreshold(20);
 	contourFinder.findContours(threshold, 5, vid_width * vid_height, 10,
 		false, false);
 

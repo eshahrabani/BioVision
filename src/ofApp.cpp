@@ -19,6 +19,9 @@ ofApp::~ofApp() {
 
 	// Delete the timeline.
 	delete timeline;
+
+	// Close the output file.
+	output.close();
 }
 
 //--------------------------------------------------------------
@@ -33,16 +36,20 @@ void ofApp::setup(){
 
 	// Start the main gui panel.
 	mainPanel.setup("BioVision");
+	toolsPanel.setup("Analysis Controls");
 
 	// Add video buttons. 
 	mainPanel.add(load_button.setup("Load"));	
 	mainPanel.add(play_toggle.set("Play", false));						  
 	mainPanel.add(next_frame_button.setup("Next frame"));				      
 	mainPanel.add(previous_frame_button.setup("Previous frame"));		
-	mainPanel.add(play_speed.setup("Play speed", 1.0, -3.0, 3.0));		  
-	
-	// Add the analyze toggle.
-	mainPanel.add(analyze_toggle.set("Analyze", false));
+	mainPanel.add(play_speed.setup("Play speed", 1.0, -3.0, 3.0));
+	mainPanel.setPosition(0, 0);
+
+	toolsPanel.add(analyze_toggle.set("Analyze (beta)", false));
+	toolsPanel.add(polygonSelectorToggle.set("Polygon Selector Tool", false));
+	toolsPanel.add(saveFrameButton.setup("Save Frame"));
+	toolsPanel.setPosition(this->app_width - toolsPanel.getWidth(), 0);
 
 	// Link the buttons to their respective methods.
 	load_button.addListener(this, &ofApp::load);					 
@@ -50,7 +57,10 @@ void ofApp::setup(){
 	next_frame_button.addListener(this, &ofApp::next_frame);		  
 	previous_frame_button.addListener(this, &ofApp::previous_frame);  
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      
+	
 	analyze_toggle.addListener(this, &ofApp::analyze_toggled);
+	polygonSelectorToggle.addListener(this, &ofApp::polygonSelectorToggled);
+	saveFrameButton.addListener(this, &ofApp::saveFrame);
 
 	// Setup timeline.
 	float tX = vid_x;
@@ -60,6 +70,8 @@ void ofApp::setup(){
 	timeline = new Timeline(vid_x, vid_y, vid_width, vid_height,
 		tX, tY, tWidth, tHeight,
 		ofColor(67, 80, 102), 100);
+	
+	output.open("data/output.txt");
 }
 
 //--------------------------------------------------------------
@@ -73,22 +85,43 @@ void ofApp::draw(){
 
 	// Draw the gui and its components.
 	mainPanel.draw();
+	toolsPanel.draw();
 
-	// Draw the timeline.
+	// Draw the timeline and a label above it.
 	timeline->draw();
+	
+	float labelX = vid_x + (vid_width / 2);
+	float labelY = vid_y - 10.0;
+	ofSetColor(0, 0, 0);
+	ofDrawBitmapString("Video", labelX, labelY);
 
-	// Draw the analysis area.
+	// Draw the analysis area and a label above it.
 	ofSetColor(0, 0, 0);
 	ofDrawRectangle(vid_x + vid_width, vid_y, vid_width, vid_height);
-	
-	// Draw the blobs found by the contour finder.
-	ofSetColor(66, 244, 170);
-	
-	if (contourFinder.nBlobs > 0) {
-		contours = blobsToPolylines(contourFinder.blobs);
+	if (this->threshold.bAllocated) {
+		ofSetColor(255, 255, 255);
+		this->threshold.draw(vid_x + vid_width, vid_y, vid_width, vid_height);
 	}
-	for (ofPolyline p : contours) {
-		drawPolyline(p, vid_x, vid_y);
+
+	labelX = vid_x + vid_width + (vid_width / 2);
+	labelY = vid_y - 10.0;
+	ofDrawBitmapString("Analysis", labelX, labelY);
+	
+	// Draw the contours found by the contour finder.
+	ofSetColor(255, 0, 0);
+	if (contours.size() > 0) {
+		// Use (vid_x, vid_y) as the anchor point to draw the contours.
+		drawPolylines(contours, vid_x, vid_y);
+	}
+
+	// Draw the selected area.
+	ofSetColor(255, 0, 0);
+	selectedArea.draw();
+
+	// Draw all selected objects.
+	ofSetColor(66, 117, 238);
+	for (ofPolyline p : selectedAreas) {
+		p.draw();
 	}
 }
 
@@ -162,8 +195,15 @@ void ofApp::updateDimensions(int w, int h) {
 	app_width = w;					  
 	app_height = h;	
 
+	// Video width should always be half of app width.
 	vid_width = app_width / 2;
+
+	// Video height should always be half of app height.
 	vid_height = app_height / 2;
+
+	// Video x position should always be on the left.
 	vid_x = 0;
-	vid_y = app_height / 2 - vid_height / 2;
+
+	// Video y position should always be at 1/4 of the height.
+	vid_y = app_height / 4; 
 }

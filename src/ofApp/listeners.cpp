@@ -48,6 +48,7 @@ void ofApp::play_speed_changed(float &f) {
 // analyzer object. 
 void ofApp::analyze_toggled(bool &b) {
 	logger.writeVerbose("Analyze toggled.");
+	this->bAnalyze = b;
 
 	// If video isn't loaded, exit this method after reverting the toggle 
 	// (if it's on). 
@@ -71,7 +72,11 @@ void ofApp::analyze_toggled(bool &b) {
 		// Don't perform any analysis if toggled off. 
 		return;
 	}
+	
+	this->analyze();
+}
 
+void ofApp::analyze() {
 	float w = vid_width;
 	float h = vid_height;
 
@@ -89,9 +94,43 @@ void ofApp::analyze_toggled(bool &b) {
 	threshold.setROI(0, 0, w, h);
 	grayImage = colorImg;
 	threshold = grayImage;
-	threshold.threshold(100);
+	threshold.adaptiveThreshold(5);
 	contourFinder.findContours(threshold, 5, vid_width * vid_height, 10,
 		false, false);
 
+	// Update the contours vector in ofApp.
+	this->contours = blobsToPolylines(contourFinder.blobs);
+
+	// Log completion. 
 	logger.writeNormal("Finished vision analysis.");
+}
+
+void ofApp::polygonSelectorToggled(bool &b) {
+	// Reset the selected area when toggled.
+	this->selectedArea.clear();
+	this->polygonSelection = b;
+}
+
+void ofApp::saveFrame() {
+	// Follow schema: frame, centroids..., areas...
+	float frame = this->getCurrentFrame();
+
+	vector<ofPoint> centroids;
+	vector<float> areas;
+	for (ofPolyline p : this->selectedAreas) {
+		centroids.push_back(p.getCentroid2D());
+		areas.push_back(p.getArea());
+	}
+
+	this->output << frame << ",";
+	for (ofPoint centroid : centroids) {
+		this->output << "[" << centroid.x << "," << centroid.y << "],";
+	}
+
+	for (float area : areas) {
+		this->output << area << ",";
+	}
+
+	this->output << "\n";
+	this->selectedAreas.clear();
 }

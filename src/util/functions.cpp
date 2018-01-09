@@ -1,25 +1,40 @@
 #include "functions.h"
-
-// Draws a polyline with anchor point (x,y) representing the top left corner. 
-void drawPolyline(ofPolyline polyline, float x=0.0, float y=0.0) {
-	// Add x,y to each point in the polyline.
-	// This unfortunately needs to be done assuming deep copies of everything are returned,
-	// since OF likes to insist on immutability. 
+ 
+ofPolyline displacePolyline(const ofPolyline &polyline, float dx = 0.0, float dy = 0.0) {
 	ofPolyline p = ofPolyline();
 	for (ofPoint pt : polyline.getVertices()) {
-		p.addVertex(ofPoint(pt.x + x, pt.y + y));
+		p.addVertex(ofPoint(pt.x + dx, pt.y + dy));
 	}
-	p.draw();
+
+	return p;
 }
 
-ofPolyline blobToPolyline(ofxCvBlob blob) {
+vector<ofPolyline> displacePolylines(const vector<ofPolyline> &polylines, float dx = 0.0, float dy = 0.0) {
+	vector<ofPolyline> displacedPolylines;
+	for (ofPolyline p : polylines) {
+		displacedPolylines.push_back(displacePolyline(p, dx, dy));
+	}
+	return displacedPolylines;
+}
+
+void drawPolyline(const ofPolyline& polyline, float x=0.0, float y=0.0) {
+	displacePolyline(polyline, x, y).draw();
+}
+
+void drawPolylines(const vector<ofPolyline>& polylines, float x = 0.0, float y = 0.0) {
+	for (ofPolyline p : polylines) {
+		drawPolyline(p, x, y);
+	}
+}
+
+ofPolyline blobToPolyline(const ofxCvBlob& blob) {
 	return(ofPolyline(blob.pts));
 }
 
-std::vector<ofPolyline> blobsToPolylines(std::vector<ofxCvBlob> blobs) {
-	std::vector<ofPolyline> polylines;
+vector<ofPolyline> blobsToPolylines(const vector<ofxCvBlob>& blobs) {
+	vector<ofPolyline> polylines;
 	for (ofxCvBlob blob : blobs) {
-		polylines.push_back(blobToPolyline(blob));
+		polylines.push_back(ofPolyline(blob.pts));
 	}
 	return polylines;
 }

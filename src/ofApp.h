@@ -1,11 +1,9 @@
-// ofApp is the main class of this application. 
-// It encapsulates the methods of the Timeline, so 
-// all functionality should be routed through ofApp.
-
 #pragma once
 
 #include <math.h>
 #include <random>
+#include <iostream>
+#include <fstream>
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxOpenCv.h"
@@ -16,7 +14,12 @@
 #include "KeyHandler.h"
 #include "functions.h"
 
+using std::vector;
+using std::ofstream;
 
+// ofApp is the main class of this application. 
+// It encapsulates the methods of the Timeline, so 
+// all functionality should be routed through ofApp.
 class ofApp : public ofBaseApp{
 
 	public:
@@ -28,7 +31,7 @@ class ofApp : public ofBaseApp{
 		Logger logger = Logger(loggerLevel);
 
 
-		/* -------------------- OPENFRAMEWORKS EVENT LISTENERS --------------------*/
+		/* -------------------- LIFECYCLE METHODS AND EVENT LISTENERS --------------------*/
 
 		// Setup() is called on initiation of ofApp, only once.
 		void setup();
@@ -41,12 +44,14 @@ class ofApp : public ofBaseApp{
 
 		void keyPressed(int key);
 		void keyReleased(int key);
+		
 		void mouseMoved(int x, int y );
 		void mouseDragged(int x, int y, int button);
 		void mousePressed(int x, int y, int button);
 		void mouseReleased(int x, int y, int button);
 		void mouseEntered(int x, int y);
 		void mouseExited(int x, int y);
+		
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo); 
 		void gotMessage(ofMessage msg);
@@ -55,7 +60,9 @@ class ofApp : public ofBaseApp{
 		/* -------------------- GUI COMPONENTS --------------------*/
 		
 		// The main panel consisting of the load button, etc. 
-		ofxPanel mainPanel;							 
+		ofxPanel mainPanel;			
+
+		ofxPanel toolsPanel;
 		
 		// The load button on the main panel.
 		ofxButton load_button;			
@@ -74,6 +81,15 @@ class ofApp : public ofBaseApp{
 		
 		// The analyze toggle on the main panel.
 		ofParameter<bool> analyze_toggle;		  
+
+		// The polygon selector toggle on the main panel.
+		ofParameter<bool> polygonSelectorToggle;
+
+		// Output mode toggle.
+		ofParameter<bool> outputModeToggle;
+
+		// Save frame button.
+		ofxButton saveFrameButton;
 	
 		// The timeline component.
 		Timeline* timeline;
@@ -96,14 +112,22 @@ class ofApp : public ofBaseApp{
 		// The function attached to the analyze toggle.
 		void analyze_toggled(bool &b);
 
+		// The function attached to the polygon selector toggle.
+		void polygonSelectorToggled(bool &b);
+
+		// Output mode toggle listener.
+		void outputModeToggled(bool &b);
+
+		// Save frame button listener.
+		void saveFrame();
+
 
 		/* -------------------- VISION ANALYSIS -------------------- */
 		bool bLearnBackground;
 		ofxCvContourFinder contourFinder;
 		ofxCvColorImage colorImg;
 		ofxCvGrayscaleImage grayImage, threshold, grayBg, grayDiff;
-		std::vector<ofPolyline> contours; 
-
+		vector<ofPolyline> contours; 
 
 		/* -------------------- VIDEO CONTROLS -------------------- */
 		
@@ -127,6 +151,9 @@ class ofApp : public ofBaseApp{
 
 		// Set the frame of the video.
 		void setFrame(int);
+
+		// Get the current frame of the video.
+		int getCurrentFrame();
 
 		// Set the frame of the video using the position of a click on 
 		// the timeline. 
@@ -165,8 +192,22 @@ class ofApp : public ofBaseApp{
 		// The y coordinate of the video relative to the app.
 		int vid_y;
 
+		// The state of the polygon selector tool.
+		bool polygonSelection = false;
+
+		// The currently selected area via the polygon selector tool.
+		ofPolyline selectedArea;
+
+		// All the objects selected for the current frame.
+		std::vector<ofPolyline> selectedAreas;
+
+		bool bAnalyze = false;
+
+		ofstream output;
 
 		/* -------------------- HELPER METHODS -------------------- */
+
+		void analyze();
 
 		// Check if a point is inside the timeline. 
 		bool isInsideTimeline(float, float);

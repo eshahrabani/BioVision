@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 // Forward declaration to avoid circular includes. 
 class ofApp;
 

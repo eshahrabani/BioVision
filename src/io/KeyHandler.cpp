@@ -100,6 +100,13 @@ void KeyHandler::handlePressed(int key) {
 	case OF_KEY_ALT:
 		alt_pressed = true;
 		break;
+	case OF_KEY_RETURN:
+		if (app->selectedArea.getVertices().size() > 0) {
+			app->selectedArea.close();
+			app->selectedAreas.push_back(app->selectedArea);
+			app->selectedArea.clear();
+		}
+		break;
 
 	// If h is pressed, print handy key commands.
 	case 'H':
@@ -110,12 +117,13 @@ void KeyHandler::handlePressed(int key) {
 		cout << "control + left: skip backward one frame\n";
 		cout << "f: increase speed by 0.25\n";
 		cout << "r: decrease speed by 0.25\n";
+		cout << "return: finish creation of polygon selection\n";
 		cout << "control + left click & drag: draw marquee on video\n";
 		cout << "control + m: clear marquee\n";
 		cout << "h: help\n\n";
 		break;
-
-	// TODO: Implement default case. 
+	default:
+		cout << "Command not recognized. Press h for a list of available commands.\n";
 	}
 }
 
@@ -123,6 +131,8 @@ void KeyHandler::handleReleased(int key) {
 	switch (key) {
 
 		// If the control key is released, set its global boolean to false.
+	case OF_KEY_LEFT_CONTROL:
+	case OF_KEY_RIGHT_CONTROL:
 	case OF_KEY_CONTROL:
 		ctrl_pressed = false;
 		break;
@@ -137,6 +147,8 @@ void KeyHandler::handleReleased(int key) {
 		left_pressed = false;
 		break;
 
+	case OF_KEY_LEFT_ALT:
+	case OF_KEY_RIGHT_ALT:
 	case OF_KEY_ALT:
 		alt_pressed = false;
 		break;

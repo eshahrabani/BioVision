@@ -60,3 +60,6 @@ obj/Release/icon.res
 *.opendb
 icon.aps
 *.TMP
+bin/data/output.txt
+bin/data/output.txt
+bin/data/output.txt

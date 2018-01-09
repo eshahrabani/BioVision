@@ -186,11 +186,11 @@
     <Filter Include="src\ofApp">
       <UniqueIdentifier>{06f036f0-4a86-4504-82b6-0db418d24323}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\include">
+      <UniqueIdentifier>{15dd90e5-7fbe-4fd0-b313-451ce500596d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ofApp.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxBaseGui.h">
       <Filter>addons\ofxGui\src</Filter>
     </ClInclude>
@@ -725,26 +725,32 @@
     <ClInclude Include="..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\videostab\videostab.hpp">
       <Filter>addons\ofxOpenCv\libs\opencv\include\opencv2\videostab</Filter>
     </ClInclude>
-    <ClInclude Include="src\gui\Marquee.h">
-      <Filter>src\gui</Filter>
+    <ClInclude Include="src\ofApp.h">
+      <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\io\KeyHandler.h">
-      <Filter>src\io</Filter>
+    <ClInclude Include="src\include\functions.h">
+      <Filter>src\include</Filter>
     </ClInclude>
-    <ClInclude Include="src\io\MouseHandler.h">
-      <Filter>src\io</Filter>
+    <ClInclude Include="src\include\KeyHandler.h">
+      <Filter>src\include</Filter>
     </ClInclude>
-    <ClInclude Include="src\gui\Timeline.h">
-      <Filter>src\gui</Filter>
+    <ClInclude Include="src\include\Logger.h">
+      <Filter>src\include</Filter>
     </ClInclude>
-    <ClInclude Include="src\io\Logger.h">
-      <Filter>src\io</Filter>
+    <ClInclude Include="src\include\Marquee.h">
+      <Filter>src\include</Filter>
     </ClInclude>
-    <ClInclude Include="src\util\functions.h">
-      <Filter>src\util</Filter>
+    <ClInclude Include="src\include\MouseHandler.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\Timeline.h">
+      <Filter>src\include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

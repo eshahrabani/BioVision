@@ -21,10 +21,10 @@ public:
 	void handleReleased(int key);
 
 	// Bools for storing key states.
-	bool right_pressed;
-	bool left_pressed;
-	bool ctrl_pressed;
-	bool alt_pressed;
+	bool right_pressed = false;
+	bool left_pressed = false;
+	bool ctrl_pressed = false;
+	bool alt_pressed = false;
 
 	// Pointer to ofApp. 
 	ofApp* app;

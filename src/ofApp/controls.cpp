@@ -14,6 +14,10 @@ void ofApp::pause() {
 	// Turn the play toggle off without triggering play_toggled.
 	play_toggle.setWithoutEventNotifications(false);
 	timeline->pause();
+
+	if (this->bAnalyze) {
+		this->analyze();
+	}
 }
 
 void ofApp::next_frame() {
@@ -25,6 +29,10 @@ void ofApp::next_frame() {
 	}
 	logger.writeVerbose("Jumping to next frame.");
 	timeline->nextFrame();
+
+	if (this->bAnalyze) {
+		this->analyze();
+	}
 }
 
 void ofApp::previous_frame() {
@@ -32,6 +40,10 @@ void ofApp::previous_frame() {
 		pause();
 	}
 	timeline->previousFrame();
+
+	if (this->bAnalyze) {
+		this->analyze();
+	}
 }
 
 bool ofApp::isVideoLoaded() {
@@ -45,6 +57,11 @@ bool ofApp::isVideoPlaying() {
 void ofApp::setFrame(int f) {
 	logger.writeVerbose("Setting new frame from ofApp.");
 	timeline->setFrame(f);
+}
+
+int ofApp::getCurrentFrame()
+{
+	return timeline->getCurrentFrame();
 }
 
 void ofApp::setFrameFromMouseX(float x) {

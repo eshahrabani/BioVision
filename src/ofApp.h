@@ -85,6 +85,18 @@ class ofApp : public ofBaseApp{
 		// Threshold block size slider.
 		ofxSlider<int> thresholdBlockSizeSlider;
 
+		// Minimum blob area slider.
+		ofxSlider<int> minBlobAreaSlider;
+
+		// Maximum blob area slider.
+		ofxSlider<int> maxBlobAreaSlider;
+
+		// Maximum number of blobs slider.
+		ofxSlider<int> nMaxBlobsSlider;
+
+		// Find holes toggle.
+		ofParameter<bool> findHolesToggle;
+
 		// Dilate toggle.
 		ofParameter<bool> dilateToggle;
 
@@ -123,6 +135,11 @@ class ofApp : public ofBaseApp{
 
 		// The function attached to the threshold block size slider.
 		void thresholdBlockSizeChanged(int &blockSize);
+
+		void minBlobAreaSliderChanged(int &area);
+		void maxBlobAreaSliderChanged(int &area);
+		void nMaxBlobsSliderChanged(int &n);
+		void findHolesToggled(bool &b);
 
 		void dilateToggled(bool &b);
 		void erodeToggled(bool &b);
@@ -223,7 +240,7 @@ class ofApp : public ofBaseApp{
 
 		/* -------------------- HELPER METHODS -------------------- */
 
-		void analyze();
+		void analyze(bool doThreshold=true);
 
 		// Check if a point is inside the timeline. 
 		bool isInsideTimeline(float, float);

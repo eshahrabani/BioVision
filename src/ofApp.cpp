@@ -48,6 +48,10 @@ void ofApp::setup(){
 
 	toolsPanel.add(analyze_toggle.set("Analyze (beta)", false));
 	toolsPanel.add(thresholdBlockSizeSlider.setup("Threshold block size", this->blockSize, 3, 100));
+	toolsPanel.add(minBlobAreaSlider.setup("Minimum blob area", 1, 1, vid_width * vid_height));
+	toolsPanel.add(maxBlobAreaSlider.setup("Maximum blob area", vid_width * vid_height, 1, vid_width * vid_height));
+	toolsPanel.add(nMaxBlobsSlider.setup("Maximum number of blobs", 5, 1, 100));
+	toolsPanel.add(findHolesToggle.set("Find holes", false));
 	toolsPanel.add(dilateToggle.set("Dilate", false));
 	toolsPanel.add(erodeToggle.set("Erode", false));
 	toolsPanel.add(polygonSelectorToggle.set("Polygon Selector Tool", false));
@@ -63,6 +67,9 @@ void ofApp::setup(){
 	
 	analyze_toggle.addListener(this, &ofApp::analyze_toggled);
 	thresholdBlockSizeSlider.addListener(this, &ofApp::thresholdBlockSizeChanged);
+	minBlobAreaSlider.addListener(this, &ofApp::minBlobAreaSliderChanged);
+	maxBlobAreaSlider.addListener(this, &ofApp::maxBlobAreaSliderChanged);
+	findHolesToggle.addListener(this, &ofApp::findHolesToggled);
 	dilateToggle.addListener(this, &ofApp::dilateToggled);
 	erodeToggle.addListener(this, &ofApp::erodeToggled);
 	polygonSelectorToggle.addListener(this, &ofApp::polygonSelectorToggled);
@@ -119,7 +126,10 @@ void ofApp::draw(){
 	ofSetColor(255, 0, 0);
 	if (contours.size() > 0) {
 		// Use (vid_x, vid_y) as the anchor point to draw the contours.
-		drawPolylines(contours, vid_x, vid_y);
+		//drawPolylines(contours, vid_x + vid_width, vid_y);
+		for (ofPolyline p : contours) {
+			p.draw();
+		}
 	}
 
 	// Draw the selected area.

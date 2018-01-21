@@ -76,7 +76,7 @@ void ofApp::analyze_toggled(bool &b) {
 	this->analyze();
 }
 
-void ofApp::analyze() {
+void ofApp::analyze(bool doThreshold) {
 	ofPixels frame = timeline->getVideoPixels();
 
 	float w = frame.getWidth();
@@ -84,14 +84,16 @@ void ofApp::analyze() {
 
 	bLearnBackground = true;
 
-
 	// Computer vision analysis.
 	colorImg.setFromPixels(frame);
 	grayImage = colorImg;
 	threshold = grayImage;
-	threshold.adaptiveThreshold(this->blockSize);
-	contourFinder.findContours(threshold, 5, w * h, 10,
-		false, false);
+	if (doThreshold) {
+		threshold.adaptiveThreshold(this->blockSize);
+	}
+	contourFinder.findContours(threshold, this->minBlobAreaSlider, this->maxBlobAreaSlider,
+		this->nMaxBlobsSlider,
+		this->findHolesToggle, false);
 
 	// Update the contours vector in ofApp.
 	this->contours = blobsToPolylines(contourFinder.blobs);
@@ -100,14 +102,36 @@ void ofApp::analyze() {
 	logger.writeNormal("Finished vision analysis.");
 }
 
+void ofApp::minBlobAreaSliderChanged(int &area) {
+	this->analyze();
+}
+
+void ofApp::maxBlobAreaSliderChanged(int &area) {
+	this->analyze();
+}
+
+void ofApp::nMaxBlobsSliderChanged(int &n) {
+	this->analyze();
+}
+
+void ofApp::findHolesToggled(bool &b) {
+	this->analyze();
+}
+
+
+
 void ofApp::dilateToggled(bool &b) {
-	this->threshold.dilate();
-	this->dilateToggle = !b;
+	if (b) {
+		this->threshold.dilate();
+		this->analyze(false);
+	}
 }
 
 void ofApp::erodeToggled(bool &b) {
-	this->threshold.erode();
-	this->erodeToggle = !b;
+	if (b) {
+		this->threshold.erode();
+		this->analyze(false);
+	}
 }
 
 void ofApp::polygonSelectorToggled(bool &b) {

@@ -47,6 +47,9 @@ void ofApp::setup(){
 	mainPanel.setPosition(0, 0);
 
 	toolsPanel.add(analyze_toggle.set("Analyze (beta)", false));
+	toolsPanel.add(thresholdBlockSizeSlider.setup("Threshold block size", this->blockSize, 3, 100));
+	toolsPanel.add(dilateToggle.set("Dilate", false));
+	toolsPanel.add(erodeToggle.set("Erode", false));
 	toolsPanel.add(polygonSelectorToggle.set("Polygon Selector Tool", false));
 	toolsPanel.add(saveFrameButton.setup("Save Frame"));
 	toolsPanel.setPosition(this->app_width - toolsPanel.getWidth(), 0);
@@ -59,6 +62,9 @@ void ofApp::setup(){
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      
 	
 	analyze_toggle.addListener(this, &ofApp::analyze_toggled);
+	thresholdBlockSizeSlider.addListener(this, &ofApp::thresholdBlockSizeChanged);
+	dilateToggle.addListener(this, &ofApp::dilateToggled);
+	erodeToggle.addListener(this, &ofApp::erodeToggled);
 	polygonSelectorToggle.addListener(this, &ofApp::polygonSelectorToggled);
 	saveFrameButton.addListener(this, &ofApp::saveFrame);
 
@@ -98,6 +104,8 @@ void ofApp::draw(){
 	// Draw the analysis area and a label above it.
 	ofSetColor(0, 0, 0);
 	ofDrawRectangle(vid_x + vid_width, vid_y, vid_width, vid_height);
+
+	// Draw the thresholded image if it's been allocated.
 	if (this->threshold.bAllocated) {
 		ofSetColor(255, 255, 255);
 		this->threshold.draw(vid_x + vid_width, vid_y, vid_width, vid_height);

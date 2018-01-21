@@ -80,7 +80,16 @@ class ofApp : public ofBaseApp{
 		ofxSlider<float> play_speed;			 
 		
 		// The analyze toggle on the main panel.
-		ofParameter<bool> analyze_toggle;		  
+		ofParameter<bool> analyze_toggle;		
+
+		// Threshold block size slider.
+		ofxSlider<int> thresholdBlockSizeSlider;
+
+		// Dilate toggle.
+		ofParameter<bool> dilateToggle;
+
+		// Erode toggle.
+		ofParameter<bool> erodeToggle;
 
 		// The polygon selector toggle on the main panel.
 		ofParameter<bool> polygonSelectorToggle;
@@ -111,6 +120,12 @@ class ofApp : public ofBaseApp{
 
 		// The function attached to the analyze toggle.
 		void analyze_toggled(bool &b);
+
+		// The function attached to the threshold block size slider.
+		void thresholdBlockSizeChanged(int &blockSize);
+
+		void dilateToggled(bool &b);
+		void erodeToggled(bool &b);
 
 		// The function attached to the polygon selector toggle.
 		void polygonSelectorToggled(bool &b);
@@ -202,6 +217,7 @@ class ofApp : public ofBaseApp{
 		std::vector<ofPolyline> selectedAreas;
 
 		bool bAnalyze = false;
+		int blockSize = 3;
 
 		ofstream output;
 

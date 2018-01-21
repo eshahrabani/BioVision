@@ -77,8 +77,10 @@ void ofApp::analyze_toggled(bool &b) {
 }
 
 void ofApp::analyze() {
-	float w = vid_width;
-	float h = vid_height;
+	ofPixels frame = timeline->getVideoPixels();
+
+	float w = frame.getWidth();
+	float h = frame.getHeight();
 
 	bLearnBackground = true;
 	colorImg.allocate(w, h);
@@ -88,14 +90,14 @@ void ofApp::analyze() {
 	threshold.allocate(w, h);
 
 	// Computer vision analysis.
-	colorImg.setFromPixels(timeline->getVideoPixels());
+	colorImg.setFromPixels(frame);
 	colorImg.setROI(0, 0, w, h);
 	grayImage.setROI(0, 0, w, h);
 	threshold.setROI(0, 0, w, h);
 	grayImage = colorImg;
 	threshold = grayImage;
-	threshold.adaptiveThreshold(5);
-	contourFinder.findContours(threshold, 5, vid_width * vid_height, 10,
+	threshold.adaptiveThreshold(this->blockSize);
+	contourFinder.findContours(threshold, 5, w * h, 10,
 		false, false);
 
 	// Update the contours vector in ofApp.
@@ -105,10 +107,27 @@ void ofApp::analyze() {
 	logger.writeNormal("Finished vision analysis.");
 }
 
+void ofApp::dilateToggled(bool &b) {
+	this->threshold.dilate();
+	this->dilateToggle = !b;
+}
+
+void ofApp::erodeToggled(bool &b) {
+	this->threshold.erode();
+	this->erodeToggle = !b;
+}
+
 void ofApp::polygonSelectorToggled(bool &b) {
 	// Reset the selected area when toggled.
 	this->selectedArea.clear();
 	this->polygonSelection = b;
+}
+
+void ofApp::thresholdBlockSizeChanged(int &blockSize) {
+	this->blockSize = blockSize;
+
+	// re-analyze
+	this->analyze(); 
 }
 
 void ofApp::saveFrame() {

@@ -83,17 +83,10 @@ void ofApp::analyze() {
 	float h = frame.getHeight();
 
 	bLearnBackground = true;
-	colorImg.allocate(w, h);
-	grayImage.allocate(w, h);
-	grayBg.allocate(w, h);
-	grayDiff.allocate(w, h);
-	threshold.allocate(w, h);
+
 
 	// Computer vision analysis.
 	colorImg.setFromPixels(frame);
-	colorImg.setROI(0, 0, w, h);
-	grayImage.setROI(0, 0, w, h);
-	threshold.setROI(0, 0, w, h);
 	grayImage = colorImg;
 	threshold = grayImage;
 	threshold.adaptiveThreshold(this->blockSize);

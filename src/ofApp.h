@@ -63,6 +63,8 @@ class ofApp : public ofBaseApp{
 		ofxPanel mainPanel;			
 
 		ofxPanel toolsPanel;
+
+		ofxPanel objectsPanel;
 		
 		// The load button on the main panel.
 		ofxButton load_button;			
@@ -77,7 +79,10 @@ class ofApp : public ofBaseApp{
 		ofxButton previous_frame_button;	
 
 		// The play speed slider on the main panel.
-		ofxSlider<float> play_speed;			 
+		ofxSlider<float> play_speed;	
+
+		// Select object toggle.
+		ofParameter<bool> selectObjectToggle;
 		
 		// The analyze toggle on the analysis panel.
 		ofParameter<bool> analyze_toggle;		
@@ -129,6 +134,8 @@ class ofApp : public ofBaseApp{
 
 		// The function attached to the play slider.
 		void play_speed_changed(float &f);
+
+		void selectObjectToggled(bool &b);
 
 		// The function attached to the analyze toggle.
 		void analyze_toggled(bool &b);

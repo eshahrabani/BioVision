@@ -37,6 +37,7 @@ void ofApp::setup(){
 	// Start the main gui panel.
 	mainPanel.setup("BioVision");
 	toolsPanel.setup("Analysis Controls");
+	objectsPanel.setup("Objects");
 
 	// Add video buttons. 
 	mainPanel.add(load_button.setup("Load"));	
@@ -59,6 +60,9 @@ void ofApp::setup(){
 	toolsPanel.add(polygonSelectorToggle.set("Polygon Selector Tool", false));
 	toolsPanel.add(saveFrameButton.setup("Save Frame"));
 
+	objectsPanel.setPosition(this->app_width / 2, 0);
+	objectsPanel.add(selectObjectToggle.set("Select object", false));
+
 	maxBlobAreaSlider.setDefaultWidth(250);
 
 	// Link the buttons to their respective methods.
@@ -67,6 +71,8 @@ void ofApp::setup(){
 	next_frame_button.addListener(this, &ofApp::next_frame);		  
 	previous_frame_button.addListener(this, &ofApp::previous_frame);  
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      
+
+	selectObjectToggle.addListener(this, &ofApp::selectObjectToggled);
 	
 	analyze_toggle.addListener(this, &ofApp::analyze_toggled);
 	thresholdBlockSizeSlider.addListener(this, &ofApp::thresholdBlockSizeChanged);
@@ -105,6 +111,7 @@ void ofApp::draw(){
 
 	// Draw the gui and its components.
 	mainPanel.draw();
+	objectsPanel.draw();
 	toolsPanel.draw();
 
 	// Draw the timeline and a label above it.
@@ -139,7 +146,6 @@ void ofApp::draw(){
 		/*for (ofPolyline p : contours) {
 			p.draw();
 		}*/
-		logger.writeNormal(std::to_string(contourFinder.nBlobs) + " blobs found.");
 		contourFinder.draw(vid_x + vid_width, vid_y, vid_width, vid_height);
 	}
 

@@ -44,6 +44,10 @@ void ofApp::play_speed_changed(float &f) {
 	timeline->setVideoSpeed(f);
 }
 
+void ofApp::selectObjectToggled(bool & b) {
+
+}
+
 // TODO: needs encapsulation of analysis into 
 // analyzer object. 
 void ofApp::analyze_toggled(bool &b) {

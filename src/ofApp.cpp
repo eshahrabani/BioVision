@@ -46,17 +46,20 @@ void ofApp::setup(){
 	mainPanel.add(play_speed.setup("Play speed", 1.0, -3.0, 3.0));
 	mainPanel.setPosition(0, 0);
 
+	toolsPanel.setDefaultWidth(250);
+	toolsPanel.setPosition(this->app_width - 250, 0);
 	toolsPanel.add(analyze_toggle.set("Analyze (beta)", false));
 	toolsPanel.add(thresholdBlockSizeSlider.setup("Threshold block size", this->blockSize, 3, 100));
-	toolsPanel.add(minBlobAreaSlider.setup("Minimum blob area", 1, 1, vid_width * vid_height));
-	toolsPanel.add(maxBlobAreaSlider.setup("Maximum blob area", vid_width * vid_height, 1, vid_width * vid_height));
-	toolsPanel.add(nMaxBlobsSlider.setup("Maximum number of blobs", 5, 1, 100));
+	toolsPanel.add(minBlobAreaSlider.setup("Minimum object area", 1, 1, vid_width * vid_height));
+	toolsPanel.add(maxBlobAreaSlider.setup("Maximum object area", vid_width * vid_height, 1, vid_width * vid_height));
+	toolsPanel.add(nMaxBlobsSlider.setup("Maximum number of objects", 5, 1, 100));
 	toolsPanel.add(findHolesToggle.set("Find holes", false));
 	toolsPanel.add(dilateToggle.set("Dilate", false));
 	toolsPanel.add(erodeToggle.set("Erode", false));
 	toolsPanel.add(polygonSelectorToggle.set("Polygon Selector Tool", false));
 	toolsPanel.add(saveFrameButton.setup("Save Frame"));
-	toolsPanel.setPosition(this->app_width - toolsPanel.getWidth(), 0);
+
+	maxBlobAreaSlider.setDefaultWidth(250);
 
 	// Link the buttons to their respective methods.
 	load_button.addListener(this, &ofApp::load);					 
@@ -69,6 +72,7 @@ void ofApp::setup(){
 	thresholdBlockSizeSlider.addListener(this, &ofApp::thresholdBlockSizeChanged);
 	minBlobAreaSlider.addListener(this, &ofApp::minBlobAreaSliderChanged);
 	maxBlobAreaSlider.addListener(this, &ofApp::maxBlobAreaSliderChanged);
+	nMaxBlobsSlider.addListener(this, &ofApp::nMaxBlobsSliderChanged);
 	findHolesToggle.addListener(this, &ofApp::findHolesToggled);
 	dilateToggle.addListener(this, &ofApp::dilateToggled);
 	erodeToggle.addListener(this, &ofApp::erodeToggled);
@@ -120,16 +124,20 @@ void ofApp::draw(){
 
 	labelX = vid_x + vid_width + (vid_width / 2);
 	labelY = vid_y - 10.0;
+	ofSetColor(0, 0, 0);
 	ofDrawBitmapString("Analysis", labelX, labelY);
 	
 	// Draw the contours found by the contour finder.
-	ofSetColor(255, 0, 0);
-	if (contours.size() > 0) {
+	if (contourFinder.nBlobs > 0) {
+		ofSetColor(255, 0, 0);
+
 		// Use (vid_x, vid_y) as the anchor point to draw the contours.
 		//drawPolylines(contours, vid_x + vid_width, vid_y);
-		for (ofPolyline p : contours) {
+		/*for (ofPolyline p : contours) {
 			p.draw();
-		}
+		}*/
+		logger.writeNormal(std::to_string(contourFinder.nBlobs) + " blobs found.");
+		contourFinder.draw(vid_x + vid_width, vid_y, vid_width, vid_height);
 	}
 
 	// Draw the selected area.
@@ -222,6 +230,6 @@ void ofApp::updateDimensions(int w, int h) {
 	// Video x position should always be on the left.
 	vid_x = 0;
 
-	// Video y position should always be at 1/4 of the height.
-	vid_y = app_height / 4; 
+	// Video y position should always be at 1/3 of the height.
+	vid_y = app_height / 3; 
 }

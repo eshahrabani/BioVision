@@ -87,10 +87,12 @@ void ofApp::analyze(bool doThreshold) {
 	// Computer vision analysis.
 	colorImg.setFromPixels(frame);
 	grayImage = colorImg;
-	threshold = grayImage;
+
 	if (doThreshold) {
+		threshold = grayImage;
 		threshold.adaptiveThreshold(this->blockSize);
 	}
+
 	contourFinder.findContours(threshold, this->minBlobAreaSlider, this->maxBlobAreaSlider,
 		this->nMaxBlobsSlider,
 		this->findHolesToggle, false);

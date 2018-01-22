@@ -79,7 +79,7 @@ class ofApp : public ofBaseApp{
 		// The play speed slider on the main panel.
 		ofxSlider<float> play_speed;			 
 		
-		// The analyze toggle on the main panel.
+		// The analyze toggle on the analysis panel.
 		ofParameter<bool> analyze_toggle;		
 
 		// Threshold block size slider.

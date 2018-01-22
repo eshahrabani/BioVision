@@ -57,6 +57,10 @@ bool ofApp::isVideoPlaying() {
 void ofApp::setFrame(int f) {
 	logger.writeVerbose("Setting new frame from ofApp.");
 	timeline->setFrame(f);
+	
+	if (this->bAnalyze) {
+		this->analyze();
+	}
 }
 
 int ofApp::getCurrentFrame()
@@ -67,6 +71,10 @@ int ofApp::getCurrentFrame()
 void ofApp::setFrameFromMouseX(float x) {
 	logger.writeVerbose("Setting new frame from ofApp using mouse X.");
 	timeline->setFrameFromMouseX(x);
+
+	if (this->bAnalyze) {
+		this->analyze();
+	}
 }
 
 void ofApp::restartVideo() {

@@ -94,6 +94,9 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
 	timeline->update();
+	if (timeline->isVideoPlaying() && this->bAnalyze) {
+		this->analyze();
+	}
 }
 
 //--------------------------------------------------------------

@@ -71,6 +71,7 @@ int ofApp::getCurrentFrame()
 void ofApp::setFrameFromMouseX(float x) {
 	logger.writeVerbose("Setting new frame from ofApp using mouse X.");
 	timeline->setFrameFromMouseX(x);
+	timeline->update();
 
 	if (this->bAnalyze) {
 		this->analyze();

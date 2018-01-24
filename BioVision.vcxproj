@@ -171,6 +171,7 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\gui\DetectedObject.cpp" />
     <ClCompile Include="src\gui\Marquee.cpp" />
     <ClCompile Include="src\gui\Timeline.cpp" />
     <ClCompile Include="src\io\KeyHandler.cpp" />
@@ -198,6 +199,7 @@
     <ClCompile Include="src\util\functions.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\include\DetectedObject.h" />
     <ClInclude Include="src\include\functions.h" />
     <ClInclude Include="src\include\KeyHandler.h" />
     <ClInclude Include="src\include\Logger.h" />

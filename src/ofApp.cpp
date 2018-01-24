@@ -137,16 +137,8 @@ void ofApp::draw(){
 	ofSetColor(0, 0, 0);
 	ofDrawBitmapString("Analysis", labelX, labelY);
 	
-	// Draw the contours found by the contour finder.
-	if (contourFinder.nBlobs > 0) {
-		ofSetColor(255, 0, 0);
-
-		// Use (vid_x, vid_y) as the anchor point to draw the contours.
-		//drawPolylines(contours, vid_x + vid_width, vid_y);
-		/*for (ofPolyline p : contours) {
-			p.draw();
-		}*/
-		contourFinder.draw(vid_x + vid_width, vid_y, vid_width, vid_height);
+	for (DetectedObject obj : this->detectedObjects) {
+		obj.draw(vid_x + vid_width, vid_y);
 	}
 
 	// Draw the selected area.

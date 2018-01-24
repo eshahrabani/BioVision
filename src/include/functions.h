@@ -7,7 +7,8 @@
  */
 
 #pragma once
-#include "ofApp.h"
+#include "ofMain.h"
+#include "ofxOpenCv.h";
 
 /*
 Applies a displacement to each point of a single polyline.

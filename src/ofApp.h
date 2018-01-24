@@ -7,6 +7,7 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxOpenCv.h"
+#include "DetectedObject.h";
 #include "Logger.h"
 #include "Timeline.h"
 #include "Marquee.h"
@@ -167,6 +168,7 @@ class ofApp : public ofBaseApp{
 		ofxCvColorImage colorImg;
 		ofxCvGrayscaleImage grayImage, threshold, grayBg, grayDiff;
 		vector<ofPolyline> contours; 
+		vector<DetectedObject> detectedObjects;
 
 		/* -------------------- VIDEO CONTROLS -------------------- */
 		

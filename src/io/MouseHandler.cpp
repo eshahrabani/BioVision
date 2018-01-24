@@ -82,6 +82,9 @@ void MouseHandler::handlePressed(int x, int y, int button) {
 		if (pressedInsidePlayer && app->polygonSelection) {
 			app->selectedArea.addVertex(x, y);
 		}
+
+		// If pressed inside an object, select that object.
+
 	}
 }
 

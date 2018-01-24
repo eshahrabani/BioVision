@@ -45,7 +45,12 @@ void ofApp::play_speed_changed(float &f) {
 }
 
 void ofApp::selectObjectToggled(bool & b) {
-
+	if (b) {
+		this->selectObjectToggle.setName("Selecting object...");
+	}
+	else {
+		this->selectObjectToggle.setName("Select object");
+	}
 }
 
 // TODO: needs encapsulation of analysis into 
@@ -82,9 +87,12 @@ void ofApp::analyze_toggled(bool &b) {
 
 void ofApp::analyze(bool doThreshold) {
 	ofPixels frame = timeline->getVideoPixels();
+	frame.resize(vid_width, vid_height);
 
 	float w = frame.getWidth();
 	float h = frame.getHeight();
+	logger.writeNormal("Width and height of frame: " + std::to_string(w) + "," + std::to_string(h));
+	logger.writeNormal("Width and height of video player: " + std::to_string(vid_width) + "," + std::to_string(vid_height));
 
 	bLearnBackground = true;
 
@@ -101,8 +109,35 @@ void ofApp::analyze(bool doThreshold) {
 		this->nMaxBlobsSlider,
 		this->findHolesToggle, false);
 
-	// Update the contours vector in ofApp.
-	this->contours = blobsToPolylines(contourFinder.blobs);
+	//this->contours = blobsToPolylines(contourFinder.blobs);
+	// Update the objects found.
+
+	this->detectedObjects.clear();
+	for (ofxCvBlob blob : contourFinder.blobs) {
+		//ofColor blobColor(ofRandom(0, 255), ofRandom(0, 255), ofRandom(0, 255));
+		ofColor blobColor(255, 0, 0);
+		this->detectedObjects.push_back(DetectedObject(blob, blobColor));
+	}
+
+	/*if (objectsFound.size() > 0) {
+
+		// Use (vid_x, vid_y) as the anchor point to draw the contours.
+		//drawPolylines(contours, vid_x + vid_width, vid_y);
+		/*for (ofPolyline p : contours) {
+		p.draw();
+		}
+		//contourFinder.draw(vid_x + vid_width, vid_y, vid_width, vid_height);
+		int i = 0;
+		for (ofxCvBlob blob : objectsFound) {
+			ofPolyline points;
+			points.addVertices(blob.pts);
+
+			ofSetColor(ofRandom(0, 255), ofRandom(0, 255), ofRandom(0, 255));
+			drawPolyline(points, vid_x + vid_width, vid_y);
+
+			i++;
+		}
+	}*/
 
 	// Log completion. 
 	logger.writeNormal("Finished vision analysis.");

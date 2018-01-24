@@ -109,35 +109,12 @@ void ofApp::analyze(bool doThreshold) {
 		this->nMaxBlobsSlider,
 		this->findHolesToggle, false);
 
-	//this->contours = blobsToPolylines(contourFinder.blobs);
-	// Update the objects found.
-
 	this->detectedObjects.clear();
 	for (ofxCvBlob blob : contourFinder.blobs) {
 		//ofColor blobColor(ofRandom(0, 255), ofRandom(0, 255), ofRandom(0, 255));
 		ofColor blobColor(255, 0, 0);
 		this->detectedObjects.push_back(DetectedObject(blob, blobColor));
 	}
-
-	/*if (objectsFound.size() > 0) {
-
-		// Use (vid_x, vid_y) as the anchor point to draw the contours.
-		//drawPolylines(contours, vid_x + vid_width, vid_y);
-		/*for (ofPolyline p : contours) {
-		p.draw();
-		}
-		//contourFinder.draw(vid_x + vid_width, vid_y, vid_width, vid_height);
-		int i = 0;
-		for (ofxCvBlob blob : objectsFound) {
-			ofPolyline points;
-			points.addVertices(blob.pts);
-
-			ofSetColor(ofRandom(0, 255), ofRandom(0, 255), ofRandom(0, 255));
-			drawPolyline(points, vid_x + vid_width, vid_y);
-
-			i++;
-		}
-	}*/
 
 	// Log completion. 
 	logger.writeNormal("Finished vision analysis.");

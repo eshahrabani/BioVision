@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <stdlib.h>
 
 // Forward declaration to avoid circular includes. 
 class ofApp;

@@ -12,38 +12,6 @@ void MouseHandler::handleMoved(int x, int y) {
 
 void MouseHandler::handleDragged(int x, int y, int button) {
 	if (button == OF_MOUSE_BUTTON_LEFT) {
-		/*if (pressedInsidePlayer) {
-			if (app->timeline->isVideoLoaded()) {
-
-				// Create marquee.
-				if (app->keyHandler->ctrl_pressed) {
-					app->marquee.setFromDrag(last_clicked_x, last_clicked_y, x, y);
-				}
-
-				// Move marquee.
-				else if (app->keyHandler->alt_pressed) {
-
-					// Calculate displacements from click position.
-					int dx = x - pos_x;
-					int dy = y - pos_y;
-
-					// Apply displacement to left corner.
-					int new_x = app->marquee.getX() + dx;
-					int new_y = app->marquee.getY() + dy;
-					app->marquee.set(new_x, new_y, app->marquee.width(), app->marquee.height());
-				}
-			}
-		
-		}*/
-
-		// If ctrl pressed, move contourfinder blobs.
-		KeyHandler* kh = app->keyHandler;
-		if (kh->ctrl_pressed && app->contours.size() > 0) {
-			float dx = x - pos_x;
-			float dy = y - pos_y;
-
-			app->contours = displacePolylines(app->contours, dx, dy);
-		}
 
 		// If in timeline, update the frame position.
 		if (pressedInsideTimeline) {
@@ -84,6 +52,36 @@ void MouseHandler::handlePressed(int x, int y, int button) {
 		}
 
 		// If pressed inside an object, select that object.
+		if (app->selectObjectToggle && app->detectedObjects.size() > 0) {
+			bool oneFound = false;
+			for (DetectedObject &obj : app->detectedObjects) {
+				if (obj.containsPoint(ofPoint(x, y))) {
+					// Change the color of this object.
+					obj.setBlobColor(ofColor(0, 204, 204));
+					oneFound = true;
+					break;
+				}
+			}
+			if (!oneFound) {
+				// Find nearest then select it.
+				int minDist = INT_MAX;
+				int minIndex = 0;
+				int i = 0;
+				for (DetectedObject &obj : app->detectedObjects) {
+					ofPoint closestPoint = obj.getClosestPoint(ofPoint(x, y));
+					app->logger.writeNormal(std::to_string(closestPoint.x) + "," + std::to_string(closestPoint.y));
+					float dist = abs(ofDist(x, y, closestPoint.x, closestPoint.y));
+
+					if (minDist > dist) {
+						minDist = dist;
+						minIndex = i;
+					}
+					app->logger.writeNormal(std::to_string(minDist));
+					i++;
+				}
+				app->detectedObjects.at(minIndex).setBlobColor(ofColor(0, 204, 204));
+			}
+		}
 
 	}
 }

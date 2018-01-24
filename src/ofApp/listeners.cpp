@@ -44,7 +44,7 @@ void ofApp::play_speed_changed(float &f) {
 	timeline->setVideoSpeed(f);
 }
 
-void ofApp::selectObjectToggled(bool & b) {
+void ofApp::selectObjectToggled(bool &b) {
 	if (b) {
 		this->selectObjectToggle.setName("Selecting object...");
 	}
@@ -111,8 +111,8 @@ void ofApp::analyze(bool doThreshold) {
 
 	this->detectedObjects.clear();
 	for (ofxCvBlob blob : contourFinder.blobs) {
-		//ofColor blobColor(ofRandom(0, 255), ofRandom(0, 255), ofRandom(0, 255));
-		ofColor blobColor(255, 0, 0);
+		ofColor blobColor(255, ofRandom(0, 255), 0);
+		//ofColor blobColor(255, 0, 0);
 		this->detectedObjects.push_back(DetectedObject(blob, blobColor, ofPoint(vid_x + vid_width, vid_y)));
 	}
 

@@ -138,7 +138,7 @@ void ofApp::draw(){
 	ofDrawBitmapString("Analysis", labelX, labelY);
 	
 	for (DetectedObject obj : this->detectedObjects) {
-		obj.draw(vid_x + vid_width, vid_y);
+		obj.draw();
 	}
 
 	// Draw the selected area.

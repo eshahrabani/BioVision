@@ -30,6 +30,10 @@ ofxCvBlob DetectedObject::getBlob() {
 	return blob;
 }
 
+const ofPolyline DetectedObject::getPoints() {
+	return this->points;
+}
+
 
 void DetectedObject::setAnchor(ofPoint anchor) {
 	this->anchor = anchor;
@@ -43,6 +47,12 @@ ofPoint DetectedObject::getClosestPoint(ofPoint target, bool useAnchor) {
 	else {
 		return this->points.getClosestPoint(target);
 	}
+}
+
+void DetectedObject::consolidateWith(DetectedObject &other) {
+	vector<ofPoint> verts = other.getPoints().getVertices();
+	this->points.addVertices(verts);
+	this->points.close();
 }
 
 bool DetectedObject::containsPoint(ofPoint pt, bool useAnchor) {

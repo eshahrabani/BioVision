@@ -17,7 +17,14 @@ public:
 	void setAnchor(ofPoint anchor);
 
 	ofxCvBlob getBlob();
+	const ofPolyline getPoints();
+
 	ofPoint getClosestPoint(ofPoint target, bool useAnchor=true);
+
+	/*
+	 * Add the points of the other object to this object. 
+	 */
+	void consolidateWith(DetectedObject &other); 
 
 	bool containsPoint(ofPoint pt, bool useAnchor=true);
 

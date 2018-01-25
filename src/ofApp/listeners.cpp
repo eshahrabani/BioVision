@@ -54,7 +54,16 @@ void ofApp::selectObjectToggled(bool &b) {
 }
 
 void ofApp::consolidateObjectsPressed() {
-	// consolidate all selected objects.
+	// consolidate the first two selected objects.
+	if (this->selectedObjects.size() >= 2) {
+		DetectedObject* obj1 = this->selectedObjects.at(0);
+		DetectedObject* obj2 = this->selectedObjects.at(1);
+		obj1->consolidateWith(*obj2);
+
+		// remove obj2 from selected objects and from the detected object vector.
+		this->selectedObjects.erase(this->selectedObjects.begin() + 1);
+		//this->detectedObjects.erase(std::remove(detectedObjects.begin(), detectedObjects.end(), (*obj2)));
+	}
 }
 
 // TODO: needs encapsulation of analysis into 

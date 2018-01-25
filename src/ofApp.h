@@ -169,6 +169,7 @@ class ofApp : public ofBaseApp{
 		ofxCvGrayscaleImage grayImage, threshold, grayBg, grayDiff;
 		vector<ofPolyline> contours; 
 		vector<DetectedObject> detectedObjects;
+		vector<DetectedObject*> selectedObjects;
 
 		/* -------------------- VIDEO CONTROLS -------------------- */
 		

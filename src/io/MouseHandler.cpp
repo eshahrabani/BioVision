@@ -53,11 +53,14 @@ void MouseHandler::handlePressed(int x, int y, int button) {
 
 		// If pressed inside an object, select that object.
 		if (app->selectObjectToggle && app->detectedObjects.size() > 0) {
+			DetectedObject* selectedObject;
 			bool oneFound = false;
+
 			for (DetectedObject &obj : app->detectedObjects) {
 				if (obj.containsPoint(ofPoint(x, y))) {
 					// Change the color of this object.
-					obj.setBlobColor(ofColor(0, 204, 204));
+					//obj.setBlobColor(ofColor(0, 204, 204));
+					selectedObject = &obj;
 					oneFound = true;
 					break;
 				}
@@ -69,20 +72,19 @@ void MouseHandler::handlePressed(int x, int y, int button) {
 				int i = 0;
 				for (DetectedObject &obj : app->detectedObjects) {
 					ofPoint closestPoint = obj.getClosestPoint(ofPoint(x, y));
-					app->logger.writeNormal(std::to_string(closestPoint.x) + "," + std::to_string(closestPoint.y));
 					float dist = abs(ofDist(x, y, closestPoint.x, closestPoint.y));
 
 					if (minDist > dist) {
 						minDist = dist;
 						minIndex = i;
 					}
-					app->logger.writeNormal(std::to_string(minDist));
+
 					i++;
 				}
-				app->detectedObjects.at(minIndex).setBlobColor(ofColor(0, 204, 204));
+				selectedObject = &app->detectedObjects.at(minIndex);
 			}
+			selectedObject->setBlobColor(ofColor(0, 204, 204));
 		}
-
 	}
 }
 

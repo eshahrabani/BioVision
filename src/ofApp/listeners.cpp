@@ -110,6 +110,8 @@ void ofApp::analyze(bool doThreshold) {
 		this->findHolesToggle, false);
 
 	this->detectedObjects.clear();
+	this->selectedObjects.clear();
+
 	for (ofxCvBlob blob : contourFinder.blobs) {
 		ofColor blobColor(255, ofRandom(0, 255), 0);
 		//ofColor blobColor(255, 0, 0);

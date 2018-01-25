@@ -47,6 +47,13 @@ void ofApp::setup(){
 	mainPanel.add(play_speed.setup("Play speed", 1.0, -3.0, 3.0));
 	mainPanel.setPosition(0, 0);
 
+	objectsPanel.setPosition(this->app_width / 2, 0);
+	objectsPanel.setDefaultWidth(250);
+	objectsPanel.add(selectObjectToggle.set("Select object", false));
+	objectsPanel.add(consolidateObjectsButton.setup("Consolidate two objects"));
+
+	maxBlobAreaSlider.setDefaultWidth(250);
+
 	toolsPanel.setDefaultWidth(250);
 	toolsPanel.setPosition(this->app_width - 250, 0);
 	toolsPanel.add(analyze_toggle.set("Analyze (beta)", false));
@@ -60,11 +67,6 @@ void ofApp::setup(){
 	toolsPanel.add(polygonSelectorToggle.set("Polygon Selector Tool", false));
 	toolsPanel.add(saveFrameButton.setup("Save Frame"));
 
-	objectsPanel.setPosition(this->app_width / 2, 0);
-	objectsPanel.add(selectObjectToggle.set("Select object", false));
-
-	maxBlobAreaSlider.setDefaultWidth(250);
-
 	// Link the buttons to their respective methods.
 	load_button.addListener(this, &ofApp::load);					 
 	play_toggle.addListener(this, &ofApp::play_toggled);              
@@ -73,6 +75,7 @@ void ofApp::setup(){
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      
 
 	selectObjectToggle.addListener(this, &ofApp::selectObjectToggled);
+	consolidateObjectsButton.addListener(this, &ofApp::consolidateObjectsPressed);
 	
 	analyze_toggle.addListener(this, &ofApp::analyze_toggled);
 	thresholdBlockSizeSlider.addListener(this, &ofApp::thresholdBlockSizeChanged);

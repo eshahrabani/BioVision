@@ -53,6 +53,10 @@ void ofApp::selectObjectToggled(bool &b) {
 	}
 }
 
+void ofApp::consolidateObjectsPressed() {
+	// consolidate all selected objects.
+}
+
 // TODO: needs encapsulation of analysis into 
 // analyzer object. 
 void ofApp::analyze_toggled(bool &b) {

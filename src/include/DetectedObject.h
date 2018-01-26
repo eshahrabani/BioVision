@@ -10,8 +10,8 @@ public:
 
 	void update();
 
-	void draw();
-	void draw(float x, float y);
+	void draw(bool drawBoundingBox=true);
+	void draw(float x, float y, bool drawBoundingBox=true);
 
 	void setBlobColor(ofColor color);
 	void setAnchor(ofPoint anchor);

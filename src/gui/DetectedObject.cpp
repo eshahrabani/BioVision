@@ -13,13 +13,19 @@ DetectedObject::DetectedObject(ofxCvBlob blob, ofColor blobColor, ofPoint anchor
 void DetectedObject::update() {
 }
 
-void DetectedObject::draw() {
-	this->draw(anchor.x, anchor.y);
+void DetectedObject::draw(bool drawBoundingBox) {
+	this->draw(anchor.x, anchor.y, drawBoundingBox);
 }
 
-void DetectedObject::draw(float x, float y) {
+void DetectedObject::draw(float x, float y, bool drawBoundingBox) {
+	if (drawBoundingBox) {
+		ofRectangle box = this->points.getBoundingBox();
+		ofSetColor(197, 66, 244);
+		ofNoFill();
+		ofDrawRectangle(anchor.x + box.x, anchor.y + box.y, box.width, box.height);
+	}
 	ofSetColor(blobColor);
-	drawPolyline(points, x, y);
+	drawPolyline(points, x, y)
 }
 
 void DetectedObject::setBlobColor(ofColor color) {

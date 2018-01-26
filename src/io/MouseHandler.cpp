@@ -31,11 +31,17 @@ void MouseHandler::handlePressed(int x, int y, int button) {
 	last_clicked_button = button;
 
 	if (button == OF_MOUSE_BUTTON_LEFT) {
-		ofRectangle area;
-		area.set(app->vid_x, app->vid_y, app->vid_width, app->vid_height);
+		bool pressedInsideAnalysisArea = false;
+		ofRectangle vidPlayerArea, analysisArea;
+		vidPlayerArea.set(app->vid_x, app->vid_y, app->vid_width, app->vid_height);
+		analysisArea.set(app->vid_x + app->vid_width, app->vid_y, app->vid_width, app->vid_height);
 
-		if (area.inside(x, y)) {
+		if (vidPlayerArea.inside(x, y)) {
 			this->pressedInsidePlayer = true;
+		}
+
+		if (analysisArea.inside(x, y)) {
+			pressedInsideAnalysisArea = true;
 		}
 
 		if (app->isInsideTimeline(x, y) && app->isVideoLoaded()) {
@@ -46,8 +52,8 @@ void MouseHandler::handlePressed(int x, int y, int button) {
 			app->setFrameFromMouseX(x);
 		}
 
-		// If pressed inside player and polygonSelection is true, build a polygon selection.
-		if (pressedInsidePlayer && app->polygonSelection) {
+		// If pressed inside player/analysis area and polygonSelection is true, build a polygon selection.
+		if (app->polygonSelection && (pressedInsidePlayer || pressedInsideAnalysisArea)) {
 			app->selectedArea.addVertex(x, y);
 		}
 

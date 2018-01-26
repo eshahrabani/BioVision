@@ -5,6 +5,8 @@ DetectedObject::DetectedObject(ofxCvBlob blob, ofColor blobColor, ofPoint anchor
 	this->points = ofPolyline(blob.pts);
 	this->points.close();
 
+	this->boundingBoxColor = ofColor(ofRandom(0, 255), ofRandom(0, 255), ofRandom(0, 255));
+
 	setBlobColor(blobColor);
 	setAnchor(anchor);
 
@@ -13,19 +15,24 @@ DetectedObject::DetectedObject(ofxCvBlob blob, ofColor blobColor, ofPoint anchor
 void DetectedObject::update() {
 }
 
-void DetectedObject::draw(bool drawBoundingBox) {
-	this->draw(anchor.x, anchor.y, drawBoundingBox);
+void DetectedObject::draw(bool drawBoundingBox, bool fillBoundingBox) {
+	this->draw(anchor.x, anchor.y, drawBoundingBox, fillBoundingBox);
 }
 
-void DetectedObject::draw(float x, float y, bool drawBoundingBox) {
+void DetectedObject::draw(float x, float y, bool drawBoundingBox, bool fillBoundingBox) {
 	if (drawBoundingBox) {
 		ofRectangle box = this->points.getBoundingBox();
-		ofSetColor(197, 66, 244);
-		ofNoFill();
+		//ofSetColor(197, 66, 244);
+		
+		ofSetColor(this->boundingBoxColor);
+		if (fillBoundingBox) {
+			ofFill();
+		}
 		ofDrawRectangle(anchor.x + box.x, anchor.y + box.y, box.width, box.height);
+		ofNoFill();
 	}
 	ofSetColor(blobColor);
-	drawPolyline(points, x, y)
+	drawPolyline(points, x, y);
 }
 
 void DetectedObject::setBlobColor(ofColor color) {

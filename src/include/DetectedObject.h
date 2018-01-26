@@ -10,8 +10,8 @@ public:
 
 	void update();
 
-	void draw(bool drawBoundingBox=true);
-	void draw(float x, float y, bool drawBoundingBox=true);
+	void draw(bool drawBoundingBox=true, bool fillBoundingBox=false);
+	void draw(float x, float y, bool drawBoundingBox=true, bool fillBoundingBox=false);
 
 	void setBlobColor(ofColor color);
 	void setAnchor(ofPoint anchor);
@@ -33,5 +33,6 @@ private:
 	ofPolyline points;
 
 	ofColor blobColor;
+	ofColor boundingBoxColor;
 	ofPoint anchor;
 };

@@ -54,16 +54,19 @@ void MouseHandler::handlePressed(int x, int y, int button) {
 		// If pressed inside an object, select that object.
 		if (app->selectObjectToggle && app->detectedObjects.size() > 0) {
 			DetectedObject* selectedObject;
+			int selectedObjectIndex;
 			bool oneFound = false;
 
+			int i = 0;
 			for (DetectedObject &obj : app->detectedObjects) {
 				if (obj.containsPoint(ofPoint(x, y))) {
-					// Change the color of this object.
-					//obj.setBlobColor(ofColor(0, 204, 204));
 					selectedObject = &obj;
+					selectedObjectIndex = i;
 					oneFound = true;
+
 					break;
 				}
+				i++;
 			}
 			if (!oneFound) {
 				// Find nearest then select it.
@@ -82,8 +85,11 @@ void MouseHandler::handlePressed(int x, int y, int button) {
 					i++;
 				}
 				selectedObject = &app->detectedObjects.at(minIndex);
+				selectedObjectIndex = minIndex;
 			}
-			selectedObject->setBlobColor(ofColor(0, 204, 204));
+			//selectedObject->setBlobColor(ofColor(0, 204, 204));
+			app->selectedObjectIndices.push_back(selectedObjectIndex);
+			app->detectedObjects.at(selectedObjectIndex).setBlobColor(ofColor(0, 204, 204));
 		}
 	}
 }

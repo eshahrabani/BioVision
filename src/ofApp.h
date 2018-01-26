@@ -174,6 +174,7 @@ class ofApp : public ofBaseApp{
 		vector<ofPolyline> contours; 
 		vector<DetectedObject> detectedObjects;
 		vector<DetectedObject*> selectedObjects; // Contains pointers to objects in detectedObjects vector.
+		vector<int> selectedObjectIndices; // contains indices into detectedObjects vector.
 
 		/* -------------------- VIDEO CONTROLS -------------------- */
 		

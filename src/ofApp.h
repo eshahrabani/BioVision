@@ -87,6 +87,9 @@ class ofApp : public ofBaseApp{
 
 		// Consolidate selected objects button.
 		ofxButton consolidateObjectsButton;
+
+		// Delete selected object button.
+		ofxButton deleteObjectButton;
 		
 		// The analyze toggle on the analysis panel.
 		ofParameter<bool> analyze_toggle;		
@@ -141,6 +144,7 @@ class ofApp : public ofBaseApp{
 
 		void selectObjectToggled(bool &b);
 		void consolidateObjectsPressed();
+		void deleteObjectPressed();
 
 		// The function attached to the analyze toggle.
 		void analyze_toggled(bool &b);

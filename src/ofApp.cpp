@@ -51,6 +51,7 @@ void ofApp::setup(){
 	objectsPanel.setDefaultWidth(250);
 	objectsPanel.add(selectObjectToggle.set("Select object", false));
 	objectsPanel.add(consolidateObjectsButton.setup("Consolidate two objects"));
+	objectsPanel.add(deleteObjectButton.setup("Delete object"));
 
 	maxBlobAreaSlider.setDefaultWidth(250);
 
@@ -76,6 +77,7 @@ void ofApp::setup(){
 
 	selectObjectToggle.addListener(this, &ofApp::selectObjectToggled);
 	consolidateObjectsButton.addListener(this, &ofApp::consolidateObjectsPressed);
+	deleteObjectButton.addListener(this, &ofApp::deleteObjectPressed);
 	
 	analyze_toggle.addListener(this, &ofApp::analyze_toggled);
 	thresholdBlockSizeSlider.addListener(this, &ofApp::thresholdBlockSizeChanged);
@@ -141,14 +143,14 @@ void ofApp::draw(){
 	ofDrawBitmapString("Analysis", labelX, labelY);
 	
 	for (DetectedObject obj : this->detectedObjects) {
-		obj.draw();
+		obj.draw(true, true);
 	}
 
-	// Draw the selected area.
+	// Draw the currently selected area.
 	ofSetColor(255, 0, 0);
 	selectedArea.draw();
 
-	// Draw all selected objects.
+	// Draw all selected areas.
 	ofSetColor(66, 117, 238);
 	for (ofPolyline p : selectedAreas) {
 		p.draw();

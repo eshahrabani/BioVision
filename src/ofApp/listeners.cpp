@@ -75,6 +75,14 @@ void ofApp::consolidateObjectsPressed() {
 	}
 }
 
+void ofApp::deleteObjectPressed() {
+	if (this->selectedObjectIndices.size() == 1) {
+		int objIndex = this->selectedObjectIndices[0];
+		this->detectedObjects.erase(this->detectedObjects.begin() + objIndex);
+		this->selectedObjectIndices.erase(this->selectedObjectIndices.begin());
+	}
+}
+
 // TODO: needs encapsulation of analysis into 
 // analyzer object. 
 void ofApp::analyze_toggled(bool &b) {

@@ -59,27 +59,22 @@ void MouseHandler::handlePressed(int x, int y, int button) {
 
 		// If pressed inside an object, select that object.
 		if (app->selectObjectToggle && app->detectedObjects.size() > 0) {
-			DetectedObject* selectedObject;
-			int selectedObjectIndex;
+			DetectedObject* selectedObject = NULL;
 			bool oneFound = false;
-
-			int i = 0;
 
 			// Iterate by reference.
 			for (DetectedObject &obj : app->detectedObjects) {
 				if (obj.containsPoint(ofPoint(x, y))) {
 					// Store the address of the found object.
 					selectedObject = &obj;
-					selectedObjectIndex = i;
 					oneFound = true;
 
 					break;
 				}
-				i++;
 			}
 			if (!oneFound) {
-				// Find nearest then select it.
-				int minDist = INT_MAX;
+				// Find nearest within 15px then select it.
+				float minDist = std::numeric_limits<float>::max();
 				int minIndex = 0;
 				int i = 0;
 				for (DetectedObject &obj : app->detectedObjects) {
@@ -94,12 +89,17 @@ void MouseHandler::handlePressed(int x, int y, int button) {
 					i++;
 				}
 				// Store the address of the found object.
-				selectedObject = &app->detectedObjects.at(minIndex);
-				selectedObjectIndex = minIndex;
+				if (minDist < 15) {
+					selectedObject = &app->detectedObjects.at(minIndex);
+				}
 			}
-			//selectedObject->setBlobColor(ofColor(0, 204, 204));
-			selectedObject->setSelected(true);
-			app->selectedObjects.push_back(selectedObject);
+			// If selected object is not null (was found), and it is not already selected,
+			// add it to the selected objects vector.
+			if (selectedObject && !DetectedObject::contains(app->selectedObjects, selectedObject)) {
+				app->logger.writeNormal("Selected object.");
+				selectedObject->setSelected(true);
+				app->selectedObjects.push_back(selectedObject);
+			}
 		}
 	}
 }

@@ -35,6 +35,8 @@ public:
 	// Returns the index of the object in the vector.
 	// If not found, returns -1.
 	static int getIndexByAddress(vector<DetectedObject> &v, DetectedObject* addr);
+	static bool contains(vector<DetectedObject>& v, DetectedObject& obj);
+	static bool contains(vector<DetectedObject*> pVec, DetectedObject* addr);
 
 private:
 	ofxCvBlob blob;

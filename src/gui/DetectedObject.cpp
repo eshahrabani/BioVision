@@ -98,3 +98,20 @@ int DetectedObject::getIndexByAddress(vector<DetectedObject> &objects, DetectedO
 	 
 	return index;
 }
+
+bool DetectedObject::contains(vector<DetectedObject>& v, DetectedObject& obj) {
+	return getIndexByAddress(v, &obj) != -1;
+}
+
+bool DetectedObject::contains(vector<DetectedObject*> pVec, DetectedObject * addr) {
+	bool contains = false;
+
+	for (DetectedObject* pObj : pVec) {
+		if (pObj == addr) {
+			contains = true;
+			break;
+		}
+	}
+
+	return contains;
+}

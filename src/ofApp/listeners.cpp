@@ -46,39 +46,40 @@ void ofApp::play_speed_changed(float &f) {
 
 void ofApp::selectObjectToggled(bool &b) {
 	if (b) {
-		this->selectObjectToggle.setName("Selecting object...");
+		this->selectObjectToggle.setName("Selecting...");
 	}
 	else {
 		// Unselect all currently selected objects.
 		for (DetectedObject* pObj : this->selectedObjects) {
+			logger.writeNormal("Unselecting object.");
 			pObj->setSelected(false);
 		}
 
 		// Clear selected objects vector.
 		this->selectedObjects.clear();
 
-		this->selectObjectToggle.setName("Select object");
+		this->selectObjectToggle.setName("Select object(s)");
 	}
 }
 
 void ofApp::consolidateObjectsPressed() {
 	// Consolidate the first two selected objects.
-	if (this->selectedObjects.size() >= 2) {
+	if (this->selectedObjects.size() == 2) {
 		DetectedObject* obj1 = this->selectedObjects.at(0);
 		DetectedObject* obj2 = this->selectedObjects.at(1);
 		obj1->consolidateWith(*obj2);
-
-		// Remove obj2 from selected objects and from the detected object vector.
-		this->selectedObjects.erase(this->selectedObjects.begin() + 1);
 
 		// Find obj2 in detected objects and delete it.
 		int obj2Index = DetectedObject::getIndexByAddress(this->detectedObjects, obj2);
 		if (obj2Index != -1) {
 			this->detectedObjects.erase(this->detectedObjects.begin() + obj2Index);
 		}
+
+		// Unselect all objects now.
+		this->selectObjectToggle = !this->selectObjectToggle;
 	}
 	else {
-		logger.writeNormal("Not enough objects selected.");
+		logger.writeNormal("Select only two objects at a time for consolidation.");
 	}
 }
 
@@ -157,7 +158,6 @@ void ofApp::analyze(bool doThreshold) {
 
 	this->detectedObjects.clear();
 	this->selectedObjects.clear();
-	this->selectedObjectIndices.clear();
 
 	for (ofxCvBlob blob : contourFinder.blobs) {
 		ofColor blobColor(255, ofRandom(0, 255), 0);

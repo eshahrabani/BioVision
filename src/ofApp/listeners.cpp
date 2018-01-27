@@ -54,42 +54,43 @@ void ofApp::selectObjectToggled(bool &b) {
 }
 
 void ofApp::consolidateObjectsPressed() {
-	// consolidate the first two selected objects.
+	// Consolidate the first two selected objects.
 	if (this->selectedObjects.size() >= 2) {
 		DetectedObject* obj1 = this->selectedObjects.at(0);
 		DetectedObject* obj2 = this->selectedObjects.at(1);
 		obj1->consolidateWith(*obj2);
 
-		//int obj1Index = this->selectedObjectIndices.at(0);
-		//int obj2Index = this->selectedObjectIndices.at(1);
-
-		//DetectedObject& obj1 = this->detectedObjects.at(obj1Index);
-		//DetectedObject& obj2 = this->detectedObjects.at(obj2Index);
-		//obj1.consolidateWith(obj2);
-
 		// remove obj2 from selected objects and from the detected object vector.
 		this->selectedObjects.erase(this->selectedObjects.begin() + 1);
 		// Find obj2 in detected objects and delete it.
 		int obj2Index = DetectedObject::getIndexByAddress(this->detectedObjects, obj2);
-		logger.writeNormal(std::to_string(obj2Index));
 		if (obj2Index != -1) {
 			this->detectedObjects.erase(this->detectedObjects.begin() + obj2Index);
 		}
-
-		//this->detectedObjects.erase(std::remove(detectedObjects.begin(), detectedObjects.end(), (*obj2)));
-		//this->selectedObjectIndices.erase(this->selectedObjectIndices.begin() + 1);
-		//this->detectedObjects.erase(this->detectedObjects.begin() + obj2Index);
+	}
+	else {
+		logger.writeNormal("Not enough objects selected.");
 	}
 }
 
 void ofApp::deleteObjectPressed() {
-	if (this->selectedObjectIndices.size() == 1) {
-		int objIndex = this->selectedObjectIndices[0];
+	if (this->selectedObjects.size() >= 1) {
+		// Take the first selected object's address.
+		DetectedObject* addr = this->selectedObjects.at(0);
+
+		// Find the index of this object in the detected objects vector.
+		int objIndex = DetectedObject::getIndexByAddress(this->detectedObjects, addr);
+
+		// Delete the selected object pointer and the detected object itself.
+		this->selectedObjects.erase(this->selectedObjects.begin());
 		this->detectedObjects.erase(this->detectedObjects.begin() + objIndex);
-		this->selectedObjectIndices.erase(this->selectedObjectIndices.begin());
+
+		/*int objIndex = this->selectedObjectIndices[0];
+		this->detectedObjects.erase(this->detectedObjects.begin() + objIndex);
+		this->selectedObjectIndices.erase(this->selectedObjectIndices.begin());*/
 	}
 	else {
-		logger.writeNormal("Can only delete one object at a time.");
+		logger.writeNormal("No objects selected.");
 	}
 }
 

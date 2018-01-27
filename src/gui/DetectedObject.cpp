@@ -48,7 +48,7 @@ ofxCvBlob DetectedObject::getBlob() {
 	return blob;
 }
 
-const ofPolyline DetectedObject::getPoints() {
+const ofPolyline DetectedObject::getPolyline() {
 	return this->points;
 }
 
@@ -72,7 +72,7 @@ void DetectedObject::setSelected(bool s) {
 }
 
 void DetectedObject::consolidateWith(DetectedObject &other) {
-	vector<ofPoint> verts = other.getPoints().getVertices();
+	vector<ofPoint> verts = other.getPolyline().getVertices();
 	this->points.addVertices(verts);
 	this->points.close();
 }

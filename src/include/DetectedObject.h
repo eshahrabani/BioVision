@@ -17,7 +17,7 @@ public:
 	void setAnchor(ofPoint anchor);
 
 	ofxCvBlob getBlob();
-	const ofPolyline getPoints();
+	const ofPolyline getPolyline();
 
 	ofPoint getClosestPoint(ofPoint target, bool useAnchor=true);
 

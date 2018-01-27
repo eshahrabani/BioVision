@@ -28,6 +28,10 @@ public:
 
 	bool containsPoint(ofPoint pt, bool useAnchor=true);
 
+	// Returns the index of the object in the vector.
+	// If not found, returns -1.
+	static int getIndexByAddress(vector<DetectedObject> &v, DetectedObject* addr);
+
 private:
 	ofxCvBlob blob;
 	ofPolyline points;

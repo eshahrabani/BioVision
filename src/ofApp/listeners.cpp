@@ -55,23 +55,30 @@ void ofApp::selectObjectToggled(bool &b) {
 
 void ofApp::consolidateObjectsPressed() {
 	// consolidate the first two selected objects.
-	if (this->selectedObjectIndices.size() == 2) {
-		//DetectedObject* obj1 = this->selectedObjects.at(0);
-		//DetectedObject* obj2 = this->selectedObjects.at(1);
-		//obj1->consolidateWith(*obj2);
+	if (this->selectedObjects.size() >= 2) {
+		DetectedObject* obj1 = this->selectedObjects.at(0);
+		DetectedObject* obj2 = this->selectedObjects.at(1);
+		obj1->consolidateWith(*obj2);
 
-		int obj1Index = this->selectedObjectIndices.at(0);
-		int obj2Index = this->selectedObjectIndices.at(1);
+		//int obj1Index = this->selectedObjectIndices.at(0);
+		//int obj2Index = this->selectedObjectIndices.at(1);
 
-		DetectedObject& obj1 = this->detectedObjects.at(obj1Index);
-		DetectedObject& obj2 = this->detectedObjects.at(obj2Index);
-		obj1.consolidateWith(obj2);
+		//DetectedObject& obj1 = this->detectedObjects.at(obj1Index);
+		//DetectedObject& obj2 = this->detectedObjects.at(obj2Index);
+		//obj1.consolidateWith(obj2);
 
 		// remove obj2 from selected objects and from the detected object vector.
-		//this->selectedObjects.erase(this->selectedObjects.begin() + 1);
+		this->selectedObjects.erase(this->selectedObjects.begin() + 1);
+		// Find obj2 in detected objects and delete it.
+		int obj2Index = DetectedObject::getIndexByAddress(this->detectedObjects, obj2);
+		logger.writeNormal(std::to_string(obj2Index));
+		if (obj2Index != -1) {
+			this->detectedObjects.erase(this->detectedObjects.begin() + obj2Index);
+		}
+
 		//this->detectedObjects.erase(std::remove(detectedObjects.begin(), detectedObjects.end(), (*obj2)));
-		this->selectedObjectIndices.erase(this->selectedObjectIndices.begin() + 1);
-		this->detectedObjects.erase(this->detectedObjects.begin() + obj2Index);
+		//this->selectedObjectIndices.erase(this->selectedObjectIndices.begin() + 1);
+		//this->detectedObjects.erase(this->detectedObjects.begin() + obj2Index);
 	}
 }
 
@@ -80,6 +87,9 @@ void ofApp::deleteObjectPressed() {
 		int objIndex = this->selectedObjectIndices[0];
 		this->detectedObjects.erase(this->detectedObjects.begin() + objIndex);
 		this->selectedObjectIndices.erase(this->selectedObjectIndices.begin());
+	}
+	else {
+		logger.writeNormal("Can only delete one object at a time.");
 	}
 }
 

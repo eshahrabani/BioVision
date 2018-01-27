@@ -64,8 +64,11 @@ void MouseHandler::handlePressed(int x, int y, int button) {
 			bool oneFound = false;
 
 			int i = 0;
+
+			// Iterate by reference.
 			for (DetectedObject &obj : app->detectedObjects) {
 				if (obj.containsPoint(ofPoint(x, y))) {
+					// Store the address of the found object.
 					selectedObject = &obj;
 					selectedObjectIndex = i;
 					oneFound = true;
@@ -90,12 +93,15 @@ void MouseHandler::handlePressed(int x, int y, int button) {
 
 					i++;
 				}
+				// Store the address of the found object.
 				selectedObject = &app->detectedObjects.at(minIndex);
 				selectedObjectIndex = minIndex;
 			}
-			//selectedObject->setBlobColor(ofColor(0, 204, 204));
-			app->selectedObjectIndices.push_back(selectedObjectIndex);
-			app->detectedObjects.at(selectedObjectIndex).setBlobColor(ofColor(0, 204, 204));
+			selectedObject->setBlobColor(ofColor(0, 204, 204));
+			app->selectedObjects.push_back(selectedObject);
+			
+			//app->selectedObjectIndices.push_back(selectedObjectIndex);
+			//app->detectedObjects.at(selectedObjectIndex).setBlobColor(ofColor(0, 204, 204));
 		}
 	}
 }

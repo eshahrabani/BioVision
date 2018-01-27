@@ -78,3 +78,15 @@ bool DetectedObject::containsPoint(ofPoint pt, bool useAnchor) {
 		return this->points.inside(pt);
 	}
 }
+
+int DetectedObject::getIndexByAddress(vector<DetectedObject> &objects, DetectedObject* addr) {
+	int index = -1;
+	for (int i = 0; i < objects.size(); i++) {
+		if (&objects.at(i) == addr) {
+			index = i;
+			break;
+		}
+	}
+	 
+	return index;
+}

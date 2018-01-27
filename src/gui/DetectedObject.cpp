@@ -9,7 +9,6 @@ DetectedObject::DetectedObject(ofxCvBlob blob, ofColor blobColor, ofPoint anchor
 
 	setBlobColor(blobColor);
 	setAnchor(anchor);
-
 }
 
 void DetectedObject::update() {
@@ -31,7 +30,13 @@ void DetectedObject::draw(float x, float y, bool drawBoundingBox, bool fillBound
 		ofDrawRectangle(anchor.x + box.x, anchor.y + box.y, box.width, box.height);
 		ofNoFill();
 	}
-	ofSetColor(blobColor);
+
+	if (this->selected) {
+		ofSetColor(this->selectedColor);
+	}
+	else {
+		ofSetColor(blobColor);
+	}
 	drawPolyline(points, x, y);
 }
 
@@ -60,6 +65,10 @@ ofPoint DetectedObject::getClosestPoint(ofPoint target, bool useAnchor) {
 	else {
 		return this->points.getClosestPoint(target);
 	}
+}
+
+void DetectedObject::setSelected(bool s) {
+	this->selected = s;
 }
 
 void DetectedObject::consolidateWith(DetectedObject &other) {

@@ -49,6 +49,14 @@ void ofApp::selectObjectToggled(bool &b) {
 		this->selectObjectToggle.setName("Selecting object...");
 	}
 	else {
+		// Unselect all currently selected objects.
+		for (DetectedObject* pObj : this->selectedObjects) {
+			pObj->setSelected(false);
+		}
+
+		// Clear selected objects vector.
+		this->selectedObjects.clear();
+
 		this->selectObjectToggle.setName("Select object");
 	}
 }
@@ -60,8 +68,9 @@ void ofApp::consolidateObjectsPressed() {
 		DetectedObject* obj2 = this->selectedObjects.at(1);
 		obj1->consolidateWith(*obj2);
 
-		// remove obj2 from selected objects and from the detected object vector.
+		// Remove obj2 from selected objects and from the detected object vector.
 		this->selectedObjects.erase(this->selectedObjects.begin() + 1);
+
 		// Find obj2 in detected objects and delete it.
 		int obj2Index = DetectedObject::getIndexByAddress(this->detectedObjects, obj2);
 		if (obj2Index != -1) {
@@ -84,10 +93,6 @@ void ofApp::deleteObjectPressed() {
 		// Delete the selected object pointer and the detected object itself.
 		this->selectedObjects.erase(this->selectedObjects.begin());
 		this->detectedObjects.erase(this->detectedObjects.begin() + objIndex);
-
-		/*int objIndex = this->selectedObjectIndices[0];
-		this->detectedObjects.erase(this->detectedObjects.begin() + objIndex);
-		this->selectedObjectIndices.erase(this->selectedObjectIndices.begin());*/
 	}
 	else {
 		logger.writeNormal("No objects selected.");

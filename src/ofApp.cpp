@@ -143,7 +143,7 @@ void ofApp::draw(){
 	ofDrawBitmapString("Analysis", labelX, labelY);
 	
 	for (DetectedObject obj : this->detectedObjects) {
-		obj.draw(true, true);
+		obj.draw(true, false);
 	}
 
 	// Draw the currently selected area.

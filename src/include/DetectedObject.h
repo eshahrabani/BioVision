@@ -21,12 +21,16 @@ public:
 
 	ofPoint getClosestPoint(ofPoint target, bool useAnchor=true);
 
+	void setSelected(bool s);
+
 	/*
 	 * Add the points of the other object to this object. 
 	 */
 	void consolidateWith(DetectedObject &other); 
 
 	bool containsPoint(ofPoint pt, bool useAnchor=true);
+
+	ofColor selectedColor = ofColor(0, 204, 204);
 
 	// Returns the index of the object in the vector.
 	// If not found, returns -1.
@@ -39,4 +43,6 @@ private:
 	ofColor blobColor;
 	ofColor boundingBoxColor;
 	ofPoint anchor;
+
+	bool selected = false;
 };

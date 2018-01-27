@@ -97,7 +97,8 @@ void MouseHandler::handlePressed(int x, int y, int button) {
 				selectedObject = &app->detectedObjects.at(minIndex);
 				selectedObjectIndex = minIndex;
 			}
-			selectedObject->setBlobColor(ofColor(0, 204, 204));
+			//selectedObject->setBlobColor(ofColor(0, 204, 204));
+			selectedObject->setSelected(true);
 			app->selectedObjects.push_back(selectedObject);
 			
 			//app->selectedObjectIndices.push_back(selectedObjectIndex);

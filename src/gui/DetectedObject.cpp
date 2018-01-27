@@ -31,11 +31,12 @@ void DetectedObject::draw(float x, float y, bool drawBoundingBox, bool fillBound
 	}
 
 	if (this->selected) {
-		ofSetColor(this->selectedColor);
+		//ofSetColor(this->selectedColor);
 	}
 	else {
 		ofSetColor(blobColor);
 	}
+	ofSetColor(blobColor);
 	drawPolyline(points, x, y);
 }
 

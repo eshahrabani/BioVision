@@ -9,6 +9,24 @@ KeyHandler::KeyHandler(ofApp* app) {
 
 void KeyHandler::handlePressed(int key) {
 	switch (key) {
+	case 'A':
+	case 'a':
+		app->analyze_toggle = !app->analyze_toggle;
+		break;
+	case 'C':
+	case 'c':
+		app->consolidateObjectsPressed();
+		break;
+
+	case 'D':
+	case 'd':
+		app->deleteObjectPressed();
+		break;
+
+	case 'S':
+	case 's':
+		app->selectObjectToggle = !app->selectObjectToggle;
+		break;
 
 	// If p is pressed, play or pause the video.
 	case 'P':

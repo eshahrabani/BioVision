@@ -21,7 +21,6 @@ void DetectedObject::draw(bool drawBoundingBox, bool fillBoundingBox) {
 void DetectedObject::draw(float x, float y, bool drawBoundingBox, bool fillBoundingBox) {
 	if (drawBoundingBox) {
 		ofRectangle box = this->points.getBoundingBox();
-		//ofSetColor(197, 66, 244);
 		
 		ofSetColor(this->boundingBoxColor);
 		if (fillBoundingBox) {

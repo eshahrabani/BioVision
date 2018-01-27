@@ -100,9 +100,6 @@ void MouseHandler::handlePressed(int x, int y, int button) {
 			//selectedObject->setBlobColor(ofColor(0, 204, 204));
 			selectedObject->setSelected(true);
 			app->selectedObjects.push_back(selectedObject);
-			
-			//app->selectedObjectIndices.push_back(selectedObjectIndex);
-			//app->detectedObjects.at(selectedObjectIndex).setBlobColor(ofColor(0, 204, 204));
 		}
 	}
 }

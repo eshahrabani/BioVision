@@ -30,7 +30,7 @@ public:
 
 	bool containsPoint(ofPoint pt, bool useAnchor=true);
 
-	ofColor selectedColor = ofColor(0, 204, 204);
+	ofColor selectedColor;
 
 	// Returns the index of the object in the vector.
 	// If not found, returns -1.
@@ -46,5 +46,5 @@ private:
 	ofColor boundingBoxColor;
 	ofPoint anchor;
 
-	bool selected = false;
+	bool selected;
 };

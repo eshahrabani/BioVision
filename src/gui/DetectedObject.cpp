@@ -9,6 +9,8 @@ DetectedObject::DetectedObject(ofxCvBlob blob, ofColor blobColor, ofPoint anchor
 
 	setBlobColor(blobColor);
 	setAnchor(anchor);
+	setSelected(false);
+	selectedColor = ofColor(0, 204, 204);
 }
 
 void DetectedObject::update() {
@@ -22,7 +24,12 @@ void DetectedObject::draw(float x, float y, bool drawBoundingBox, bool fillBound
 	if (drawBoundingBox) {
 		ofRectangle box = this->points.getBoundingBox();
 		
-		ofSetColor(this->boundingBoxColor);
+		if (this->selected) {
+			ofSetColor(blobColor);
+		}
+		else {
+			ofSetColor(this->boundingBoxColor);
+		}
 		if (fillBoundingBox) {
 			ofFill();
 		}
@@ -31,12 +38,11 @@ void DetectedObject::draw(float x, float y, bool drawBoundingBox, bool fillBound
 	}
 
 	if (this->selected) {
-		//ofSetColor(this->selectedColor);
+		ofSetColor(this->selectedColor);
 	}
 	else {
 		ofSetColor(blobColor);
 	}
-	ofSetColor(blobColor);
 	drawPolyline(points, x, y);
 }
 

@@ -96,9 +96,9 @@ void MouseHandler::handlePressed(int x, int y, int button) {
 			// If selected object is not null (was found), and it is not already selected,
 			// add it to the selected objects vector.
 			if (selectedObject && !DetectedObject::contains(app->selectedObjects, selectedObject)) {
-				app->logger.writeNormal("Selected object.");
 				selectedObject->setSelected(true);
 				app->selectedObjects.push_back(selectedObject);
+				app->logger.writeNormal(std::to_string(app->selectedObjects.size()) + " object(s) selected.");
 			}
 		}
 	}

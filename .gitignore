@@ -63,3 +63,10 @@ icon.aps
 bin/data/output.txt
 bin/data/output.txt
 bin/data/output.txt
+*.pdb
+*.res
+*.exe
+bin/BioVision_debug.ilk
+*.pdb
+*.pdb
+obj/Debug/vc140.pdb

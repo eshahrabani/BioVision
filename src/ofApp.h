@@ -82,11 +82,20 @@ class ofApp : public ofBaseApp{
 		// The play speed slider on the main panel.
 		ofxSlider<float> play_speed;	
 
+		// Create object button.
+		ofParameter<bool> createObjectToggle;
+
+		// Mark as known object button.
+		ofxButton markObjectButton;
+
 		// Select object toggle.
 		ofParameter<bool> selectObjectToggle;
 
 		// Consolidate selected objects button.
 		ofxButton consolidateObjectsButton;
+
+		// Separate object toggle.
+		ofParameter<bool> separateObjectToggle;
 
 		// Delete selected object button.
 		ofxButton deleteObjectButton;

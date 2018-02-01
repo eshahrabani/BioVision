@@ -82,8 +82,8 @@ class ofApp : public ofBaseApp{
 		// The play speed slider on the main panel.
 		ofxSlider<float> play_speed;	
 
-		// Create object button.
-		ofParameter<bool> createObjectToggle;
+		// Create objects button.
+		ofxButton createObjectsButton;
 
 		// Mark as known object button.
 		ofxButton markObjectButton;
@@ -127,6 +127,9 @@ class ofApp : public ofBaseApp{
 		// The polygon selector toggle on the main panel.
 		ofParameter<bool> polygonSelectorToggle;
 
+		// Clear polygons button.
+		ofxButton clearPolygonsButton;
+
 		// Output mode toggle.
 		ofParameter<bool> outputModeToggle;
 
@@ -151,6 +154,7 @@ class ofApp : public ofBaseApp{
 		// The function attached to the play slider.
 		void play_speed_changed(float &f);
 
+		void createObjectPressed();
 		void selectObjectToggled(bool &b);
 		void consolidateObjectsPressed();
 		void deleteObjectPressed();

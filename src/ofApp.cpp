@@ -49,7 +49,7 @@ void ofApp::setup(){
 
 	objectsPanel.setPosition(this->app_width / 2, 0);
 	objectsPanel.setDefaultWidth(250);
-	objectsPanel.add(createObjectToggle.set("Create object", false));
+	objectsPanel.add(createObjectsButton.setup("Create object(s)"));
 	objectsPanel.add(markObjectButton.setup("Mark object"));
 	objectsPanel.add(selectObjectToggle.set("Select object", false));
 	objectsPanel.add(consolidateObjectsButton.setup("Consolidate two objects"));
@@ -78,6 +78,7 @@ void ofApp::setup(){
 	previous_frame_button.addListener(this, &ofApp::previous_frame);  
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      
 
+	createObjectsButton.addListener(this, &ofApp::createObjectPressed);
 	selectObjectToggle.addListener(this, &ofApp::selectObjectToggled);
 	consolidateObjectsButton.addListener(this, &ofApp::consolidateObjectsPressed);
 	deleteObjectButton.addListener(this, &ofApp::deleteObjectPressed);

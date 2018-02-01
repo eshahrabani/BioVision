@@ -44,6 +44,17 @@ void ofApp::play_speed_changed(float &f) {
 	timeline->setVideoSpeed(f);
 }
 
+void ofApp::createObjectPressed() {
+	// At least one full polygon is selected.
+	if (this->selectedAreas.size() > 0) {
+		for (ofPolyline polygon : this->selectedAreas) {
+			this->detectedObjects.push_back(DetectedObject(polygon));
+		}
+		this->selectedAreas.clear();
+		this->polygonSelectorToggle = !this->polygonSelectorToggle;
+	}
+}
+
 void ofApp::selectObjectToggled(bool &b) {
 	if (b) {
 		this->selectObjectToggle.setName("Selecting...");
@@ -160,7 +171,8 @@ void ofApp::analyze(bool doThreshold) {
 	this->selectedObjects.clear();
 
 	for (ofxCvBlob blob : contourFinder.blobs) {
-		ofColor blobColor(255, ofRandom(0, 255), 0);
+		//ofColor blobColor(255, ofRandom(0, 255), 0);
+		ofColor blobColor(255, 0, 0);
 		this->detectedObjects.push_back(DetectedObject(blob, blobColor, ofPoint(vid_x + vid_width, vid_y)));
 	}
 

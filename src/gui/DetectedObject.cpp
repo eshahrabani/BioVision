@@ -10,6 +10,24 @@ DetectedObject::DetectedObject(ofxCvBlob blob, ofColor blobColor, ofPoint anchor
 	setBlobColor(blobColor);
 	setAnchor(anchor);
 	setSelected(false);
+
+	selectedColor = ofColor(0, 204, 204);
+}
+
+DetectedObject::DetectedObject(ofPolyline polyline, ofColor blobColor, ofPoint anchor) {
+	this->blob = ofxCvBlob();
+	this->blob.pts = polyline.getVertices();
+
+	this->points = polyline;
+	if (!this->points.isClosed()) {
+		this->points.close();
+	}
+
+	this->boundingBoxColor = ofColor(ofRandom(0, 255), ofRandom(0, 255), ofRandom(0, 255));
+
+	setBlobColor(blobColor);
+	setAnchor(anchor);
+	setSelected(false);
 	selectedColor = ofColor(0, 204, 204);
 }
 
@@ -54,8 +72,13 @@ ofxCvBlob DetectedObject::getBlob() {
 	return blob;
 }
 
-const ofPolyline DetectedObject::getPolyline() {
-	return this->points;
+const ofPolyline DetectedObject::getPolyline(bool useAnchor) {
+	if (useAnchor) {
+		return displacePolyline(this->points, this->anchor.x, this->anchor.y);
+	}
+	else {
+		return this->points;
+	}
 }
 
 

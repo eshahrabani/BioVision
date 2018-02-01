@@ -1,32 +1,18 @@
 #include "DetectedObject.h";
 
-DetectedObject::DetectedObject(ofxCvBlob blob, ofColor blobColor, ofPoint anchor) {
-	this->blob = blob;
-	this->points = ofPolyline(blob.pts);
-	this->points.close();
-
-	this->boundingBoxColor = ofColor(ofRandom(0, 255), ofRandom(0, 255), ofRandom(0, 255));
-
-	setBlobColor(blobColor);
-	setAnchor(anchor);
-	setSelected(false);
-
-	selectedColor = ofColor(0, 204, 204);
-}
+DetectedObject::DetectedObject(
+	ofxCvBlob blob, ofColor blobColor, ofPoint anchor
+) : DetectedObject(ofPolyline(blob.pts), blobColor, anchor) {}
 
 DetectedObject::DetectedObject(ofPolyline polyline, ofColor blobColor, ofPoint anchor) {
-	this->blob = ofxCvBlob();
-	this->blob.pts = polyline.getVertices();
-
-	this->points = polyline;
+	this->points = displacePolyline(polyline, anchor.x, anchor.y);
 	if (!this->points.isClosed()) {
 		this->points.close();
 	}
 
 	this->boundingBoxColor = ofColor(ofRandom(0, 255), ofRandom(0, 255), ofRandom(0, 255));
 
-	setBlobColor(blobColor);
-	setAnchor(anchor);
+	setObjectColor(blobColor);
 	setSelected(false);
 	selectedColor = ofColor(0, 204, 204);
 }
@@ -35,15 +21,11 @@ void DetectedObject::update() {
 }
 
 void DetectedObject::draw(bool drawBoundingBox, bool fillBoundingBox) {
-	this->draw(anchor.x, anchor.y, drawBoundingBox, fillBoundingBox);
-}
-
-void DetectedObject::draw(float x, float y, bool drawBoundingBox, bool fillBoundingBox) {
 	if (drawBoundingBox) {
 		ofRectangle box = this->points.getBoundingBox();
 		
 		if (this->selected) {
-			ofSetColor(blobColor);
+			ofSetColor(objectColor);
 		}
 		else {
 			ofSetColor(this->boundingBoxColor);
@@ -51,7 +33,7 @@ void DetectedObject::draw(float x, float y, bool drawBoundingBox, bool fillBound
 		if (fillBoundingBox) {
 			ofFill();
 		}
-		ofDrawRectangle(anchor.x + box.x, anchor.y + box.y, box.width, box.height);
+		ofDrawRectangle(box.x, box.y, box.width, box.height);
 		ofNoFill();
 	}
 
@@ -59,41 +41,21 @@ void DetectedObject::draw(float x, float y, bool drawBoundingBox, bool fillBound
 		ofSetColor(this->selectedColor);
 	}
 	else {
-		ofSetColor(blobColor);
+		ofSetColor(objectColor);
 	}
-	drawPolyline(points, x, y);
+	drawPolyline(this->points, 0, 0);
 }
 
-void DetectedObject::setBlobColor(ofColor color) {
-	blobColor = color;
+void DetectedObject::setObjectColor(ofColor color) {
+	objectColor = color;
 }
 
-ofxCvBlob DetectedObject::getBlob() {
-	return blob;
+const ofPolyline DetectedObject::getPolyline() {
+	return this->points;
 }
 
-const ofPolyline DetectedObject::getPolyline(bool useAnchor) {
-	if (useAnchor) {
-		return displacePolyline(this->points, this->anchor.x, this->anchor.y);
-	}
-	else {
-		return this->points;
-	}
-}
-
-
-void DetectedObject::setAnchor(ofPoint anchor) {
-	this->anchor = anchor;
-}
-
-ofPoint DetectedObject::getClosestPoint(ofPoint target, bool useAnchor) {
-	if (useAnchor) {
-		ofPolyline adjusted = displacePolyline(this->points, anchor.x, anchor.y);
-		return adjusted.getClosestPoint(target);
-	}
-	else {
-		return this->points.getClosestPoint(target);
-	}
+ofPoint DetectedObject::getClosestPoint(ofPoint target) {
+	return this->points.getClosestPoint(target);
 }
 
 void DetectedObject::setSelected(bool s) {
@@ -106,15 +68,8 @@ void DetectedObject::consolidateWith(DetectedObject &other) {
 	this->points.close();
 }
 
-bool DetectedObject::containsPoint(ofPoint pt, bool useAnchor) {
-	// Adjust internal polyline based on the anchor.
-	if (useAnchor) {
-		ofPolyline adjustedPolyline = displacePolyline(this->points, anchor.x, anchor.y);
-		return adjustedPolyline.inside(pt);
-	}
-	else {
-		return this->points.inside(pt);
-	}
+bool DetectedObject::containsPoint(ofPoint pt) {
+	return this->points.inside(pt);
 }
 
 int DetectedObject::getIndexByAddress(vector<DetectedObject> &objects, DetectedObject* addr) {

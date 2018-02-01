@@ -6,21 +6,19 @@
 
 class DetectedObject {
 public:
-	DetectedObject(ofxCvBlob blob, ofColor blobColor = ofColor(255, 0, 0), ofPoint anchor=ofPoint(0, 0));
-	DetectedObject(ofPolyline polyLine, ofColor blobColor = ofColor(255, 0, 0), ofPoint anchor = ofPoint(0, 0));
+	DetectedObject(ofxCvBlob blob, ofColor objColor = ofColor(255, 0, 0), ofPoint anchor=ofPoint(0, 0));
+	DetectedObject(ofPolyline polyLine, ofColor objColor = ofColor(255, 0, 0), ofPoint anchor = ofPoint(0, 0));
 
 	void update();
 
 	void draw(bool drawBoundingBox=true, bool fillBoundingBox=false);
 	void draw(float x, float y, bool drawBoundingBox=true, bool fillBoundingBox=false);
 
-	void setBlobColor(ofColor color);
-	void setAnchor(ofPoint anchor);
+	void setObjectColor(ofColor color);
 
-	ofxCvBlob getBlob();
-	const ofPolyline getPolyline(bool useAnchor=true);
+	const ofPolyline getPolyline();
 
-	ofPoint getClosestPoint(ofPoint target, bool useAnchor=true);
+	ofPoint getClosestPoint(ofPoint target);
 
 	void setSelected(bool s);
 
@@ -29,7 +27,7 @@ public:
 	 */
 	void consolidateWith(DetectedObject &other); 
 
-	bool containsPoint(ofPoint pt, bool useAnchor=true);
+	bool containsPoint(ofPoint pt);
 
 	ofColor selectedColor;
 
@@ -40,12 +38,10 @@ public:
 	static bool contains(vector<DetectedObject*> pVec, DetectedObject* addr);
 
 private:
-	ofxCvBlob blob;
 	ofPolyline points;
 
-	ofColor blobColor;
+	ofColor objectColor;
 	ofColor boundingBoxColor;
-	ofPoint anchor;
 
 	bool selected;
 };

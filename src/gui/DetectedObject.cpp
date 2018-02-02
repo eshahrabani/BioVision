@@ -50,6 +50,14 @@ void DetectedObject::setObjectColor(ofColor color) {
 	objectColor = color;
 }
 
+void DetectedObject::setPoints(ofPolyline points) {
+	if (!points.isClosed()) {
+		points.close();
+	}
+
+	this->points = points;
+}
+
 const ofPolyline DetectedObject::getPolyline() {
 	return this->points;
 }

@@ -38,3 +38,28 @@ vector<ofPolyline> blobsToPolylines(const vector<ofxCvBlob>& blobs) {
 	}
 	return polylines;
 }
+
+bool polylinesOverlap(ofPolyline p1, ofPolyline p2) {
+	// Walk along the bounding box of p1 and see if any of them are in p2.
+	ofRectangle boundingBox = p1.getBoundingBox();
+	float w = boundingBox.width;
+	float h = boundingBox.height;
+	float x = boundingBox.x;
+	float y = boundingBox.y;
+
+	// Walk along the width.
+	for (int ix = x; ix <= x + w; ix++) {
+		if (p2.inside(ix, y) || p2.inside(ix, y + h)) {
+			return true;
+		}
+	}
+
+	// Walk along the height;
+	for (int iy = y; iy <= y + h; iy++) {
+		if (p2.inside(x, iy) || p2.inside(x + w, iy)) {
+			return true;
+		}
+	}
+
+	return false;
+}

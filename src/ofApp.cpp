@@ -81,6 +81,7 @@ void ofApp::setup(){
 	createObjectsButton.addListener(this, &ofApp::createObjectPressed);
 	selectObjectToggle.addListener(this, &ofApp::selectObjectToggled);
 	consolidateObjectsButton.addListener(this, &ofApp::consolidateObjectsPressed);
+	separateObjectButton.addListener(this, &ofApp::separateObjectPressed);
 	deleteObjectButton.addListener(this, &ofApp::deleteObjectPressed);
 	
 	analyze_toggle.addListener(this, &ofApp::analyze_toggled);

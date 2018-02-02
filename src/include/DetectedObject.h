@@ -14,6 +14,7 @@ public:
 	void draw(bool drawBoundingBox=true, bool fillBoundingBox=false);
 
 	void setObjectColor(ofColor color);
+	void setPoints(ofPolyline points);
 
 	const ofPolyline getPolyline();
 

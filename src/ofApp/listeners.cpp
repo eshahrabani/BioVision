@@ -95,22 +95,47 @@ void ofApp::consolidateObjectsPressed() {
 }
 
 void ofApp::separateObjectPressed() {
+	logger.writeNormal("Separating objects...");
 	// Must select a single polygon area to separate first.
 	if (this->selectedAreas.size() == 1) {
 		ofPolyline area = this->selectedAreas.at(0);
 		
 		// Find parts of detected objects inside this area and split them off.
 		for (DetectedObject& dtObject : this->detectedObjects) {
-			bool partiallyInside = false;
-			for (ofPoint pt : area.getVertices()) {
+			bool partiallyInside = polylinesOverlap(area, dtObject.getPolyline());
+			
+			/*for (ofPoint pt : area.getVertices()) {
 				if (dtObject.containsPoint(pt)) {
 					partiallyInside = true;
 					break;
 				}
-			}
+			}*/
 			
-			// TODO
+			// Separate the object.
+			if (partiallyInside) {
+				vector<ofPoint> newObjectPts;
+				vector<ofPoint> oldObjectPts;
+				for (ofPoint pt : dtObject.getPolyline().getVertices()) {
+					// Point is inside selected area.
+					if (area.inside(pt)) {
+						newObjectPts.push_back(pt);
+					}
+					else {
+						oldObjectPts.push_back(pt);
+					}
+				}
+
+				this->detectedObjects.push_back(DetectedObject(ofPolyline(newObjectPts)));
+				dtObject.setPoints(oldObjectPts);
+				this->selectedAreas.clear();
+			}
+			else {
+				logger.writeNormal("No objects are partially or completely inside the selected area.");
+			}
 		}
+	}
+	else {
+		logger.writeNormal("Select one area with the polygon selector tool.");
 	}
 }
 

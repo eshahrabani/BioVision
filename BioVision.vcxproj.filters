@@ -79,6 +79,9 @@
     <ClCompile Include="src\gui\DetectedObject.cpp">
       <Filter>src\gui</Filter>
     </ClCompile>
+    <ClCompile Include="src\gui\KnownObjectsPanel.cpp">
+      <Filter>src\gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -750,6 +753,9 @@
       <Filter>src\include</Filter>
     </ClInclude>
     <ClInclude Include="src\include\DetectedObject.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\KnownObjectsPanel.h">
       <Filter>src\include</Filter>
     </ClInclude>
   </ItemGroup>

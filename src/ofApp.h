@@ -7,6 +7,7 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxOpenCv.h"
+#include "KnownObjectsPanel.h";
 #include "DetectedObject.h";
 #include "Logger.h"
 #include "Timeline.h"
@@ -61,7 +62,9 @@ class ofApp : public ofBaseApp{
 		/* -------------------- GUI COMPONENTS --------------------*/
 		
 		// The main panel consisting of the load button, etc. 
-		ofxPanel mainPanel;			
+		ofxPanel mainPanel;		
+
+		KnownObjectsPanel knownObjectsPanel;
 
 		ofxPanel toolsPanel;
 

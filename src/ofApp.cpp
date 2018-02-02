@@ -34,8 +34,9 @@ void ofApp::setup(){
 	app_height = ofGetHeight();
 	updateDimensions(app_width, app_height);
 
-	// Start the main gui panel.
+	// Start the main gui panels.
 	mainPanel.setup("BioVision");
+	knownObjectsPanel.setup(app_width / 4, 10, 200, 200);
 	toolsPanel.setup("Analysis Controls");
 	objectsPanel.setup("Objects");
 
@@ -121,6 +122,7 @@ void ofApp::draw(){
 
 	// Draw the gui and its components.
 	mainPanel.draw();
+	knownObjectsPanel.draw();
 	objectsPanel.draw();
 	toolsPanel.draw();
 

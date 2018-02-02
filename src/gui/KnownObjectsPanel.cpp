@@ -11,6 +11,26 @@ KnownObjectsPanel::~KnownObjectsPanel() {
 	ofRemoveListener(ofEvents().mousePressed, this, &KnownObjectsPanel::mousePressed);
 }
 
+void KnownObjectsPanel::addItem(string name) {
+	this->items.push_back(name);
+}
+
+void KnownObjectsPanel::clearItems() {
+	this->items.clear();
+}
+
+void KnownObjectsPanel::removeItem(string name) {
+	int itemIndex;
+	for (int i = 0; i < this->items.size(); i++) {
+		if (this->items.at(i) == name) {
+			itemIndex = i;
+			break;
+		}
+	}
+
+	this->items.erase(this->items.begin() + itemIndex);
+}
+
 void KnownObjectsPanel::draw() {
 	this->draw(this->x, this->y);
 }
@@ -26,8 +46,6 @@ void KnownObjectsPanel::draw(float x, float y) {
 void KnownObjectsPanel::mousePressed(ofMouseEventArgs& args) {
 	ofRectangle thisArea(x, y, width, height);
 	if (!thisArea.inside(args.x, args.y)) return;
-
-	
 }
 
 void KnownObjectsPanel::setDimensions(float width, float height) {

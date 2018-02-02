@@ -12,7 +12,6 @@ public:
 	void update();
 
 	void draw(bool drawBoundingBox=true, bool fillBoundingBox=false);
-	void draw(float x, float y, bool drawBoundingBox=true, bool fillBoundingBox=false);
 
 	void setObjectColor(ofColor color);
 

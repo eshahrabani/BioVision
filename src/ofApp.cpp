@@ -53,7 +53,7 @@ void ofApp::setup(){
 	objectsPanel.add(markObjectButton.setup("Mark object"));
 	objectsPanel.add(selectObjectToggle.set("Select object", false));
 	objectsPanel.add(consolidateObjectsButton.setup("Consolidate two objects"));
-	objectsPanel.add(separateObjectToggle.set("Separate object", false));
+	objectsPanel.add(separateObjectButton.setup("Separate object"));
 	objectsPanel.add(deleteObjectButton.setup("Delete object"));
 
 	maxBlobAreaSlider.setDefaultWidth(250);

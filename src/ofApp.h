@@ -94,8 +94,8 @@ class ofApp : public ofBaseApp{
 		// Consolidate selected objects button.
 		ofxButton consolidateObjectsButton;
 
-		// Separate object toggle.
-		ofParameter<bool> separateObjectToggle;
+		// Separate object button.
+		ofxButton separateObjectButton;
 
 		// Delete selected object button.
 		ofxButton deleteObjectButton;
@@ -157,6 +157,7 @@ class ofApp : public ofBaseApp{
 		void createObjectPressed();
 		void selectObjectToggled(bool &b);
 		void consolidateObjectsPressed();
+		void separateObjectPressed();
 		void deleteObjectPressed();
 
 		// The function attached to the analyze toggle.

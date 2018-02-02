@@ -94,6 +94,26 @@ void ofApp::consolidateObjectsPressed() {
 	}
 }
 
+void ofApp::separateObjectPressed() {
+	// Must select a single polygon area to separate first.
+	if (this->selectedAreas.size() == 1) {
+		ofPolyline area = this->selectedAreas.at(0);
+		
+		// Find parts of detected objects inside this area and split them off.
+		for (DetectedObject& dtObject : this->detectedObjects) {
+			bool partiallyInside = false;
+			for (ofPoint pt : area.getVertices()) {
+				if (dtObject.containsPoint(pt)) {
+					partiallyInside = true;
+					break;
+				}
+			}
+			
+			// TODO
+		}
+	}
+}
+
 void ofApp::deleteObjectPressed() {
 	if (this->selectedObjects.size() >= 1) {
 		// Take the first selected object's address.

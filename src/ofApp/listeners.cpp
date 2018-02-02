@@ -101,6 +101,8 @@ void ofApp::separateObjectPressed() {
 		ofPolyline area = this->selectedAreas.at(0);
 		
 		// Find parts of detected objects inside this area and split them off.
+		vector<int> delIndices;
+		int idx = 0;
 		for (DetectedObject& dtObject : this->detectedObjects) {
 			bool partiallyInside = polylinesOverlap(area, dtObject.getPolyline());
 			
@@ -113,10 +115,24 @@ void ofApp::separateObjectPressed() {
 			
 			// Separate the object.
 			if (partiallyInside) {
+				logger.writeNormal("Found an object partially inside selected area.");
 				vector<ofPoint> newObjectPts;
 				vector<ofPoint> oldObjectPts;
-				for (ofPoint pt : dtObject.getPolyline().getVertices()) {
+				
+				/*for (ofPoint pt : dtObject.getPolyline().getVertices()) {
 					// Point is inside selected area.
+					logger.writeNormal(std::to_string(pt.x) + std::to_string(pt.y));
+					if (area.inside(pt)) {
+						newObjectPts.push_back(pt);
+					}
+					else {
+						oldObjectPts.push_back(pt);
+					}
+				}*/
+				vector<ofPoint> objectVerts = dtObject.getPolyline().getVertices();
+				for (int i = 0; i < objectVerts.size(); i++) {
+					ofPoint pt = objectVerts.at(i);
+					logger.writeNormal(std::to_string(pt.x) + std::to_string(pt.y));
 					if (area.inside(pt)) {
 						newObjectPts.push_back(pt);
 					}
@@ -126,12 +142,19 @@ void ofApp::separateObjectPressed() {
 				}
 
 				this->detectedObjects.push_back(DetectedObject(ofPolyline(newObjectPts)));
-				dtObject.setPoints(oldObjectPts);
+				this->detectedObjects.push_back(DetectedObject(ofPolyline(oldObjectPts)));
+				
 				this->selectedAreas.clear();
+				delIndices.push_back(idx);
+
+				break;
 			}
-			else {
-				logger.writeNormal("No objects are partially or completely inside the selected area.");
-			}
+			idx++;
+		}
+		
+		// Delete old objects.
+		for (int i : delIndices) {
+			detectedObjects.erase(detectedObjects.begin() + i);
 		}
 	}
 	else {

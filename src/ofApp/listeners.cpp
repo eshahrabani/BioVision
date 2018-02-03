@@ -118,17 +118,6 @@ void ofApp::separateObjectPressed() {
 				logger.writeNormal("Found an object partially inside selected area.");
 				vector<ofPoint> newObjectPts;
 				vector<ofPoint> oldObjectPts;
-				
-				/*for (ofPoint pt : dtObject.getPolyline().getVertices()) {
-					// Point is inside selected area.
-					logger.writeNormal(std::to_string(pt.x) + std::to_string(pt.y));
-					if (area.inside(pt)) {
-						newObjectPts.push_back(pt);
-					}
-					else {
-						oldObjectPts.push_back(pt);
-					}
-				}*/
 				vector<ofPoint> objectVerts = dtObject.getPolyline().getVertices();
 				for (int i = 0; i < objectVerts.size(); i++) {
 					ofPoint pt = objectVerts.at(i);

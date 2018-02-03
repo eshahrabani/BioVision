@@ -106,13 +106,6 @@ void ofApp::separateObjectPressed() {
 		for (DetectedObject& dtObject : this->detectedObjects) {
 			bool partiallyInside = polylinesOverlap(area, dtObject.getPolyline());
 			
-			/*for (ofPoint pt : area.getVertices()) {
-				if (dtObject.containsPoint(pt)) {
-					partiallyInside = true;
-					break;
-				}
-			}*/
-			
 			// Separate the object.
 			if (partiallyInside) {
 				logger.writeNormal("Found an object partially inside selected area.");

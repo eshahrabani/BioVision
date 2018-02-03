@@ -38,9 +38,11 @@ void KnownObjectsPanel::draw() {
 void KnownObjectsPanel::draw(float x, float y) {
 	ofSetColor(0, 0, 0);
 	ofDrawRectangle(x, y, this->width, this->height);
-
-	ofSetColor(0, 0, 0);
 	ofDrawBitmapString("Tracked objects", x + width / 5, y + height / 10);
+
+	for (int i = 0; i < this->items.size(); i++) {
+		ofDrawBitmapString(items.at(i), x + width / 10, y + (i + 2) * (height / 10));
+	}
 }
 
 void KnownObjectsPanel::mousePressed(ofMouseEventArgs& args) {

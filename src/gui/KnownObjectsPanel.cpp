@@ -36,11 +36,11 @@ void KnownObjectsPanel::draw() {
 }
 
 void KnownObjectsPanel::draw(float x, float y) {
-	ofSetColor(255, 255, 255);
+	ofSetColor(0, 0, 0);
 	ofDrawRectangle(x, y, this->width, this->height);
 
 	ofSetColor(0, 0, 0);
-	ofDrawBitmapString("Tracked objects", x + width / 4, y + height / 10);
+	ofDrawBitmapString("Tracked objects", x + width / 5, y + height / 10);
 }
 
 void KnownObjectsPanel::mousePressed(ofMouseEventArgs& args) {

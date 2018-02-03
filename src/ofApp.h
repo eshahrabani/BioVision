@@ -7,8 +7,8 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxOpenCv.h"
-#include "KnownObjectsPanel.h";
-#include "DetectedObject.h";
+#include "KnownObjectsPanel.h"
+#include "DetectedObject.h"
 #include "Logger.h"
 #include "Timeline.h"
 #include "Marquee.h"
@@ -64,7 +64,10 @@ class ofApp : public ofBaseApp{
 		// The main panel consisting of the load button, etc. 
 		ofxPanel mainPanel;		
 
-		KnownObjectsPanel knownObjectsPanel;
+		//KnownObjectsPanel knownObjectsPanel;
+		ofxPanel knownObjectsPanel;
+		vector<ofxButton> knownObjectButtons;
+		vector<void*> knownObjectButtonListeners;
 
 		ofxPanel toolsPanel;
 
@@ -158,6 +161,8 @@ class ofApp : public ofBaseApp{
 		void play_speed_changed(float &f);
 
 		void createObjectPressed();
+		void markObjectPressed();
+		void markedObjectPressed();
 		void selectObjectToggled(bool &b);
 		void consolidateObjectsPressed();
 		void separateObjectPressed();

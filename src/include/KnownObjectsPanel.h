@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include "ofMain.h";
+#include "ofMain.h"
 
 using std::vector;
 

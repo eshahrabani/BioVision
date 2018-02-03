@@ -1,4 +1,4 @@
-#include "KnownObjectsPanel.h";
+#include "KnownObjectsPanel.h"
 
 KnownObjectsPanel::KnownObjectsPanel(float x, float y, float width, float height) {
 	this->setPosition(x, y);

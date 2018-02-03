@@ -36,7 +36,8 @@ void ofApp::setup(){
 
 	// Start the main gui panels.
 	mainPanel.setup("BioVision");
-	knownObjectsPanel.setup(app_width / 4, 10, 200, 200);
+	//knownObjectsPanel.setup(app_width / 4, 10, 200, 200);
+	knownObjectsPanel.setup("Tracked Objects");
 	toolsPanel.setup("Analysis Controls");
 	objectsPanel.setup("Objects");
 
@@ -47,6 +48,8 @@ void ofApp::setup(){
 	mainPanel.add(previous_frame_button.setup("Previous frame"));		
 	mainPanel.add(play_speed.setup("Play speed", 1.0, -3.0, 3.0));
 	mainPanel.setPosition(0, 0);
+
+	knownObjectsPanel.setPosition(app_width / 4, 10);
 
 	objectsPanel.setPosition(this->app_width / 2, 0);
 	objectsPanel.setDefaultWidth(250);
@@ -80,6 +83,7 @@ void ofApp::setup(){
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      
 
 	createObjectsButton.addListener(this, &ofApp::createObjectPressed);
+	markObjectButton.addListener(this, &ofApp::markObjectPressed);
 	selectObjectToggle.addListener(this, &ofApp::selectObjectToggled);
 	consolidateObjectsButton.addListener(this, &ofApp::consolidateObjectsPressed);
 	separateObjectButton.addListener(this, &ofApp::separateObjectPressed);

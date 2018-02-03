@@ -5,6 +5,9 @@ KnownObjectsPanel::KnownObjectsPanel(float x, float y, float width, float height
 	this->setDimensions(width, height);
 
 	ofAddListener(ofEvents().mousePressed, this, &KnownObjectsPanel::mousePressed);
+	items.push_back("item1");
+	items.push_back("item2");
+	items.push_back("item3");
 }
 
 KnownObjectsPanel::~KnownObjectsPanel() {
@@ -41,7 +44,14 @@ void KnownObjectsPanel::draw(float x, float y) {
 	ofDrawBitmapString("Tracked objects", x + width / 5, y + height / 10);
 
 	for (int i = 0; i < this->items.size(); i++) {
-		ofDrawBitmapString(items.at(i), x + width / 10, y + (i + 2) * (height / 10));
+		float x = this->x + width / 10;
+		float y = this->y + (i + 2) * (height / 10);
+
+		ofDrawBitmapString(items.at(i), x, y);
+
+		ofPoint p1(this->x, y + (height / 20));
+		ofPoint p2(this->x + width, y + (height / 15));
+		ofDrawLine(p1, p2);
 	}
 }
 

@@ -59,17 +59,6 @@ void ofApp::markObjectPressed() {
 	if (this->selectedObjects.size() == 1) {
 		string name = ofSystemTextBoxDialog("Enter the name of the selected object.");
 		
-		// Create a button for the new object.
-		ofxButton newButton;
-		this->knownObjectButtons.push_back(*newButton.setup(name));
-
-		knownObjectsPanel.clear();
-		for (ofxButton& btn : knownObjectButtons) {
-			// Make sure the listener has been removed before adding it again.
-			//btn.removeListener(this, &ofApp::markedObjectPressed);
-			//btn.addListener(this, &ofApp::markedObjectPressed);
-			this->knownObjectsPanel.add(&btn);
-		}
 	}
 }
 

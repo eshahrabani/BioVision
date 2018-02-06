@@ -36,12 +36,12 @@ void ofApp::setup(){
 
 	// Start the main gui panels.
 	mainPanel.setup("BioVision");
-	//knownObjectsPanel.setup(app_width / 4, 10, 200, 200);
-	knownObjectsPanel.setup("Tracked Objects");
+	knownObjectsPanel.setup("Known objects");
 	toolsPanel.setup("Analysis Controls");
 	objectsPanel.setup("Objects");
 
 	// Add video buttons. 
+	mainPanel.setPosition(0, 0);
 	mainPanel.add(load_button.setup("Load"));	
 	mainPanel.add(play_toggle.set("Play", false));						  
 	mainPanel.add(next_frame_button.setup("Next frame"));				      

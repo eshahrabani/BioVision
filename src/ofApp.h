@@ -64,10 +64,8 @@ class ofApp : public ofBaseApp{
 		// The main panel consisting of the load button, etc. 
 		ofxPanel mainPanel;		
 
-		//KnownObjectsPanel knownObjectsPanel;
-		ofxPanel knownObjectsPanel;
-		vector<ofxButton> knownObjectButtons;
-		vector<void*> knownObjectButtonListeners;
+		// Panel for tracking known objects.
+		KnownObjectsPanel knownObjectsPanel;
 
 		ofxPanel toolsPanel;
 

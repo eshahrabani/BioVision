@@ -8,10 +8,13 @@ using std::vector;
 class KnownObjectsPanel : public ofxPanel {
 public:
 	KnownObjectsPanel();
+	~KnownObjectsPanel();
 
 	void addItem(string name);
-	void removeItem(string name);
 	void clearItems();
 
 	bool mousePressed(ofMouseEventArgs& args);
+
+private:
+	vector<ofxButton*> pButtons;
 };

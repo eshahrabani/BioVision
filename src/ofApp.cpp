@@ -50,6 +50,7 @@ void ofApp::setup(){
 	mainPanel.setPosition(0, 0);
 
 	knownObjectsPanel.setPosition(app_width / 4, 10);
+	knownObjectsPanel.addItem("Clear all");
 
 	objectsPanel.setPosition(this->app_width / 2, 0);
 	objectsPanel.setDefaultWidth(250);

@@ -11,8 +11,28 @@ KnownObjectsPanel::~KnownObjectsPanel() {
 	}
 }
 
+bool KnownObjectsPanel::mousePressed(ofMouseEventArgs& args) {
+	float x = args.x;
+	float y = args.y;
+
+	// (x, y) should be inside the panel.
+	if (this->getShape().inside(x, y)) {
+		for (ofxButton* pButton : this->pButtons) {
+			if (pButton->getShape().inside(x, y)) {
+				// Clicked inside this button.
+				this->itemPressed(pButton->getName());
+			}
+		}
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 void KnownObjectsPanel::addItem(string name) {
 	ofxButton* pButton = new ofxButton();
+	
 	pButton->setup(name);
 
 	this->pButtons.push_back(pButton);
@@ -27,6 +47,6 @@ void KnownObjectsPanel::clearItems() {
 	this->clear();
 }
 
-bool KnownObjectsPanel::mousePressed(ofMouseEventArgs& args) {
-	return true;
+void KnownObjectsPanel::itemPressed(string name) {
+	
 }

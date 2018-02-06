@@ -10,10 +10,12 @@ public:
 	KnownObjectsPanel();
 	~KnownObjectsPanel();
 
+	bool mousePressed(ofMouseEventArgs& args);
+
 	void addItem(string name);
 	void clearItems();
 
-	bool mousePressed(ofMouseEventArgs& args);
+	void itemPressed(string name);
 
 private:
 	vector<ofxButton*> pButtons;

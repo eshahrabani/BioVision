@@ -62,8 +62,8 @@ void ofApp::markObjectPressed() {
 	}
 }
 
-void ofApp::markedObjectPressed() {
-
+void ofApp::markedObjectPressed(string name) {
+	cout << name << endl;
 }
 
 void ofApp::selectObjectToggled(bool &b) {

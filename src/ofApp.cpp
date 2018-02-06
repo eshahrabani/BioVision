@@ -51,6 +51,9 @@ void ofApp::setup(){
 
 	knownObjectsPanel.setPosition(app_width / 4, 10);
 	knownObjectsPanel.addItem("Clear all");
+	knownObjectsPanel.onItemPressed([this](string name) -> void {
+		this->markedObjectPressed(name);
+	});
 
 	objectsPanel.setPosition(this->app_width / 2, 0);
 	objectsPanel.setDefaultWidth(250);

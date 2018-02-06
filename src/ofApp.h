@@ -160,7 +160,7 @@ class ofApp : public ofBaseApp{
 
 		void createObjectPressed();
 		void markObjectPressed();
-		void markedObjectPressed();
+		void markedObjectPressed(string name);
 		void selectObjectToggled(bool &b);
 		void consolidateObjectsPressed();
 		void separateObjectPressed();

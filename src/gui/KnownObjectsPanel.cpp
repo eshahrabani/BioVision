@@ -48,5 +48,13 @@ void KnownObjectsPanel::clearItems() {
 }
 
 void KnownObjectsPanel::itemPressed(string name) {
-	
+	if (this->onItemPressCallback) {
+		this->onItemPressCallback(name);
+	}
 }
+
+void KnownObjectsPanel::onItemPressed(OnItemPressCallback callback) {
+	this->onItemPressCallback = callback;
+}
+
+

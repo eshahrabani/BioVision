@@ -4,6 +4,10 @@
 #include "ofxGui.h";
 
 using std::vector;
+using std::string;
+using std::function;
+
+typedef function<void(string name)> OnItemPressCallback;
 
 class KnownObjectsPanel : public ofxPanel {
 public:
@@ -16,7 +20,9 @@ public:
 	void clearItems();
 
 	void itemPressed(string name);
+	void onItemPressed(OnItemPressCallback callback);
 
 private:
 	vector<ofxButton*> pButtons;
+	OnItemPressCallback onItemPressCallback;
 };

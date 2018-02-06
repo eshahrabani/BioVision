@@ -70,3 +70,5 @@ bin/BioVision_debug.ilk
 *.pdb
 *.pdb
 obj/Debug/vc140.pdb
+*.pdb
+obj/Debug/vc140.pdb

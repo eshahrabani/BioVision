@@ -158,7 +158,7 @@ void ofApp::draw(){
 	ofDrawBitmapString("Analysis", labelX, labelY);
 	
 	ofSetColor(255, 255, 255);
-	for (DetectedObject obj : this->detectedObjects) {
+	for (DetectedObject& obj : this->detectedObjects) {
 		obj.draw(true, false);
 	}
 

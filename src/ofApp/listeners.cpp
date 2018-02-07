@@ -59,6 +59,11 @@ void ofApp::markNewObjectButtonPressed() {
 	if (this->selectedObjects.size() == 1) {
 		string name = ofSystemTextBoxDialog("Enter the name of the selected object.");
 		this->knownObjectsPanel.addItem(name);
+
+		// Add a copy of the object to the tracked objects vector.
+		DetectedObject obj = *this->selectedObjects.at(0);
+		DetectedObject copy(obj);
+		this->trackedObjects.push_back(copy);
 	}
 }
 
@@ -232,7 +237,6 @@ void ofApp::analyze(bool doThreshold) {
 	this->selectedObjects.clear();
 
 	for (ofxCvBlob blob : contourFinder.blobs) {
-		//ofColor blobColor(255, ofRandom(0, 255), 0);
 		ofColor blobColor(255, 0, 0);
 		this->detectedObjects.push_back(DetectedObject(blob, blobColor, ofPoint(vid_x + vid_width, vid_y)));
 	}

@@ -2,7 +2,8 @@
 
 DetectedObject::DetectedObject(
 	ofxCvBlob blob, ofColor blobColor, ofPoint anchor
-) : DetectedObject(ofPolyline(blob.pts), blobColor, anchor) {}
+) : 
+	DetectedObject(ofPolyline(blob.pts), blobColor, anchor) {}
 
 DetectedObject::DetectedObject(ofPolyline polyline, ofColor blobColor, ofPoint anchor) {
 	this->points = displacePolyline(polyline, anchor.x, anchor.y);
@@ -16,6 +17,10 @@ DetectedObject::DetectedObject(ofPolyline polyline, ofColor blobColor, ofPoint a
 	setSelected(false);
 	selectedColor = ofColor(0, 204, 204);
 }
+
+// Copy constructor.
+DetectedObject::DetectedObject(const DetectedObject& other) :
+	DetectedObject(other.getPolyline(), other.getObjectColor()) {}
 
 void DetectedObject::update() {
 }
@@ -58,7 +63,11 @@ void DetectedObject::setPoints(ofPolyline points) {
 	this->points = points;
 }
 
-const ofPolyline DetectedObject::getPolyline() {
+const ofColor DetectedObject::getObjectColor() const {
+	return this->objectColor;
+}
+
+const ofPolyline DetectedObject::getPolyline() const {
 	return this->points;
 }
 

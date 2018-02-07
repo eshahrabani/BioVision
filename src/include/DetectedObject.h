@@ -8,6 +8,7 @@ class DetectedObject {
 public:
 	DetectedObject(ofxCvBlob blob, ofColor objColor = ofColor(255, 0, 0), ofPoint anchor=ofPoint(0, 0));
 	DetectedObject(ofPolyline polyLine, ofColor objColor = ofColor(255, 0, 0), ofPoint anchor = ofPoint(0, 0));
+	DetectedObject(const DetectedObject& other);
 
 	void update();
 
@@ -16,7 +17,8 @@ public:
 	void setObjectColor(ofColor color);
 	void setPoints(ofPolyline points);
 
-	const ofPolyline getPolyline();
+	const ofColor getObjectColor() const;
+	const ofPolyline getPolyline() const;
 
 	ofPoint getClosestPoint(ofPoint target);
 

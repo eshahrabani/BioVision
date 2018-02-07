@@ -57,8 +57,8 @@ void ofApp::setup(){
 
 	objectsPanel.setPosition(this->app_width / 2, 0);
 	objectsPanel.setDefaultWidth(250);
-	objectsPanel.add(createObjectsButton.setup("Create object(s)"));
-	objectsPanel.add(markObjectButton.setup("Mark object"));
+	objectsPanel.add(createObjectsButton.setup("Create analysis object(s)"));
+	objectsPanel.add(markNewObjectButton.setup("Mark new object"));
 	objectsPanel.add(selectObjectToggle.set("Select object", false));
 	objectsPanel.add(consolidateObjectsButton.setup("Consolidate two objects"));
 	objectsPanel.add(separateObjectButton.setup("Separate object"));
@@ -87,7 +87,7 @@ void ofApp::setup(){
 	play_speed.addListener(this, &ofApp::play_speed_changed);	      
 
 	createObjectsButton.addListener(this, &ofApp::createObjectPressed);
-	markObjectButton.addListener(this, &ofApp::markObjectPressed);
+	markNewObjectButton.addListener(this, &ofApp::markNewObjectButtonPressed);
 	selectObjectToggle.addListener(this, &ofApp::selectObjectToggled);
 	consolidateObjectsButton.addListener(this, &ofApp::consolidateObjectsPressed);
 	separateObjectButton.addListener(this, &ofApp::separateObjectPressed);

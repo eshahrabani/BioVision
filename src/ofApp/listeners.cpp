@@ -55,10 +55,10 @@ void ofApp::createObjectPressed() {
 	}
 }
 
-void ofApp::markObjectPressed() {
+void ofApp::markNewObjectButtonPressed() {
 	if (this->selectedObjects.size() == 1) {
 		string name = ofSystemTextBoxDialog("Enter the name of the selected object.");
-		
+		this->knownObjectsPanel.addItem(name);
 	}
 }
 

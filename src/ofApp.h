@@ -89,8 +89,8 @@ class ofApp : public ofBaseApp{
 		// Create objects button.
 		ofxButton createObjectsButton;
 
-		// Mark as known object button.
-		ofxButton markObjectButton;
+		// Mark a new known object button.
+		ofxButton markNewObjectButton;
 
 		// Select object toggle.
 		ofParameter<bool> selectObjectToggle;
@@ -159,8 +159,13 @@ class ofApp : public ofBaseApp{
 		void play_speed_changed(float &f);
 
 		void createObjectPressed();
-		void markObjectPressed();
+
+		void markNewObjectButtonPressed();
+
+		// Callback function for clicking one of the objects in the known objects
+		// panel.
 		void markedObjectPressed(string name);
+
 		void selectObjectToggled(bool &b);
 		void consolidateObjectsPressed();
 		void separateObjectPressed();

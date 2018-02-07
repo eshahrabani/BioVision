@@ -19,10 +19,10 @@ public:
 	void addItem(string name);
 	void clearItems();
 
-	void itemPressed(string name);
 	void onItemPressed(OnItemPressCallback callback);
 
 private:
+	void itemPressed(string name);
 	vector<ofxButton*> pButtons;
 	OnItemPressCallback onItemPressCallback;
 };

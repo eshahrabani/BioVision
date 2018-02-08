@@ -58,7 +58,8 @@ void MouseHandler::handlePressed(int x, int y, int button) {
 		}
 
 		// If pressed inside an object, select that object.
-		if (app->selectObjectToggle && app->detectedObjects.size() > 0) {
+		// Does not allow selection if polygon selector is active.
+		if (app->selectObjectToggle && app->detectedObjects.size() > 0 &&!app->polygonSelection) {
 			DetectedObject* selectedObject = NULL;
 			bool oneFound = false;
 

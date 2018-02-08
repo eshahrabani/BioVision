@@ -154,8 +154,9 @@ void ofApp::separateObjectPressed() {
 			detectedObjects.erase(detectedObjects.begin() + i);
 		}
 
-		// Turn off polygon selector.
+		// Turn off polygon selector and object selector.
 		this->polygonSelectorToggle = !this->polygonSelectorToggle;
+		this->selectObjectToggle = !this->selectObjectToggle;
 	}
 	else {
 		logger.writeNormal("Select one area with the polygon selector tool.");

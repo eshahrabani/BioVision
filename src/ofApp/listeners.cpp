@@ -153,6 +153,9 @@ void ofApp::separateObjectPressed() {
 		for (int i : delIndices) {
 			detectedObjects.erase(detectedObjects.begin() + i);
 		}
+
+		// Turn off polygon selector.
+		this->polygonSelectorToggle = !this->polygonSelectorToggle;
 	}
 	else {
 		logger.writeNormal("Select one area with the polygon selector tool.");

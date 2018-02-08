@@ -130,7 +130,6 @@ void ofApp::separateObjectPressed() {
 				vector<ofPoint> objectVerts = dtObject.getPolyline().getVertices();
 				for (int i = 0; i < objectVerts.size(); i++) {
 					ofPoint pt = objectVerts.at(i);
-					logger.writeNormal(std::to_string(pt.x) + std::to_string(pt.y));
 					if (area.inside(pt)) {
 						newObjectPts.push_back(pt);
 					}

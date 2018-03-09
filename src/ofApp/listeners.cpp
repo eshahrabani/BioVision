@@ -58,6 +58,8 @@ void ofApp::createObjectPressed() {
 void ofApp::markNewObjectButtonPressed() {
 	if (this->selectedObjects.size() == 1) {
 		string name = ofSystemTextBoxDialog("Enter the name of the selected object.");
+		if (name == "") return;
+
 		this->knownObjectsPanel.addItem(name);
 
 		// Add a copy of the object to the tracked objects vector.

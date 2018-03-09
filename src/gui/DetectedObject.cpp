@@ -6,6 +6,7 @@ DetectedObject::DetectedObject(
 	DetectedObject(ofPolyline(blob.pts), blobColor, anchor) {}
 
 DetectedObject::DetectedObject(ofPolyline polyline, ofColor blobColor, ofPoint anchor) {
+	this->anchor = anchor;
 	this->points = displacePolyline(polyline, anchor.x, anchor.y);
 	if (!this->points.isClosed()) {
 		this->points.close();
@@ -18,8 +19,9 @@ DetectedObject::DetectedObject(ofPolyline polyline, ofColor blobColor, ofPoint a
 	selectedColor = ofColor(0, 204, 204);
 }
 
-DetectedObject::DetectedObject(ofPolyline polyline, ofPixels videoPixels, ofColor objColor, ofPoint anchor) :
+DetectedObject::DetectedObject(ofPolyline polyline, int videoFrame, ofPixels videoPixels, ofColor objColor, ofPoint anchor) :
 DetectedObject(polyline, objColor, anchor) {
+	this->videoFrame = videoFrame;
 	this->videoPixels = videoPixels;
 }
 
@@ -80,8 +82,34 @@ const ofPixels DetectedObject::getVideoPixels() const {
 	return this->videoPixels;
 }
 
+int DetectedObject::getFrame() {
+	return this->videoFrame;
+}
+
 ofPoint DetectedObject::getClosestPoint(ofPoint target) {
 	return this->points.getClosestPoint(target);
+}
+
+ofColor DetectedObject::getVideoObjectAverageColor() {
+	ofPolyline backAdjusted = displacePolyline(this->points, -this->anchor.x, -this->anchor.y);
+	vector<ofColor> colors;
+
+	// Get colors of all the pixels of this object (from the video frame).
+	for (ofPoint pt : backAdjusted.getVertices()) {
+		ofColor color = this->videoPixels.getColor(pt.x, pt.y);
+		colors.push_back(color);
+	}
+
+	return averageColors(colors);
+}
+
+ofPoint DetectedObject::getVideoObjectCentroid() {
+	ofPolyline backAdjusted = displacePolyline(this->points, -this->anchor.x, -this->anchor.y);
+	return backAdjusted.getCentroid2D();
+}
+
+float DetectedObject::getVideoObjectArea() {
+	return this->points.getArea();
 }
 
 void DetectedObject::setSelected(bool s) {

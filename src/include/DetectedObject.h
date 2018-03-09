@@ -8,7 +8,7 @@ class DetectedObject {
 public:
 	DetectedObject(ofxCvBlob blob, ofColor objColor = ofColor(255, 0, 0), ofPoint anchor=ofPoint(0, 0));
 	DetectedObject(ofPolyline polyLine, ofColor objColor = ofColor(255, 0, 0), ofPoint anchor = ofPoint(0, 0));
-	DetectedObject(ofPolyline polyline, ofPixels videoPixels, ofColor objColor = ofColor(255, 0, 0), ofPoint anchor = ofPoint(0, 0));
+	DetectedObject(ofPolyline polyline, int videoFrame, ofPixels videoPixels, ofColor objColor = ofColor(255, 0, 0), ofPoint anchor = ofPoint(0, 0));
 	DetectedObject(const DetectedObject& other);
 
 	void update();
@@ -22,7 +22,11 @@ public:
 	const ofPolyline getPolyline() const;
 	const ofPixels getVideoPixels() const;
 
+	int getFrame();
 	ofPoint getClosestPoint(ofPoint target);
+	ofColor getVideoObjectAverageColor();
+	ofPoint getVideoObjectCentroid();
+	float getVideoObjectArea();
 
 	void setSelected(bool s);
 
@@ -43,7 +47,9 @@ public:
 
 private:
 	ofPolyline points;
+	ofPoint anchor;
 	ofPixels videoPixels;
+	int videoFrame;
 	ofColor objectColor;
 	ofColor boundingBoxColor;
 

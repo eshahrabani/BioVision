@@ -68,3 +68,5 @@ obj
 obj/Debug
 *.pdb
 *.pdb
+*.pdb
+obj/Debug/vc140.pdb

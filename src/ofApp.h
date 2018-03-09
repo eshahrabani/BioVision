@@ -16,8 +16,11 @@
 #include "KeyHandler.h"
 #include "functions.h"
 
+using std::map;
 using std::vector;
 using std::ofstream;
+
+typedef map<string, vector<DetectedObject>> TrackedObjectsMap;
 
 // ofApp is the main class of this application. 
 // It encapsulates the methods of the Timeline, so 
@@ -201,9 +204,15 @@ class ofApp : public ofBaseApp{
 		ofxCvColorImage colorImg;
 		ofxCvGrayscaleImage grayImage, threshold, grayBg, grayDiff;
 		vector<ofPolyline> contours; 
+		
+		/* 
+		* Object manipulation.
+		*/
 		vector<DetectedObject> detectedObjects;
-		vector<DetectedObject*> selectedObjects; // Contains pointers to objects in detectedObjects vector.
-		vector<DetectedObject> trackedObjects;
+
+		// Contains pointers to objects in detectedObjects vector.
+		vector<DetectedObject*> selectedObjects;
+		TrackedObjectsMap trackedOjectsMap;
 
 		/* -------------------- VIDEO CONTROLS -------------------- */
 		

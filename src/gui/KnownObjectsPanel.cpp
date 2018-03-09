@@ -36,7 +36,12 @@ void KnownObjectsPanel::addItem(string name) {
 	pButton->setup(name);
 
 	this->pButtons.push_back(pButton);
+	this->buttonNames.push_back(name);
 	this->add(pButton);
+}
+
+vector<string> KnownObjectsPanel::getNames() {
+	return this->buttonNames;
 }
 
 void KnownObjectsPanel::clearItems() {

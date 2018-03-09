@@ -17,6 +17,7 @@ public:
 	bool mousePressed(ofMouseEventArgs& args);
 
 	void addItem(string name);
+	vector<string> getNames();
 	void clearItems();
 
 	void onItemPressed(OnItemPressCallback callback);
@@ -24,5 +25,6 @@ public:
 private:
 	void itemPressed(string name);
 	vector<ofxButton*> pButtons;
+	vector<string> buttonNames;
 	OnItemPressCallback onItemPressCallback;
 };

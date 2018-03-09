@@ -39,7 +39,7 @@ void ofApp::setup(){
 	knownObjectsPanel.setup("Known objects");
 	toolsPanel.setup("Analysis Controls");
 	objectsPanel.setup("Objects");
-
+	
 	// Add video buttons. 
 	mainPanel.setPosition(0, 0);
 	mainPanel.add(load_button.setup("Load"));	

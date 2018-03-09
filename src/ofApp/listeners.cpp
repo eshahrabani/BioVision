@@ -58,19 +58,36 @@ void ofApp::createObjectPressed() {
 void ofApp::markNewObjectButtonPressed() {
 	if (this->selectedObjects.size() == 1) {
 		string name = ofSystemTextBoxDialog("Enter the name of the selected object.");
+
+		// Don't do anything if the name is blank.
 		if (name == "") return;
 
+		// Add the name of the object to the known objects panel.
 		this->knownObjectsPanel.addItem(name);
 
-		// Add a copy of the object to the tracked objects vector.
+		// Get the currently selected object and begin a new entry in the tracked objects map.
 		DetectedObject obj = *this->selectedObjects.at(0);
-		DetectedObject copy(obj);
-		this->trackedObjects.push_back(copy);
+		std::shared_ptr<vector<DetectedObject>> pObjs(new vector<DetectedObject>);
+		pObjs->push_back(obj);
+
+		this->trackedOjectsMap[name] = *pObjs;
 	}
 }
 
 void ofApp::markedObjectPressed(string name) {
-	cout << name << endl;
+	/* 
+	 * This is hacky. 
+	 * TODO: build the clear-all button into the known objects panel itself.
+	 */
+	if (name == "Clear all") {
+		this->knownObjectsPanel.clearItems();
+		this->trackedOjectsMap.clear();
+		this->knownObjectsPanel.addItem("Clear all");
+	}
+	else if (this->selectedObjects.size() == 1) {
+		// Add the currently selected object to the vector of the tracked objects map.
+		this->trackedOjectsMap.at(name).push_back(*this->selectedObjects.at(0));
+	}
 }
 
 void ofApp::selectObjectToggled(bool &b) {

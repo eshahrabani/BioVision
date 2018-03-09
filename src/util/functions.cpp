@@ -78,11 +78,11 @@ int average(const vector<int>& vec) {
 	return (int)(summed / vec.size());
 }
 
-ofColor averageColors(vector<ofColor>& colors) {
+ofColor BV::averageColors(const vector<ofColor>& colors) {
 	vector<int> r;
 	vector<int> g;
 	vector<int> b;
-	
+
 	for (ofColor c : colors) {
 		r.push_back(c.r);
 		g.push_back(c.g);

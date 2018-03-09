@@ -86,6 +86,7 @@ void ofApp::markedObjectPressed(string name) {
 	}
 	else if (this->selectedObjects.size() == 1) {
 		// Add the currently selected object to the vector of the tracked objects map.
+		logger.writeNormal("The currently selected object has been marked as an object of type: " + name);
 		this->trackedOjectsMap.at(name).push_back(*this->selectedObjects.at(0));
 	}
 }
@@ -260,7 +261,10 @@ void ofApp::analyze(bool doThreshold) {
 
 	for (ofxCvBlob blob : contourFinder.blobs) {
 		ofColor blobColor(255, 0, 0);
-		this->detectedObjects.push_back(DetectedObject(blob, blobColor, ofPoint(vid_x + vid_width, vid_y)));
+		ofPixels videoPixels = this->getPixels();
+		int currentFrame = this->getCurrentFrame();
+		ofPoint anchor(vid_x + vid_width, vid_y);
+		this->detectedObjects.push_back(DetectedObject(blob.pts, currentFrame, videoPixels, blobColor, anchor));
 	}
 
 	// Log completion. 
@@ -312,9 +316,32 @@ void ofApp::thresholdBlockSizeChanged(int &blockSize) {
 	this->analyze(); 
 }
 
-void ofApp::saveFrame() {
-	// Follow schema: frame, centroids..., areas...
-	float frame = this->getCurrentFrame();
+void ofApp::saveObjects() {
+	// Follow schema: object name, frame, area, average color, centroid
+	for (TrackedObjectsMap::iterator mapIterator = this->trackedOjectsMap.begin(); 
+		mapIterator != this->trackedOjectsMap.end(); 
+		++mapIterator) {
+		
+		string name = mapIterator->first;
+		vector<DetectedObject> objects = mapIterator->second;
+		
+		for (DetectedObject obj : objects) {
+			int frame = obj.getFrame();
+			float area = obj.getVideoObjectArea();
+			ofColor averageColor = obj.getVideoObjectAverageColor();
+			ofPoint centroid = obj.getVideoObjectCentroid();
+
+			// Begin a new row.
+			output << name << ", ";
+			output << frame << ", ";
+			output << std::to_string(area) << ", ";
+			output << "rgb(" << std::to_string(averageColor.r) << "," << std::to_string(averageColor.g) << "," << std::to_string(averageColor.b) << "), ";
+			output << "[" << std::to_string(centroid.x) << "," << std::to_string(centroid.y) << "]";
+			output << "\n";
+		}
+	}
+	
+	/*float frame = this->getCurrentFrame();
 
 	vector<ofPoint> centroids;
 	vector<float> areas;
@@ -334,4 +361,5 @@ void ofApp::saveFrame() {
 
 	this->output << "\n";
 	this->selectedAreas.clear();
+	*/
 }

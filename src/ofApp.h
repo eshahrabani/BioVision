@@ -140,8 +140,8 @@ class ofApp : public ofBaseApp{
 		// Output mode toggle.
 		ofParameter<bool> outputModeToggle;
 
-		// Save frame button.
-		ofxButton saveFrameButton;
+		// Save all objects button.
+		ofxButton saveAllObjectsButton;
 	
 		// The timeline component.
 		Timeline* timeline;
@@ -195,7 +195,7 @@ class ofApp : public ofBaseApp{
 		void outputModeToggled(bool &b);
 
 		// Save frame button listener.
-		void saveFrame();
+		void saveObjects();
 
 
 		/* -------------------- VISION ANALYSIS -------------------- */
@@ -239,6 +239,9 @@ class ofApp : public ofBaseApp{
 
 		// Get the current frame of the video.
 		int getCurrentFrame();
+
+		// Get the current pixels of the video.
+		ofPixels getPixels();
 
 		// Set the frame of the video using the position of a click on 
 		// the timeline. 

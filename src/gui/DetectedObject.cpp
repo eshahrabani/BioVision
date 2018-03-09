@@ -100,7 +100,7 @@ ofColor DetectedObject::getVideoObjectAverageColor() {
 		colors.push_back(color);
 	}
 
-	return averageColors(colors);
+	return BV::averageColors(colors);
 }
 
 ofPoint DetectedObject::getVideoObjectCentroid() {

@@ -77,7 +77,7 @@ void ofApp::setup(){
 	toolsPanel.add(dilateToggle.set("Dilate", false));
 	toolsPanel.add(erodeToggle.set("Erode", false));
 	toolsPanel.add(polygonSelectorToggle.set("Polygon Selector Tool", false));
-	toolsPanel.add(saveFrameButton.setup("Save Frame"));
+	toolsPanel.add(saveAllObjectsButton.setup("Save all objects"));
 
 	// Link the buttons to their respective methods.
 	load_button.addListener(this, &ofApp::load);					 
@@ -102,7 +102,7 @@ void ofApp::setup(){
 	dilateToggle.addListener(this, &ofApp::dilateToggled);
 	erodeToggle.addListener(this, &ofApp::erodeToggled);
 	polygonSelectorToggle.addListener(this, &ofApp::polygonSelectorToggled);
-	saveFrameButton.addListener(this, &ofApp::saveFrame);
+	saveAllObjectsButton.addListener(this, &ofApp::saveObjects);
 
 	// Setup timeline.
 	float tX = vid_x;
@@ -113,7 +113,7 @@ void ofApp::setup(){
 		tX, tY, tWidth, tHeight,
 		ofColor(67, 80, 102), 100);
 	
-	output.open("data/output.txt");
+	output.open("data/objects.txt");
 }
 
 //--------------------------------------------------------------

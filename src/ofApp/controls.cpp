@@ -68,6 +68,10 @@ int ofApp::getCurrentFrame()
 	return timeline->getCurrentFrame();
 }
 
+ofPixels ofApp::getPixels() {
+	return this->timeline->getVideoPixels();
+}
+
 void ofApp::setFrameFromMouseX(float x) {
 	logger.writeVerbose("Setting new frame from ofApp using mouse X.");
 	timeline->setFrameFromMouseX(x);

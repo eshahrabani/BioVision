@@ -50,4 +50,6 @@ bool polylinesOverlap(ofPolyline p1, ofPolyline p2);
 int sum(const vector<int>& vec);
 int average(const vector<int>& vec);
 
-ofColor averageColors(const vector<ofColor>& colors);
+namespace BV {
+	ofColor averageColors(const vector<ofColor>& colors);
+}

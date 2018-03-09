@@ -63,3 +63,35 @@ bool polylinesOverlap(ofPolyline p1, ofPolyline p2) {
 
 	return false;
 }
+
+int sum(const vector<int>& vec) {
+	int out;
+	for (int i : vec) {
+		out += i;
+	}
+
+	return out;
+}
+
+int average(const vector<int>& vec) {
+	int summed = sum(vec);
+	return (int)(summed / vec.size());
+}
+
+ofColor averageColors(vector<ofColor>& colors) {
+	vector<int> r;
+	vector<int> g;
+	vector<int> b;
+	
+	for (ofColor c : colors) {
+		r.push_back(c.r);
+		g.push_back(c.g);
+		b.push_back(c.b);
+	}
+
+	int avgR = average(r);
+	int avgG = average(g);
+	int avgB = average(b);
+
+	return ofColor(avgR, avgG, avgB);
+}

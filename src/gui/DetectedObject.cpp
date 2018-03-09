@@ -18,9 +18,14 @@ DetectedObject::DetectedObject(ofPolyline polyline, ofColor blobColor, ofPoint a
 	selectedColor = ofColor(0, 204, 204);
 }
 
+DetectedObject::DetectedObject(ofPolyline polyline, ofPixels videoPixels, ofColor objColor, ofPoint anchor) :
+DetectedObject(polyline, objColor, anchor) {
+	this->videoPixels = videoPixels;
+}
+
 // Copy constructor.
 DetectedObject::DetectedObject(const DetectedObject& other) :
-	DetectedObject(other.getPolyline(), other.getObjectColor()) {}
+	DetectedObject(other.getPolyline(), other.getOutlineColor()) {}
 
 void DetectedObject::update() {
 }
@@ -63,12 +68,16 @@ void DetectedObject::setPoints(ofPolyline points) {
 	this->points = points;
 }
 
-const ofColor DetectedObject::getObjectColor() const {
+const ofColor DetectedObject::getOutlineColor() const {
 	return this->objectColor;
 }
 
 const ofPolyline DetectedObject::getPolyline() const {
 	return this->points;
+}
+
+const ofPixels DetectedObject::getVideoPixels() const {
+	return this->videoPixels;
 }
 
 ofPoint DetectedObject::getClosestPoint(ofPoint target) {

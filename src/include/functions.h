@@ -46,3 +46,8 @@ vector<ofPolyline> blobsToPolylines(const vector<ofxCvBlob>& blobs);
 // Returns true if the two polylines overlap.
 // Not perfect because the first polyline's bounding box is used as simplification.
 bool polylinesOverlap(ofPolyline p1, ofPolyline p2);
+
+int sum(const vector<int>& vec);
+int average(const vector<int>& vec);
+
+ofColor averageColors(const vector<ofColor>& colors);

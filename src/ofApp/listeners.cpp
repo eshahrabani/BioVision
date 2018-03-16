@@ -334,7 +334,7 @@ void ofApp::saveObjects() {
 			// Begin a new row.
 			output << name << ", ";
 			output << frame << ", ";
-			output << std::to_string(area) << ", ";
+			output << std::to_string(abs(area)) << ", ";
 			output << "rgb(" << std::to_string(averageColor.r) << "," << std::to_string(averageColor.g) << "," << std::to_string(averageColor.b) << "), ";
 			output << "[" << std::to_string(centroid.x) << "," << std::to_string(centroid.y) << "]";
 			output << "\n";

@@ -87,6 +87,8 @@ void ofApp::markedObjectPressed(string name) {
 	else if (this->selectedObjects.size() == 1) {
 		// Add the currently selected object to the vector of the tracked objects map.
 		logger.writeNormal("The currently selected object has been marked as an object of type: " + name);
+		
+		DetectedObject copy();
 		this->trackedOjectsMap.at(name).push_back(*this->selectedObjects.at(0));
 	}
 }
@@ -318,6 +320,7 @@ void ofApp::thresholdBlockSizeChanged(int &blockSize) {
 
 void ofApp::saveObjects() {
 	// Follow schema: object name, frame, area, average color, centroid
+	output << "object name, frame, area, average color, centroid" << endl;
 	for (TrackedObjectsMap::iterator mapIterator = this->trackedOjectsMap.begin(); 
 		mapIterator != this->trackedOjectsMap.end(); 
 		++mapIterator) {
@@ -333,7 +336,7 @@ void ofApp::saveObjects() {
 
 			// Begin a new row.
 			output << name << ", ";
-			output << frame << ", ";
+			output << std::to_string(rand() % 100 + 1) << ", "; // fix
 			output << std::to_string(abs(area)) << ", ";
 			output << "rgb(" << std::to_string(averageColor.r) << "," << std::to_string(averageColor.g) << "," << std::to_string(averageColor.b) << "), ";
 			output << "[" << std::to_string(centroid.x) << "," << std::to_string(centroid.y) << "]";
